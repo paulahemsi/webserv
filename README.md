@@ -2,6 +2,7 @@
 
 * [introduction](#introduction)
 * [study resources](#study_resources)
+* [socket](#socket)
 
 # introduction
 
@@ -24,6 +25,13 @@ that resource or an error message if unable to do so. The resource is typically 
 While the primary function is to serve content, full implementation of HTTP also includes ways of receiving content from clients. This feature is used for submitting web
 forms, including the uploading of files.
 
+## socket
+
+A socket is the mechanism that most popular operating systems provide to give programs access to the network. It allows messages to be sent and received between applications (unrelated processes) on different networked machines.
+
+The sockets mechanism has been created to be independent of any specific type of network. IP, however, is by far the most dominant network and the most popular use of sockets.
+
+From [HTTP Server: Everything you need to know to Build a simple HTTP server from scratch](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
 
 ## study_resources
 
