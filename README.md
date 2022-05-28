@@ -31,8 +31,17 @@ A socket is the mechanism that most popular operating systems provide to give pr
 
 The sockets mechanism has been created to be independent of any specific type of network. IP, however, is by far the most dominant network and the most popular use of sockets.
 
+There are a few steps involved in using sockets:
+
+* Create the socket
+* Identify the socket
+* On the server, wait for an incoming connection
+* Send and receive messages
+* Close the socket
+
 From [HTTP Server: Everything you need to know to Build a simple HTTP server from scratch](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
 
 ## study_resources
 
 * [Overview Of World Wide Web by Arif Butt](https://www.youtube.com/watch?v=Ls2G6HjvkYc&list=PL7B2bn3G_wfD6_mhy-eLdn_mFgQ_mOyLl&index=11)
+* [HTTP Server: Everything you need to know to Build a simple HTTP server from scratch](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
