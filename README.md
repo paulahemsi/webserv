@@ -26,6 +26,8 @@ that resource or an error message if unable to do so. The resource is typically 
 While the primary function is to serve content, full implementation of HTTP also includes ways of receiving content from clients. This feature is used for submitting web
 forms, including the uploading of files.
 
+> note that any software program that does the same as a web browser (ie: retrieve documents from servers) is called a **client** in network terminology and a **user agent** in web terminology. Also note that the **server is** properly the **server program**, and **not the computer** on which the server is an application program. (Sometimes called the server machine.)
+
 ## socket
 
 A socket is the mechanism that most popular operating systems provide to give programs access to the network. It allows messages to be sent and received between applications (unrelated processes) on different networked machines.
@@ -82,3 +84,4 @@ From [HTTP Server: Everything you need to know to Build a simple HTTP server fro
 
 * [Overview Of World Wide Web by Arif Butt](https://www.youtube.com/watch?v=Ls2G6HjvkYc&list=PL7B2bn3G_wfD6_mhy-eLdn_mFgQ_mOyLl&index=11)
 * [HTTP Server: Everything you need to know to Build a simple HTTP server from scratch](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
+* [How the web works: HTTP and CGI explained](https://www.garshol.priv.no/download/text/http-tut.html)
