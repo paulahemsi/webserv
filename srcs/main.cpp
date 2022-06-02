@@ -21,12 +21,12 @@ int main(void)
 
 	ft::Socket socket;
 
-	listen(socket._server_fd, BACKLOG);
+	socket.start_listening(BACKLOG);
 
 	while(1)
 	{
 		std::cout << "waiting........." << std::endl;
-		int client_socket_fd = accept(socket._server_fd, (struct sockaddr *)&client_infos, &client_infos_size);
+		int client_socket_fd = accept(socket.get_server_fd(), (struct sockaddr *)&client_infos, &client_infos_size);
 		char buffer[100];
 		int reading;
 		while((reading = read(client_socket_fd, buffer, 100)))

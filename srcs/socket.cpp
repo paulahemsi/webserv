@@ -21,6 +21,17 @@ void	ft::Socket::_set_server_infos()
 	this->_server_infos.sin_addr.s_addr = htonl(INADDR_ANY);
 }
 
+void ft::Socket::start_listening(int backlog)
+{
+	listen(this->_server_fd, backlog);
+}
+
+int ft::Socket::get_server_fd(void)
+{
+	return (this->_server_fd);
+}
+
+
 ft::Socket::~Socket(void)
 {
 	close(this->_server_fd);
