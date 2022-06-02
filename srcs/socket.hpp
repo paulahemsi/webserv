@@ -16,8 +16,8 @@ namespace ft
 	class Socket
 	{
 		private:
-			int					_server_fd;
-			struct	sockaddr_in	_server_infos;
+			int					_fd;
+			struct	sockaddr_in	_infos;
 
 			void	_create(void);
 			void	_set_infos(void);
@@ -47,7 +47,7 @@ namespace ft
 			
 			void start_listening(int backlog);
 			
-			int get_server_fd(void);
+			int get_socket_fd(void);
 	};
 }
 
