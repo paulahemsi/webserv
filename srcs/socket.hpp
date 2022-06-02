@@ -19,7 +19,9 @@ namespace ft
 			int					_server_fd;
 			struct	sockaddr_in	_server_infos;
 
-			void	_set_server_infos();
+			void	_create(void);
+			void	_set_infos(void);
+			void	_bind(void);
 
 			class CreateSocketError : public std::exception
 			{
