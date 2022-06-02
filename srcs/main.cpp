@@ -14,13 +14,15 @@
 //     char              sin_zero[8]; 
 // };
 
+#include <errno.h>
+
 #define DOMAIN		AF_INET //IP
 #define TYPE		SOCK_STREAM //TCP
 #define PROTOCOL	0
 #define ERROR		-1
 //defines the maximum number of pending connections that can be queued up before connections are refused.
 #define BACKLOG		100
-#define PORT		888
+#define PORT		4444
 
 int main(void)
 {
@@ -34,9 +36,11 @@ int main(void)
 		std::cout << "error creating server socket" << std::endl;
 		return (-1);
 	}
+	memset((char*)&server_infos, 0, sizeof(server_infos));
 	server_infos.sin_family = DOMAIN;
 	server_infos.sin_port = htons(PORT);
-	memset((char*)&server_infos, 0, sizeof(server_infos));
+	server_infos.sin_addr.s_addr = htonl(INADDR_ANY);
+
 	if (bind(server_socket_fd, (struct sockaddr *)&server_infos, sizeof(server_infos)) == ERROR)
 	{
 		std::cout << "error binding server socket" << std::endl;
