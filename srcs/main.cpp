@@ -14,29 +14,45 @@
 #define ERROR		-1
 #define BACKLOG		100
 
+typedef struct sockaddr_in socket_address;
+
+static int get_client_connection(int server_socket)
+{
+	socket_address	client_infos;
+	unsigned int	client_infos_size;
+
+	client_infos_size = sizeof(client_infos);
+	return (accept(server_socket,
+					(struct sockaddr *)&client_infos,
+					&client_infos_size));
+}
+
+static void deal_with_requests(int client_socket)
+{
+	char	buffer[100];
+	int		reading;
+
+	while((reading = read(client_socket, buffer, 100)))
+	{
+		std::cout << "Request:" << buffer << std::endl;
+		std::cout << "Executing the request" << std::endl;
+		write(client_socket, "response", 9);
+	}
+
+}
+
 int main(void)
 {
-	struct sockaddr_in client_infos;
-	unsigned int client_infos_size = sizeof(client_infos);
+	ft::Socket server_socket;
 
-	ft::Socket socket;
-
-	socket.start_listening(BACKLOG);
+	server_socket.start_listening(BACKLOG);
 
 	while(1)
 	{
 		std::cout << "waiting........." << std::endl;
-		int client_socket_fd = accept(socket.get_socket_fd(), (struct sockaddr *)&client_infos, &client_infos_size);
-		char buffer[100];
-		int reading;
-		while((reading = read(client_socket_fd, buffer, 100)))
-		{
-			std::cout << "Request:" << buffer << std::endl;
-			std::cout << "Executing the request" << std::endl;
-			write(client_socket_fd, "response", 9);
-		}
-		close(client_socket_fd);
+		int client_socket = get_client_connection(server_socket.get_socket_fd());
+		deal_with_requests(client_socket);
+		close(client_socket);
 	}
-
 	return (0);
 }
