@@ -8,12 +8,13 @@ CFLAGS		+= -std=c++98
 RM			:=	rm -rf
 
 SRCS_DIR	:=	./srcs/
-SRCS		:=	main.cpp
+SRCS		:=	main.cpp \
+				socket.cpp
 
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
-HEADER		=
+HEADER		=	socker.hpp
 INCLUDES	=
 
 VPATH		:=	$(SRCS_DIR)
