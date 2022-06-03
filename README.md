@@ -44,6 +44,79 @@ There are a few steps involved in using sockets:
 
 From [HTTP Server: Everything you need to know to Build a simple HTTP server from scratch](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
 
+## HTTP
+
+The HTTP protocol is a **request/response protocol**.
+
+A **client** sends a **request to the server** in the form of a request method, URI, and protocol version, followed by a MIME-like message containing request modifiers, client information, and possible body content over a connection with a server.
+
+The **server responds** with a status line, including the message's protocol version and a success or error code, followed by a MIME-like message containing server information, entity metainformation, and possible entity-body content.
+
+Most HTTP communication is **initiated by a user agent** and consists of a **request to be applied to a resource on some origin server**. In the simplest case, this may be accomplished via a single connection between the user agent and the origin server.
+
+A more complicated situation occurs when one or more intermediaries are present in the request/response chain.
+
+In **HTTP/1.1**, a connection may be used for **one or more request/response exchanges**, although connections may be closed for a variety of reasons.
+
+The "http" scheme is used to locate network resources via the HTTP protocol. This scheme-specific syntax and semantics for http URLs is:
+
+   `http_URL = "http:" "//" host [ ":" port ] [ abs_path [ "?" query ]]`
+
+**If the port is empty or not given, port 80 is assumed.**
+
+
+The HTTP protocol **does not place any a priori limit on the length of a URI**. Servers MUST be able to handle the URI of any resource they serve, and SHOULD be able to handle URIs of unbounded length if they provide GET-based forms that could generate such URIs. **A server SHOULD return 414 (Request-URI Too Long) status if a URI is longer than the server can handle**.
+
+
+### client
+
+A **program** that **establishes connections** for the purpose of **sending requests**.
+
+### user agent
+
+The **client which initiates a request**. These are often browsers, editors, spiders (web-traversing robots), or other end user tools.
+
+### server
+
+An **application program** that **accepts connections** in order to **service requests by sending back responses**.
+
+**Any given program** may be capable of being **both** a client and a server; our use of these terms refers only to the **role being performed** by the program **for a particular connection**, rather than to the program's capabilities in general. Likewise, any server may act as an origin server, proxy, gateway, or tunnel, switching behavior based on the nature of each request.
+
+### proxy
+
+An **intermediary program** which **acts as both a server and a client** for the purpose of **making requests** on **behalf** of **other clients**. Requests are serviced internally or by passing them on, with possible translation, to other servers.
+
+A proxy MUST implement both the client and server requirements of this specification. 
+
+A **"transparent proxy"** is a proxy that **does not modify the request or response** beyond what is required for proxy authentication and identification. 
+
+A **"non-transparent proxy"** is a proxy that **modifies the request or response** in order **to provide some added service to the user agent**, such as group annotation services, media type transformation, protocol reduction, or anonymity filtering.
+
+Except where either transparent or non-transparent behavior is explicitly stated, the HTTP proxy requirements apply to both types of proxies.
+
+### gateway
+
+A **server** which acts as an **intermediary** for some **other server**. Unlike a proxy, a gateway **receives requests as if it were the origin server for the requested resource**; the requesting client may not be aware that it is communicating with a gateway.
+
+### cache
+
+A **program's local store** of response messages and the subsystem
+that controls its message storage, retrieval, and deletion.
+
+A cache stores cacheable responses in order to **reduce the response time and network bandwidth consumption on future** equivalent requests.
+
+Any client or server may include a cache, though a cache cannot be used by a server that is acting as a tunnel.
+
+### Request
+
+The Request-Line begins with a method token, followed by the Request-URI and the protocol version, and ending with CRLF. The elements are separated by SP characters. No CR or LF is allowed except in the final CRLF sequence.
+
+`Request-Line = Method SP Request-URI SP HTTP-Version CRLF`
+
+The `Method`  token indicates the method to be performed on the resource identified by the Request-URI. The method is case-sensitive
+
+The `Request-URI` is a Uniform Resource Identifier (section 3.2) and identifies the resource upon which to apply the request.
+
 ## specific_functions_overview
 
 <details>
