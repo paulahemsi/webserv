@@ -27,25 +27,40 @@ static int get_client_connection(int server_socket)
 					&client_infos_size));
 }
 
+
 static void deal_with_requests(int client_socket)
 {
-	char	buffer[100];
+	char	buffer[10000];
 	int		reading;
 
-	while((reading = read(client_socket, buffer, 100)))
+	while((reading = read(client_socket, buffer, 10000)))
 	{
 		std::cout << "Request:" << buffer << std::endl;
 		std::cout << "Executing the request" << std::endl;
 		write(client_socket, "response", 9);
 	}
-
 }
 
 int main(void)
 {
 	ft::Socket server_socket;
 
-	server_socket.start_listening(BACKLOG);
+	try
+	{
+		server_socket.create();
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		server_socket.start_listening(BACKLOG);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 
 	while(1)
 	{
