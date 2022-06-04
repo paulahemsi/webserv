@@ -109,13 +109,61 @@ Any client or server may include a cache, though a cache cannot be used by a ser
 
 ### Request
 
+A request message from a client to a server includes, within the first line of that message, the method to be applied to the resource, the identifier of the resource, and the protocol version in use.
+
+#### Request-Line
+
 The Request-Line begins with a method token, followed by the Request-URI and the protocol version, and ending with CRLF. The elements are separated by SP characters. No CR or LF is allowed except in the final CRLF sequence.
 
 `Request-Line = Method SP Request-URI SP HTTP-Version CRLF`
 
 The `Method`  token indicates the method to be performed on the resource identified by the Request-URI. The method is case-sensitive
 
+|Method|
+|----------|
+|"OPTIONS" |
+| "GET"     |
+| "HEAD"    |
+| "POST"    |
+| "PUT"     |
+| "DELETE"  |
+| "TRACE"   |
+| "CONNECT" |
+
+The list of methods allowed by a resource can be specified in an **Allow header field**.
+
+The return code of the **response always notifies** the client whether a **method is currently allowed on a resource**, since the set of allowed methods can change dynamically. 
+
+An origin server SHOULD return the status code **405** (Method Not Allowed) if the method is **known by the origin server but not allowed for the requested resource**, and **501** (Not Implemented) if the method is **unrecognized or not implemented by the origin server**. The methods **GET** and **HEAD** **MUST be supported** by all general-purpose servers. **All other** methods are **OPTIONAL**.
+
 The `Request-URI` is a Uniform Resource Identifier (section 3.2) and identifies the resource upon which to apply the request.
+
+#### Request Header Fields
+
+The request-header fields allow the client to pass additional information about the request, and about the client itself, to the server.
+
+|Request Header|
+|--------------|
+| Accept             |
+| Accept-Charset     |
+| Accept-Encoding    |
+| Accept-Language    |
+| Authorization      |
+| Expect             |
+| From               |
+| Host               |
+| If-Match           |
+| If-Modified-Since  |
+| If-None-Match      |
+| If-Range           |
+| If-Unmodified-Since|
+| Max-Forwards       |
+| Proxy-Authorization|
+| Range              |
+| Referer            |
+| TE                 |
+| User-Agent         |
+
 
 ## specific_functions_overview
 
