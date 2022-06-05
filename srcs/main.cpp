@@ -7,6 +7,7 @@
 #include <netinet/in.h> //sockaddr_in
 
 #include "socket.hpp"
+#include "Request.hpp"
 
 #define DOMAIN		AF_INET //IP
 #define TCP			SOCK_STREAM //TCP
@@ -30,12 +31,12 @@ static int get_client_connection(int server_socket)
 
 static void deal_with_requests(int client_socket)
 {
-	char	buffer[10000];
-	int		reading;
+	char		buffer[10000];
+	int			reading;
 
 	while((reading = read(client_socket, buffer, 10000)))
 	{
-		std::cout << "Request:" << buffer << std::endl;
+		ft::Request	request(buffer);
 		std::cout << "Executing the request" << std::endl;
 		write(client_socket, "response", 9);
 	}
@@ -51,7 +52,8 @@ int main(void)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cout << e.what() << '\n';
+		return(-1);
 	}
 	try
 	{
@@ -60,6 +62,7 @@ int main(void)
 	catch(const std::exception& e)
 	{
 		std::cout << e.what() << std::endl;
+		return(-1);
 	}
 
 	while(1)
