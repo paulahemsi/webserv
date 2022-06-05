@@ -7,8 +7,9 @@ ft::Request::Request(std::string request_string)
 	std::stringstream request_(request_string);
 	std::string line;
 	std::getline(request_, line, '\r');
-	//parse first line
 	this->_parse_request_line(line);
+	this->_parse_header(request_);
+	// this->_parse_body();
 	//loop over other lines and insert in map
 	//detect empty line
 	//stores body
@@ -24,6 +25,17 @@ void ft::Request::_parse_request_line(std::string request_line)
 		std::string value = request_line.substr(0, pos);
 		this->_request.insert(ft::request_pair(field[i], value));
 		request_line.erase(0, pos + 1);
+	}
+}
+
+void ft::Request::_parse_header(std::stringstream &header)
+{
+	for (std::string line; line != "\n"; std::getline(header, line, '\r'))
+	{
+		std::size_t pos = line.find(' ');
+		std::string key = line.substr(0, pos);
+		std::string value = line.substr(pos + 1, std::string::npos);
+		this->_request.insert(ft::request_pair(key, value));
 	}
 }
 
