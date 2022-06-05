@@ -19,12 +19,15 @@ namespace ft
 			
 			void _parse_request_line(std::string request_line);
 			void _parse_header(std::stringstream &header);
+			void _parse_body(std::string request_string);
 
 		public:
 			Request(std::string request_string);
 			~Request(void);
+
+			//DEBUGGING FUNCTION
+			void debugging_request(void);
 	};
 }
-
 
 #endif 

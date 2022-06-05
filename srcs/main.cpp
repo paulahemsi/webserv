@@ -37,6 +37,7 @@ static void deal_with_requests(int client_socket)
 	while((reading = read(client_socket, buffer, 10000)))
 	{
 		ft::Request	request(buffer);
+		request.debugging_request();
 		std::cout << "Executing the request" << std::endl;
 		write(client_socket, "response", 9);
 	}

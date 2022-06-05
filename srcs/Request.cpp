@@ -1,7 +1,6 @@
 
 #include "Request.hpp"
 
-
 ft::Request::Request(std::string request_string)
 {
 	std::stringstream request_(request_string);
@@ -9,10 +8,7 @@ ft::Request::Request(std::string request_string)
 	std::getline(request_, line, '\r');
 	this->_parse_request_line(line);
 	this->_parse_header(request_);
-	// this->_parse_body();
-	//loop over other lines and insert in map
-	//detect empty line
-	//stores body
+	this->_parse_body(request_string);
 }
 
 void ft::Request::_parse_request_line(std::string request_line)
@@ -36,6 +32,24 @@ void ft::Request::_parse_header(std::stringstream &header)
 		std::string key = line.substr(0, pos);
 		std::string value = line.substr(pos + 1, std::string::npos);
 		this->_request.insert(ft::request_pair(key, value));
+	}
+}
+
+void ft::Request::_parse_body(std::string request_string)
+{
+	std::size_t pos = request_string.find("\r\n\r\n");
+	std::string value = request_string.substr(pos + 4, std::string::npos);
+	this->_request.insert(ft::request_pair("Body:", value));
+}
+
+//DEBUGGING FUNCTION
+void ft::Request::debugging_request(void)
+{
+	std::map<std::string, std::string>::iterator it = this->_request.begin();
+	while (it != this->_request.end())
+	{
+		std::cout << it->first << " " << it->second << std::endl;
+		it++;
 	}
 }
 
