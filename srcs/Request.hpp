@@ -23,7 +23,10 @@ namespace ft
 
 		public:
 			Request(std::string request_string);
+			Request(const Request& other);
 			~Request(void);
+
+			Request& operator= (const Request& other);
 
 			//DEBUGGING FUNCTION
 			void debugging_request(void);

@@ -1,6 +1,11 @@
 
 #include "Request.hpp"
 
+ft::Request::Request(const ft::Request& other)
+{
+	*this = other;
+}
+
 ft::Request::Request(std::string request_string)
 {
 	std::stringstream request_(request_string);
@@ -42,6 +47,17 @@ void ft::Request::_parse_body(std::string request_string)
 	this->_request.insert(ft::request_pair("Body:", value));
 }
 
+ft::Request& ft::Request::operator= (const Request& other)
+{
+	this->_request = other._request;
+	return (*this);
+}
+
+ft::Request::~Request(void)
+{
+	std::cout << "Request destructor called" << std::endl;
+}
+
 //DEBUGGING FUNCTION
 void ft::Request::debugging_request(void)
 {
@@ -51,9 +67,4 @@ void ft::Request::debugging_request(void)
 		std::cout << it->first << " " << it->second << std::endl;
 		it++;
 	}
-}
-
-ft::Request::~Request(void)
-{
-	std::cout << "Request destructor called" << std::endl;
 }
