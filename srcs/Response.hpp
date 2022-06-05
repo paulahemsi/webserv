@@ -6,13 +6,14 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/05 22:16:41 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/05 23:22:15 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RESPONSE_HPP
 #define RESPONSE_HPP
 
+#include <unistd.h>
 #include <string>
 #include <sstream>
 
@@ -33,6 +34,7 @@ namespace ft
 			~Response(void);
 
 			std::string toString(void);
+			void		send(int client);
 	};
 }
 

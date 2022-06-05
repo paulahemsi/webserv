@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/05 22:16:45 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/05 23:20:46 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,12 @@ std::string ft::Response::toString(void)
 				+ status_code.str() + SP
 				+ this->_reason_phrase + CRLF;
 	return (status_line);
+}
+
+void	ft::Response::send(int client)
+{
+	std::string response;
+
+	response = this->toString();
+	write(client, response.c_str(), response.length());
 }

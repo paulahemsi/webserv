@@ -1,5 +1,4 @@
 
-#include <unistd.h> //read() write()
 #include <string.h> //memset()
 #include <iostream> //cpp
 #include <sys/socket.h> //socket()
@@ -39,7 +38,7 @@ static void deal_with_requests(int client_socket)
 		std::cout << "Executing the request" << std::endl;
 		ft::Response response;
 		std::cout << response.toString();
-		write(client_socket, "response", 9);
+		response.send(client_socket);
 	}
 }
 
