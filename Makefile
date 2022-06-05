@@ -9,12 +9,15 @@ RM			:=	rm -rf
 
 SRCS_DIR	:=	./srcs/
 SRCS		:=	main.cpp \
-				socket.cpp
+				socket.cpp \
+				Request.cpp
 
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
-HEADER		=	socker.hpp
+HEADER		=	socket.hpp \
+				Request.hpp
+
 INCLUDES	=
 
 VPATH		:=	$(SRCS_DIR)
