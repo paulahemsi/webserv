@@ -28,6 +28,7 @@ namespace ft
 
 			Request& operator= (const Request& other);
 
+			std::string get_request_field(std::string key);
 			//DEBUGGING FUNCTION
 			void debugging_request(void);
 	};

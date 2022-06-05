@@ -47,6 +47,11 @@ void ft::Request::_parse_body(std::string request_string)
 	this->_request.insert(ft::request_pair("Body:", value));
 }
 
+std::string ft::Request::get_request_field(std::string key)
+{
+	return (this->_request[(key + ":")]);
+}
+
 ft::Request& ft::Request::operator= (const Request& other)
 {
 	this->_request = other._request;
