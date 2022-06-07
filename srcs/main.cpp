@@ -50,19 +50,11 @@ int main(void)
 	try
 	{
 		server_socket.create();
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << e.what() << '\n';
-		return(-1);
-	}
-	try
-	{
 		server_socket.start_listening(BACKLOG);
 	}
 	catch(const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		std::cout << e.what() << '\n';
 		return(-1);
 	}
 
