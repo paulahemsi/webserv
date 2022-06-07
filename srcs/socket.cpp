@@ -3,8 +3,12 @@
 
 ft::Socket::Socket(void)
 {
-	_create();
 	_set_infos();
+}
+
+void	ft::Socket::create()
+{
+	_create();
 	_bind();
 }
 

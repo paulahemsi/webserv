@@ -23,6 +23,16 @@ namespace ft
 			void	_set_infos(void);
 			void	_bind(void);
 
+
+		public:
+			Socket(void);
+			~Socket(void);
+			
+			void	start_listening(int backlog);
+			void	create(void);
+			
+			int		get_socket_fd(void);
+			
 			class CreateSocketError : public std::exception
 			{
 				public:
@@ -40,14 +50,6 @@ namespace ft
 						return ("\e[0;31merror binding socket\e[0m");
 					}
 			};
-
-		public:
-			Socket(void);
-			~Socket(void);
-			
-			void start_listening(int backlog);
-			
-			int get_socket_fd(void);
 	};
 }
 
