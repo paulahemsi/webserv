@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/05 23:48:01 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/08 02:56:45 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,26 @@
 #include <unistd.h>
 #include <string>
 #include <sstream>
+#include <map>
 
 #define SP		" "
 #define CRLF	"\r\n"
 
 namespace ft
 {
+	typedef std::pair<std::string, std::string> header_pair;
+	typedef std::map<std::string, std::string> header_map;
+
 	class Response
 	{
 		private:
 			std::string		_http_version;
 			unsigned int	_status_code;
 			std::string		_reason_phrase;
+			header_map		_header;
 			std::string		_body;
+
+		std::string _headerToString(void);
 		
 		public:
 			Response(void);
