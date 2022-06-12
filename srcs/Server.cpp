@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 18:46:21 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:20:16 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,15 @@ static void deal_with_requests(int client_socket)
 void	ft::Server::run(void)
 {
 	this->_start_listening();
+	this->_event_loop();
+}
+
+void ft::Server::_event_loop(void)
+{
+	std::cout << "waiting........." << std::endl;
 	while(1)
-	{
-		std::cout << "waiting........." << std::endl;
-	//	server.event_poll();
-		int client_socket = get_client_connection(this->get_socket_fd());
-		deal_with_requests(client_socket);
-		close(client_socket);
-	}
+		this->_event_poll();
+
 }
 
 void ft::Server::_start_listening(void)
@@ -91,24 +92,39 @@ void ft::Server::_start_listening(void)
 		socket->start_listening(this->_backlog);
 }
 
-//void	ft::Server::event_poll()
-//{
-//	size_t								size = this->_size;
-//	struct pollfd						poll_fds[size];
-//	std::vector<ft::Socket>::iterator	socket;
-//
-//	for (int i = 0; size; i++)
-//	{
-//		poll_fds[i].fd = this->_sockets[i].get_fd();
-//		poll_fds[i].events = POLLIN | POLLPRI | POLLOUT | POLLWRBAND;
-//	}
-//	int ret = poll(poll_fds, size, 0);
-//	if (ret == -1)
-//		return ;
-//	for (int i = 0; size; i++)
-//		if ((poll_fds[i].revents & (POLLIN | POLLPRI | POLLOUT | POLLWRBAND)) == (POLLIN | POLLPRI | POLLOUT | POLLWRBAND))
-//			//set what fd
-//}
+void	ft::Server::_event_poll()
+{
+	size_t								size = this->_size;
+	struct pollfd						poll_fds[size];
+	std::vector<ft::Socket>::iterator	socket;
+
+	for (size_t i = 0; i < size; i++)
+	{
+		poll_fds[i].fd = this->_sockets[i].get_fd();
+		//poll_fds[i].events = POLLIN | POLLPRI | POLLOUT | POLLWRBAND;
+		poll_fds[i].events = POLLIN;
+	}
+	int ret;
+	while ((ret = poll(poll_fds, size, 0)))
+	{
+		if (ret == -1)
+			return ;
+		if (ret > 0)
+		{
+			for (size_t i = 0; i < size; i++)
+			{
+				//if ((poll_fds[i].revents & (POLLIN | POLLPRI | POLLOUT | POLLWRBAND)) == (POLLIN | POLLPRI | POLLOUT | POLLWRBAND))
+				if ((poll_fds[i].revents & (POLLIN)) == POLLIN)
+				{
+					int client_socket = get_client_connection(poll_fds[i].fd);
+					deal_with_requests(client_socket);
+					close(client_socket);
+				}
+			}
+			return ;
+		}
+	}
+}
 
 int ft::Server::get_socket_fd(void)
 {
