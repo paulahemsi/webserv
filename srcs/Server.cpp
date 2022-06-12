@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 19:44:46 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:34:38 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,22 @@ void	ft::Server::run(void)
 
 void ft::Server::_event_loop(void)
 {
-	std::cout << "waiting........." << std::endl;
-	while(1)
-		this->_event_poll();
+	Poll	poll(this->_sockets);
 
+	std::cout << "waiting........." << std::endl;
+	while (true)
+	{
+		poll.exec();
+		for (size_t i = 0; i < this->_size; i++)
+		{
+			if (this->_check_event(poll.get_revent(i)))
+			{
+				int client_socket = get_client_connection(poll.get_fd(i));
+				deal_with_requests(client_socket);
+				close(client_socket);
+			}
+		}
+	}
 }
 
 void ft::Server::_start_listening(void)
@@ -104,40 +116,6 @@ bool	ft::Server::_check_event(short revents)
 	if ((revents & POLLWRBAND) == POLLWRBAND)
 		return (true);
 	return (false);
-}
-
-void	ft::Server::_event_poll()
-{
-	size_t								size = this->_size;
-	struct pollfd						interest_list[size];
-	std::vector<ft::Socket>::iterator	socket;
-
-	for (size_t i = 0; i < size; i++)
-	{
-		interest_list[i].fd = this->_sockets[i].get_fd();
-		interest_list[i].events = POLLIN | POLLPRI | POLLOUT | POLLWRBAND;
-	}
-	int ret;
-	while ((ret = poll(interest_list, size, 0)))
-	{
-		if (ret == -1)
-			return ;
-		for (size_t i = 0; i < size; i++)
-		{
-			if (this->_check_event(interest_list[i].revents))
-			{
-				int client_socket = get_client_connection(interest_list[i].fd);
-				deal_with_requests(client_socket);
-				close(client_socket);
-			}
-		}
-	}
-}
-
-int ft::Server::get_socket_fd(void)
-{
-	//TODO: return a socket get from event poll
-	return (this->_sockets.begin()->get_fd());
 }
 
 ft::Server::~Server(void)
