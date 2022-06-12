@@ -1,13 +1,13 @@
 #!/bin/sh
 
-SERVER_CONF=/etc/nginx/sites-available/exemple
+SERVER_CONF=/etc/nginx/sites-available/example
 
 if [ ! -f "$SERVER_CONF" ]
 then
-	mkdir -p /var/www/exemple
-	mv /srcs/hello-world.html /var/www/exemple/
-	mv /srcs/exemple /etc/nginx/sites-available/
-	ln -s /etc/nginx/sites-available/exemple etc/nginx/sites-enabled/
+	mkdir -p /var/www/example
+	mv /srcs/hello-world.html /var/www/example/
+	mv /srcs/example /etc/nginx/sites-available/
+	ln -s /etc/nginx/sites-available/example etc/nginx/sites-enabled/
 fi
 
 exec "$@"

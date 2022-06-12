@@ -4,11 +4,11 @@ server {
 
 	server_name _ ;
 	
-	root /var/www/exemple;
+	root /var/www/example;
 	index index.html index.htm;
 	
 	location / {
-		root /var/www/exemple;
+		root /var/www/example;
 		try_files $uri $uri/ =404;
 	}
 
