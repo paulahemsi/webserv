@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 15:37:46 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:28:29 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ static void deal_with_requests(int client_socket)
 int main(void)
 {
 	int			ports[2] = {4444, 4445};
-	ft::Server	server(2, ports);
+	ft::Server	server(2, ports, BACKLOG);
 
 	try
 	{
 		server.create_sockets();
-		server.start_listening(BACKLOG);
+		server.start_listening();
 	}
 	catch(const std::exception& e)
 	{
@@ -68,6 +68,7 @@ int main(void)
 	while(1)
 	{
 		std::cout << "waiting........." << std::endl;
+	//	server.event_poll();
 		int client_socket = get_client_connection(server.get_socket_fd());
 		deal_with_requests(client_socket);
 		close(client_socket);
