@@ -1,5 +1,4 @@
 
-#include <unistd.h> //read() write()
 #include <string.h> //memset()
 #include <iostream> //cpp
 #include <sys/socket.h> //socket()
@@ -8,10 +7,8 @@
 
 #include "socket.hpp"
 #include "Request.hpp"
+#include "Response.hpp"
 
-#define DOMAIN		AF_INET //IP
-#define TCP			SOCK_STREAM //TCP
-#define PROTOCOL	0
 #define ERROR		-1
 #define BACKLOG		100
 
@@ -39,7 +36,10 @@ static void deal_with_requests(int client_socket)
 		ft::Request	request(buffer);
 		request.debugging_request();
 		std::cout << "Executing the request" << std::endl;
-		write(client_socket, "response", 9);
+
+		ft::Response response;
+		response.show();
+		response.send(client_socket);
 	}
 }
 
@@ -55,7 +55,7 @@ int main(void)
 	catch(const std::exception& e)
 	{
 		std::cout << e.what() << '\n';
-		return(-1);
+		return(ERROR);
 	}
 
 	while(1)

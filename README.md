@@ -164,6 +164,41 @@ The request-header fields allow the client to pass additional information about 
 | TE                 |
 | User-Agent         |
 
+### Response
+After receiving and interpreting a request message, a server responds with an HTTP response message.
+
+#### Status-Line
+
+The first line of a Response message is the Status-Line, consisting of the protocol version followed by a numeric status code and its associated textual phrase, with each element separated by SP characters. No CR or LF is allowed except in the final CRLF sequence.
+
+`Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF`
+
+The `Status-Code` element is a 3-digit integer result code of the attempt to understand and satisfy the request.
+The `Reason-Phrase` is intended to give a short textual description of the `Status-Code`. The `Status-Code` is intended for use by automata and the `Reason-Phrase` is intended for the human user. The client is not required to examine or display the `Reason-Phrase`.
+
+The first digit of the `Status-Code` defines the class of response. The last two digits do not have any categorization role. There are 5 values for the first digit:
+
+- `1xx`: Informational - Request received, continuing process
+- `2xx`: Success - The action was successfully received, understood, and accepted
+- `3xx`: Redirection - Further action must be taken in order to complete the request
+- `4xx`: Client Error - The request contains bad syntax or cannot be fulfilled
+- `5xx`: Server Error - The server failed to fulfill an apparently valid request
+
+### Response Header Fields
+
+The response-header fields allow the server to pass additional information about the response. These header fields give information about the server and about further access to the resource identified by the Request-URI.
+
+|Response Header|
+|---------------|
+| Accept-Ranges      |
+| Age                |
+| ETag               |
+| Location           |
+| Proxy-Authenticate |
+| Retry-After        |
+| Server             |
+| Vary               |
+| WWW-Authenticate   |
 
 ## specific_functions_overview
 

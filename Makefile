@@ -4,20 +4,22 @@ CC			:=	c++
 CFLAGS		:= -Wall -Wextra -Werror
 CFLAGS		+= -g
 CFLAGS		+= -std=c++98
+#CFLAGS		+= -fstandalone-debug
 
 RM			:=	rm -rf
 
 SRCS_DIR	:=	./srcs/
 SRCS		:=	main.cpp \
 				socket.cpp \
-				Request.cpp
+				Request.cpp \
+				Response.cpp
 
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
 HEADER		=	socket.hpp \
-				Request.hpp
-
+				Request.hpp \
+				Response.hpp
 INCLUDES	=
 
 VPATH		:=	$(SRCS_DIR)
