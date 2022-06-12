@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 18:42:18 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:46:21 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,50 @@ void	ft::Server::create_sockets(void)
 		socket->create();
 }
 
+#include "Request.hpp"
+#include "Response.hpp"
+typedef struct sockaddr_in socket_address;
+
+static int get_client_connection(int server_socket)
+{
+	socket_address	client_infos;
+	unsigned int	client_infos_size;
+
+	client_infos_size = sizeof(client_infos);
+	return (accept(server_socket,
+					(struct sockaddr *)&client_infos,
+					&client_infos_size));
+}
+
+
+static void deal_with_requests(int client_socket)
+{
+	char		buffer[10000];
+	int			reading;
+
+	while((reading = read(client_socket, buffer, 10000)))
+	{
+		ft::Request	request(buffer);
+		request.debugging_request();
+		std::cout << "Executing the request" << std::endl;
+
+		ft::Response response;
+		response.show();
+		response.send(client_socket);
+	}
+}
+
 void	ft::Server::run(void)
 {
 	this->_start_listening();
+	while(1)
+	{
+		std::cout << "waiting........." << std::endl;
+	//	server.event_poll();
+		int client_socket = get_client_connection(this->get_socket_fd());
+		deal_with_requests(client_socket);
+		close(client_socket);
+	}
 }
 
 void ft::Server::_start_listening(void)
