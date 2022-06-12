@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 14:42:16 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:17:09 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ namespace ft
 
 		public:
 			Server(void);
+			Server(size_t size, int *ports);
 			~Server(void);
 			
 			void	start_listening(int backlog);

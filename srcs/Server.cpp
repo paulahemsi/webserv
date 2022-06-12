@@ -6,13 +6,18 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 14:59:04 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:29:37 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
 ft::Server::Server(void): _sockets(1)
+{
+	return ;
+}
+
+ft::Server::Server(size_t size, int *ports): _sockets(ports, ports + size)
 {
 	return ;
 }

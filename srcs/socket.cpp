@@ -1,7 +1,12 @@
 
 #include "socket.hpp"
 
-ft::Socket::Socket(void)
+ft::Socket::Socket(void): _port(PORT)
+{
+	_set_infos();
+}
+
+ft::Socket::Socket(int port): _port(port)
 {
 	_set_infos();
 }
@@ -23,7 +28,7 @@ void	ft::Socket::_set_infos()
 {
 	memset((char*)&this->_infos, 0, sizeof(this->_infos));
 	this->_infos.sin_family = AF_INET;
-	this->_infos.sin_port = htons(PORT);
+	this->_infos.sin_port = htons(_port);
 	this->_infos.sin_addr.s_addr = htonl(INADDR_ANY);
 }
 

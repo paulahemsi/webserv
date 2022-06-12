@@ -1,10 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
+/*   Updated: 2022/06/12 15:37:46 by lfrasson         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <string.h> //memset()
-#include <iostream> //cpp
-#include <sys/socket.h> //socket()
-#include <arpa/inet.h> //htons()
-#include <netinet/in.h> //sockaddr_in
-
+#include <iostream>
 #include "Server.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
@@ -45,7 +51,8 @@ static void deal_with_requests(int client_socket)
 
 int main(void)
 {
-	ft::Server	server;
+	int			ports[2] = {4444, 4445};
+	ft::Server	server(2, ports);
 
 	try
 	{

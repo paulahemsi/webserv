@@ -16,6 +16,7 @@ namespace ft
 	class Socket
 	{
 		private:
+			int					_port;
 			int					_fd;
 			struct	sockaddr_in	_infos;
 
@@ -26,6 +27,7 @@ namespace ft
 
 		public:
 			Socket(void);
+			Socket(int port);
 			~Socket(void);
 			
 			void	start_listening(int backlog);

@@ -1,0 +1,29 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 4444 (#0)
+> GET /hello-world.html HTTP/1.1
+> Host: localhost:4444
+> User-Agent: curl/7.64.1
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.14.2
+< Date: Sat, 11 Jun 2022 16:28:17 GMT
+< Content-Type: text/html
+< Content-Length: 53
+< Last-Modified: Sat, 11 Jun 2022 14:28:13 GMT
+< Connection: keep-alive
+< ETag: "62a4a67d-35"
+< Accept-Ranges: bytes
+< 
+{ [53 bytes data]
+100    53  100    53    0     0   8833      0 --:--:-- --:--:-- --:--:--  8833
+* Connection #0 to host localhost left intact
+<html>
+<body>
+<h1>Hello, World!</h1>
+</body>
+</html>
+* Closing connection 0
