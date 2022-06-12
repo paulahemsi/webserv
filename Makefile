@@ -10,6 +10,7 @@ RM			:=	rm -rf
 
 SRCS_DIR	:=	./srcs/
 SRCS		:=	main.cpp \
+				Server.cpp \
 				socket.cpp \
 				Request.cpp \
 				Response.cpp
@@ -17,7 +18,8 @@ SRCS		:=	main.cpp \
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
-HEADER		=	socket.hpp \
+HEADER		=	Server.hpp \
+				socket.cpp \
 				Request.hpp \
 				Response.hpp
 INCLUDES	=

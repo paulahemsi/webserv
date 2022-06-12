@@ -31,7 +31,7 @@ namespace ft
 			void	start_listening(int backlog);
 			void	create(void);
 			
-			int		get_socket_fd(void);
+			int		get_fd(void);
 			
 			class CreateSocketError : public std::exception
 			{

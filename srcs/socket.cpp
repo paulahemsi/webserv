@@ -38,7 +38,7 @@ void ft::Socket::start_listening(int backlog)
 	listen(this->_fd, backlog);
 }
 
-int ft::Socket::get_socket_fd(void)
+int ft::Socket::get_fd(void)
 {
 	return (this->_fd);
 }

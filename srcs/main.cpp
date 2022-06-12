@@ -5,7 +5,7 @@
 #include <arpa/inet.h> //htons()
 #include <netinet/in.h> //sockaddr_in
 
-#include "socket.hpp"
+#include "Server.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
 
@@ -45,12 +45,12 @@ static void deal_with_requests(int client_socket)
 
 int main(void)
 {
-	ft::Socket server_socket;
+	ft::Server	server;
 
 	try
 	{
-		server_socket.create();
-		server_socket.start_listening(BACKLOG);
+		server.create_sockets();
+		server.start_listening(BACKLOG);
 	}
 	catch(const std::exception& e)
 	{
@@ -61,7 +61,7 @@ int main(void)
 	while(1)
 	{
 		std::cout << "waiting........." << std::endl;
-		int client_socket = get_client_connection(server_socket.get_socket_fd());
+		int client_socket = get_client_connection(server.get_socket_fd());
 		deal_with_requests(client_socket);
 		close(client_socket);
 	}
