@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 19:12:09 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:25:22 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ namespace ft
 			void	_start_listening(void);
 			void	_event_loop(void);
 			void	_event_poll(void);
+			bool	_check_event(short revent);
 
 		public:
 			Server(void);

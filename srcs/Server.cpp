@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 19:20:16 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:44:46 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,36 +92,44 @@ void ft::Server::_start_listening(void)
 		socket->start_listening(this->_backlog);
 }
 
+
+bool	ft::Server::_check_event(short revents)
+{
+	if ((revents & POLLIN) == POLLIN)
+		return (true);
+	if ((revents & POLLPRI) == POLLPRI)
+		return (true);
+	if ((revents & POLLOUT) == POLLOUT)
+		return (true);
+	if ((revents & POLLWRBAND) == POLLWRBAND)
+		return (true);
+	return (false);
+}
+
 void	ft::Server::_event_poll()
 {
 	size_t								size = this->_size;
-	struct pollfd						poll_fds[size];
+	struct pollfd						interest_list[size];
 	std::vector<ft::Socket>::iterator	socket;
 
 	for (size_t i = 0; i < size; i++)
 	{
-		poll_fds[i].fd = this->_sockets[i].get_fd();
-		//poll_fds[i].events = POLLIN | POLLPRI | POLLOUT | POLLWRBAND;
-		poll_fds[i].events = POLLIN;
+		interest_list[i].fd = this->_sockets[i].get_fd();
+		interest_list[i].events = POLLIN | POLLPRI | POLLOUT | POLLWRBAND;
 	}
 	int ret;
-	while ((ret = poll(poll_fds, size, 0)))
+	while ((ret = poll(interest_list, size, 0)))
 	{
 		if (ret == -1)
 			return ;
-		if (ret > 0)
+		for (size_t i = 0; i < size; i++)
 		{
-			for (size_t i = 0; i < size; i++)
+			if (this->_check_event(interest_list[i].revents))
 			{
-				//if ((poll_fds[i].revents & (POLLIN | POLLPRI | POLLOUT | POLLWRBAND)) == (POLLIN | POLLPRI | POLLOUT | POLLWRBAND))
-				if ((poll_fds[i].revents & (POLLIN)) == POLLIN)
-				{
-					int client_socket = get_client_connection(poll_fds[i].fd);
-					deal_with_requests(client_socket);
-					close(client_socket);
-				}
+				int client_socket = get_client_connection(interest_list[i].fd);
+				deal_with_requests(client_socket);
+				close(client_socket);
 			}
-			return ;
 		}
 	}
 }
