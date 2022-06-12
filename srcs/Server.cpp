@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 18:34:52 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:42:18 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ _sockets(ports, ports + size)
 	return ;
 }
 
-void	ft::Server::create_sockets()
+void	ft::Server::create_sockets(void)
 {
 	std::vector<ft::Socket>::iterator socket;
 
@@ -36,7 +36,12 @@ void	ft::Server::create_sockets()
 		socket->create();
 }
 
-void ft::Server::start_listening(void)
+void	ft::Server::run(void)
+{
+	this->_start_listening();
+}
+
+void ft::Server::_start_listening(void)
 {
 	std::vector<ft::Socket>::iterator socket;
 

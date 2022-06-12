@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 18:28:29 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:42:27 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int main(void)
 	try
 	{
 		server.create_sockets();
-		server.start_listening();
+		server.run();
 	}
 	catch(const std::exception& e)
 	{
