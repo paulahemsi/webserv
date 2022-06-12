@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/11 14:06:28 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 13:35:04 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ ft::Response::~Response(void)
 	return ;
 }
 
-std::string ft::Response::_headerToString(void)
+std::string ft::Response::_header_to_string(void)
 {
 	std::string					header;
 	ft::header_map::iterator	it = this->_header.begin();
@@ -49,7 +49,7 @@ std::string ft::Response::_headerToString(void)
 	return (header);
 }
 
-std::string ft::Response::toString(void)
+std::string ft::Response::_to_string(void)
 {
 	std::stringstream status_code;
 	std::string status_line;
@@ -59,7 +59,7 @@ std::string ft::Response::toString(void)
 	status_line = this->_http_version + SP
 				+ status_code.str() + SP
 				+ this->_reason_phrase + CRLF;
-	header = _headerToString();
+	header = _header_to_string();
 	return (status_line + header + CRLF + this->_body );
 }
 
@@ -67,6 +67,11 @@ void	ft::Response::send(int client)
 {
 	std::string response;
 
-	response = this->toString();
+	response = this->_to_string();
 	write(client, response.c_str(), response.length());
+}
+
+void	ft::Response::show(void)
+{
+	std::cout << this->_to_string();
 }

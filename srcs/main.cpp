@@ -36,8 +36,9 @@ static void deal_with_requests(int client_socket)
 		ft::Request	request(buffer);
 		request.debugging_request();
 		std::cout << "Executing the request" << std::endl;
+
 		ft::Response response;
-		std::cout << response.toString();
+		response.show();
 		response.send(client_socket);
 	}
 }
