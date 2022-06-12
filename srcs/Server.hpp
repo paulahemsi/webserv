@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 14:19:20 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 14:42:16 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define SERVER_HPP
 
 #include "socket.hpp"
+#include <vector>
 //#include <unistd.h>
 //#include <string.h>
 //#include <iostream>
@@ -29,7 +30,7 @@ namespace ft
 	class Server
 	{
 		private:
-			ft::Socket _socket;
+			std::vector<ft::Socket> _sockets;
 
 		public:
 			Server(void);

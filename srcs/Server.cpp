@@ -6,30 +6,39 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 14:21:33 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 14:59:04 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
-ft::Server::Server(void)
+ft::Server::Server(void): _sockets(1)
 {
 	return ;
 }
 
 void	ft::Server::create_sockets()
 {
-	this->_socket.create();
+	std::vector<ft::Socket>::iterator socket;
+
+	socket = this->_sockets.begin();
+	for (; socket != this->_sockets.end(); socket++)
+		socket->create();
 }
 
 void ft::Server::start_listening(int backlog)
 {
-	this->_socket.start_listening(backlog);
+	std::vector<ft::Socket>::iterator socket;
+
+	socket = this->_sockets.begin();
+	for (; socket != this->_sockets.end(); socket++)
+		socket->start_listening(backlog);
 }
 
 int ft::Server::get_socket_fd(void)
 {
-	return (this->_socket.get_fd());
+	//TODO: return a socket get from event poll
+	return (this->_sockets.begin()->get_fd());
 }
 
 ft::Server::~Server(void)
