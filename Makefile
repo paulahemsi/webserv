@@ -13,6 +13,7 @@ SRCS		:=	main.cpp \
 				Server.cpp \
 				socket.cpp \
 				Poll.cpp \
+				Client.cpp \
 				Request.cpp \
 				Response.cpp
 
@@ -22,6 +23,7 @@ OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 HEADER		=	Server.hpp \
 				socket.hpp \
 				Poll.hpp \
+				Client.hpp \
 				Request.hpp \
 				Response.hpp
 INCLUDES	=

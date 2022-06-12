@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 20:34:38 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:57:11 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,6 @@ void	ft::Server::create_sockets(void)
 
 #include "Request.hpp"
 #include "Response.hpp"
-typedef struct sockaddr_in socket_address;
-
-static int get_client_connection(int server_socket)
-{
-	socket_address	client_infos;
-	unsigned int	client_infos_size;
-
-	client_infos_size = sizeof(client_infos);
-	return (accept(server_socket,
-					(struct sockaddr *)&client_infos,
-					&client_infos_size));
-}
-
 
 static void deal_with_requests(int client_socket)
 {
@@ -87,7 +74,9 @@ void ft::Server::_event_loop(void)
 		{
 			if (this->_check_event(poll.get_revent(i)))
 			{
-				int client_socket = get_client_connection(poll.get_fd(i));
+				Client client;
+
+				int client_socket = client.connect(poll.get_fd(i));
 				deal_with_requests(client_socket);
 				close(client_socket);
 			}

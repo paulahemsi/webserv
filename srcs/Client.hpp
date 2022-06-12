@@ -1,43 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.hpp                                         :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 20:56:03 by lfrasson         ###   ########.fr       */
+/*   Created: 2022/06/12 20:41:42 by lfrasson          #+#    #+#             */
+/*   Updated: 2022/06/12 20:53:21 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_HPP
-#define SERVER_HPP
+#ifndef CLIENT_HPP
+#define CLIENT_HPP 
 
-#include "socket.hpp"
-#include "Poll.hpp"
-#include "Client.hpp"
-#include <vector>
+#include <sys/socket.h> 
+#include <netinet/in.h>
 
 namespace ft
 {
-	class Server
+	typedef struct sockaddr_in socket_address;
+
+	class Client
 	{
 		private:
-			size_t					_size;
-			size_t					_backlog;
-			std::vector<ft::Socket> _sockets;
-
-			void	_start_listening(void);
-			void	_event_loop(void);
-			bool	_check_event(short revent);
+			socket_address	_infos;
 
 		public:
-			Server(void);
-			Server(size_t size, int *ports, size_t backlog);
-			~Server(void);
-	
-			void	create_sockets(void);
-			void	run(void);
+			Client(void);
+			~Client(void);
+
+			int	connect(int server_fd);	
 	};
 }
 
