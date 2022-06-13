@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 19:49:23 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 21:28:49 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/12 22:33:48 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft::Poll::exec(void)
 {
 	int ret = poll(this->_interest_list, this->_size, 0);
 	if (ret == -1)
-		return ;
+		throw (PollError());
 
 }
 
