@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 22:23:17 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/12 22:30:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 int main(void)
 {
 	int				ports[2] = {4444, 4445};
-	ft::WebServer	server(2, ports, BACKLOG);
+	ft::WebServer	web_server(2, ports, BACKLOG);
 
 	try
 	{
-		server.create_servers();
-		server.run();
+		web_server.create_servers();
+		web_server.run();
 	}
 	catch(const std::exception& e)
 	{
