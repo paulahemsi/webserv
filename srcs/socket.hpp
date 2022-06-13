@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   socket.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
+/*   Updated: 2022/06/12 21:58:37 by phemsi-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 
@@ -16,6 +28,7 @@ namespace ft
 	class Socket
 	{
 		private:
+			int					_port;
 			int					_fd;
 			struct	sockaddr_in	_infos;
 
@@ -26,12 +39,13 @@ namespace ft
 
 		public:
 			Socket(void);
+			Socket(int port);
 			~Socket(void);
 			
 			void	start_listening(int backlog);
 			void	create(void);
 			
-			int		get_socket_fd(void);
+			int		get_fd(void);
 			
 			class CreateSocketError : public std::exception
 			{
