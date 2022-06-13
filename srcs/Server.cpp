@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 21:39:07 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/12 21:51:16 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,6 @@ void	ft::Server::create_sockets(void)
 		socket->create();
 }
 
-static void deal_with_requests(ft::Client &client)
-{
-	size_t		size = 10000;
-	char		buffer[size];
-
-	while(client.send_request(buffer, size))
-	{
-		ft::Request	request(buffer);
-		std::cout << "Executing the request" << std::endl;
-		ft::Response response;
-		response.send(client.get_fd());
-	}
-}
-
 void	ft::Server::run(void)
 {
 	this->_start_listening();
@@ -69,17 +55,27 @@ void ft::Server::_event_loop(void)
 	}
 }
 
-void	ft::Server::_check_event(ft::Poll &poll, size_t index)
+void	ft::Server::_connect_with_client(int server_fd)
 {
-	if (this->_check_event_mask(poll.get_event_return(index)))
-	{
-		ft::Client client;
+	ft::Client	client;
+	size_t		size = 10000;
+	char		buffer[size];
 
-		client.connect(poll.get_fd(index));
-		deal_with_requests(client);
+	client.connect(server_fd);
+	while(client.send_request(buffer, size))
+	{
+		ft::Request	request(buffer);
+		std::cout << "Executing the request" << std::endl;
+		ft::Response response;
+		response.send(client.get_fd());
 	}
 }
 
+void	ft::Server::_check_event(ft::Poll &poll, size_t index)
+{
+	if (this->_check_event_mask(poll.get_event_return(index)))
+		this->_connect_with_client(poll.get_fd(index));
+}
 
 void ft::Server::_start_listening(void)
 {
@@ -89,7 +85,6 @@ void ft::Server::_start_listening(void)
 	for (; socket != this->_sockets.end(); socket++)
 		socket->start_listening(this->_backlog);
 }
-
 
 bool	ft::Server::_check_event_mask(short revents)
 {
