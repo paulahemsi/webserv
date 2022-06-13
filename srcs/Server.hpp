@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 20:56:03 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 21:04:27 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "socket.hpp"
 #include "Poll.hpp"
 #include "Client.hpp"
+#include "Request.hpp"
+#include "Response.hpp"
 #include <vector>
 
 namespace ft
