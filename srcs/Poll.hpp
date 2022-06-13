@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Poll.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 19:49:19 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 20:23:47 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 21:28:39 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft
 		
 			void	exec(void);
 			int		get_fd(size_t index);
-			short	get_revent(size_t index);
+			short	get_event_return(size_t index);
 	};
 }
 

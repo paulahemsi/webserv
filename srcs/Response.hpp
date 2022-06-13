@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Response.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 13:36:10 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 21:16:53 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RESPONSE_HPP
 #define RESPONSE_HPP
 
-#include <unistd.h>
 #include <iostream>
 #include <string>
 #include <sstream>

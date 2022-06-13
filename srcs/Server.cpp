@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 21:04:02 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 21:39:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,17 @@ void	ft::Server::create_sockets(void)
 		socket->create();
 }
 
-static void deal_with_requests(int client_socket)
+static void deal_with_requests(ft::Client &client)
 {
-	char		buffer[10000];
-	int			reading;
+	size_t		size = 10000;
+	char		buffer[size];
 
-	while((reading = read(client_socket, buffer, 10000)))
+	while(client.send_request(buffer, size))
 	{
 		ft::Request	request(buffer);
-		request.debugging_request();
 		std::cout << "Executing the request" << std::endl;
-
 		ft::Response response;
-		response.show();
-		response.send(client_socket);
+		response.send(client.get_fd());
 	}
 }
 
@@ -68,18 +65,21 @@ void ft::Server::_event_loop(void)
 	{
 		poll.exec();
 		for (size_t i = 0; i < this->_size; i++)
-		{
-			if (this->_check_event(poll.get_revent(i)))
-			{
-				Client client;
-
-				int client_socket = client.connect(poll.get_fd(i));
-				deal_with_requests(client_socket);
-				close(client_socket);
-			}
-		}
+			this->_check_event(poll, i);
 	}
 }
+
+void	ft::Server::_check_event(ft::Poll &poll, size_t index)
+{
+	if (this->_check_event_mask(poll.get_event_return(index)))
+	{
+		ft::Client client;
+
+		client.connect(poll.get_fd(index));
+		deal_with_requests(client);
+	}
+}
+
 
 void ft::Server::_start_listening(void)
 {
@@ -91,7 +91,7 @@ void ft::Server::_start_listening(void)
 }
 
 
-bool	ft::Server::_check_event(short revents)
+bool	ft::Server::_check_event_mask(short revents)
 {
 	if ((revents & POLLIN) == POLLIN)
 		return (true);

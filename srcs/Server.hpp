@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 21:04:27 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/12 21:39:14 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ namespace ft
 
 			void	_start_listening(void);
 			void	_event_loop(void);
-			bool	_check_event(short revent);
+			void	_check_event(ft::Poll &poll, size_t index);
+			bool	_check_event_mask(short revent);
+			
 
 		public:
 			Server(void);
