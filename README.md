@@ -19,6 +19,7 @@
     * [Request_Header_Fields](#Request_Header_Fields)
 * [Configuration_file](#Configuration_file)
     * [server_blocks](#server_blocks)
+      * [listen](#listen)
       * [server_name](#server_name)
     * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
 * [specific_functions_overview](#specific_functions_overview)
@@ -233,6 +234,43 @@ configurations are setup is by:
 ### server_blocks
 
 Server configuration files contain a server block for a website.
+
+#### listen
+
+**The server configuration block usually includes a listen directive to specify the IP address and port on which the server listens for requests.**
+
+[NGINX listen docs](https://nginx.org/en/docs/http/ngx_http_core_module.html#listen)
+
+On Nnginx, both address and port, or only address or only port can be specified. An address may also be a hostname
+
+```
+listen 127.0.0.1:8000;
+listen 127.0.0.1;
+listen 8000;
+listen *:8000;
+listen localhost:8000;
+```
+
+On Nignx, `backlog=number` sets the backlog parameter in the listen() call that limits the maximum length for the queue of pending connections.
+By default, backlog is set to 511 on Linux
+
+```
+listen localhost:8000 backlog=1024
+```
+
+On Nginx, you [can have multiple listen directives per server](https://stackoverflow.com/questions/38051198/nginx-how-to-setup-multiple-port-in-one-server-or-domain-name):
+
+```
+server {
+ listen 5005 ssl;
+ listen 6006 ssl;
+ server_name <https - mydomainname>;
+ ssl_certificate <location cert>;
+ ssl_certificate_key <location key>;
+  location /tags.txt {
+    add_header 'Access-Control-Allow-Origin' '*';
+  }
+```
 
 #### server_name
 
