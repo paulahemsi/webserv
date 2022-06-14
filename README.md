@@ -2,6 +2,21 @@
 
 * [introduction](#introduction)
 * [socket](#socket)
+* [HTTP](#HTTP)
+  * [client](#client)
+  * [user_agent](#user_agent)
+  * [server](#server)
+  * [proxy](#proxy)
+  * [gateway](#gateway)
+  * [cache](#cache)
+  * [Request](#Request)
+    * [Request-Line](#Request-Line)
+    * [Request-Line](#Request-Line)
+    * [Response_Header_Fields](#Response_Header_Fields)
+  * [Response](#Response)
+    * [Status-Line](#Status-Line)
+    * [Request-Line](#Request-Line)
+    * [Request_Header_Fields](#Request_Header_Fields)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
 
@@ -72,7 +87,7 @@ The HTTP protocol **does not place any a priori limit on the length of a URI**. 
 
 A **program** that **establishes connections** for the purpose of **sending requests**.
 
-### user agent
+### user_agent
 
 The **client which initiates a request**. These are often browsers, editors, spiders (web-traversing robots), or other end user tools.
 
@@ -138,7 +153,7 @@ An origin server SHOULD return the status code **405** (Method Not Allowed) if t
 
 The `Request-URI` is a Uniform Resource Identifier (section 3.2) and identifies the resource upon which to apply the request.
 
-#### Request Header Fields
+#### Request_Header_Fields
 
 The request-header fields allow the client to pass additional information about the request, and about the client itself, to the server.
 
@@ -184,7 +199,7 @@ The first digit of the `Status-Code` defines the class of response. The last two
 - `4xx`: Client Error - The request contains bad syntax or cannot be fulfilled
 - `5xx`: Server Error - The server failed to fulfill an apparently valid request
 
-### Response Header Fields
+### Response_Header_Fields
 
 The response-header fields allow the server to pass additional information about the response. These header fields give information about the server and about further access to the resource identified by the Request-URI.
 
