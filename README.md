@@ -240,6 +240,9 @@ Allows multiple domains to be served from a single IP address. Ideally, it shoul
 
 > In catch-all server examples the strange name “_” can be seen There is nothing special about this name, it is just one of a myriad of invalid domain names which never intersect with any real name. Other invalid names like “--” and “!@#” may equally be used.
 
+[This](https://serverfault.com/questions/914906/what-is-the-difference-between-server-name-and-server-name-in-nginx) and [this](https://stackoverflow.com/questions/9454764/nginx-server-name-wildcard-or-catch-all
+) are interesting threads about `_` and `""`
+
 [NGINX server_name docs](http://nginx.org/en/docs/http/server_names.html)
 
 ### how_nginx_processes_a_request
