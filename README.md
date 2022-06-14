@@ -246,6 +246,26 @@ Allows multiple domains to be served from a single IP address. Ideally, it shoul
 
 #### if listen diretive are the same:
 
+```
+server {
+    listen      80;
+    server_name example.org www.example.org;
+    ...
+}
+
+server {
+    listen      80;
+    server_name example.net www.example.net;
+    ...
+}
+
+server {
+    listen      80;
+    server_name example.com www.example.com;
+    ...
+}
+```
+
 * decides which server should process the request based on the **request’s header** field `Host`
 * If its value does not match any server name then nginx will route the request to the default server for this port. The default server is the first one
 * If requests without the “Host” header field should not be allowed, a server that just drops the requests can be defined:
@@ -258,6 +278,26 @@ server {
 ```
 
 #### if listen diretive are different:
+
+```
+server {
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
+    ...
+}
+
+server {
+    listen      192.168.1.1:80;
+    server_name example.net www.example.net;
+    ...
+}
+
+server {
+    listen      192.168.1.2:80;
+    server_name example.com www.example.com;
+    ...
+}
+```
 
 * first tests the IP address and port of the request against the listen directives of the server blocks
 * then tests the “Host” header field of the request against the server_name entries of the server blocks that matched the IP address and port
