@@ -2,6 +2,25 @@
 
 * [introduction](#introduction)
 * [socket](#socket)
+* [HTTP](#HTTP)
+  * [client](#client)
+  * [user_agent](#user_agent)
+  * [server](#server)
+  * [proxy](#proxy)
+  * [gateway](#gateway)
+  * [cache](#cache)
+  * [Request](#Request)
+    * [Request-Line](#Request-Line)
+    * [Request-Line](#Request-Line)
+    * [Response_Header_Fields](#Response_Header_Fields)
+  * [Response](#Response)
+    * [Status-Line](#Status-Line)
+    * [Request-Line](#Request-Line)
+    * [Request_Header_Fields](#Request_Header_Fields)
+* [Configuration_file](#Configuration_file)
+    * [server_blocks](#server_blocks)
+      * [server_name](#server_name)
+    * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
 
@@ -72,7 +91,7 @@ The HTTP protocol **does not place any a priori limit on the length of a URI**. 
 
 A **program** that **establishes connections** for the purpose of **sending requests**.
 
-### user agent
+### user_agent
 
 The **client which initiates a request**. These are often browsers, editors, spiders (web-traversing robots), or other end user tools.
 
@@ -138,7 +157,7 @@ An origin server SHOULD return the status code **405** (Method Not Allowed) if t
 
 The `Request-URI` is a Uniform Resource Identifier (section 3.2) and identifies the resource upon which to apply the request.
 
-#### Request Header Fields
+#### Request_Header_Fields
 
 The request-header fields allow the client to pass additional information about the request, and about the client itself, to the server.
 
@@ -184,7 +203,7 @@ The first digit of the `Status-Code` defines the class of response. The last two
 - `4xx`: Client Error - The request contains bad syntax or cannot be fulfilled
 - `5xx`: Server Error - The server failed to fulfill an apparently valid request
 
-### Response Header Fields
+### Response_Header_Fields
 
 The response-header fields allow the server to pass additional information about the response. These header fields give information about the server and about further access to the resource identified by the Request-URI.
 
@@ -199,6 +218,95 @@ The response-header fields allow the server to pass additional information about
 | Server             |
 | Vary               |
 | WWW-Authenticate   |
+
+## Configuration_file
+
+(based on NGNIX)
+
+configurations are setup is by:
+
+* directives - configuration options
+* Blocks (also known as contexts) - Groups in which Directives are organized
+
+* any character after # in a line becomes a comment
+
+### server_blocks
+
+Server configuration files contain a server block for a website.
+
+#### server_name
+
+Allows multiple domains to be served from a single IP address. Ideally, it should be created per domain or site. Based on the request header it receives, the server decides which domain to serve.
+
+> In catch-all server examples the strange name “_” can be seen There is nothing special about this name, it is just one of a myriad of invalid domain names which never intersect with any real name. Other invalid names like “--” and “!@#” may equally be used.
+
+[This](https://serverfault.com/questions/914906/what-is-the-difference-between-server-name-and-server-name-in-nginx) and [this](https://stackoverflow.com/questions/9454764/nginx-server-name-wildcard-or-catch-all
+) are interesting threads about `_` and `""`
+
+[NGINX server_name docs](http://nginx.org/en/docs/http/server_names.html)
+
+### how_nginx_processes_a_request
+
+#### if listen diretive are the same:
+
+```
+server {
+    listen      80;
+    server_name example.org www.example.org;
+    ...
+}
+
+server {
+    listen      80;
+    server_name example.net www.example.net;
+    ...
+}
+
+server {
+    listen      80;
+    server_name example.com www.example.com;
+    ...
+}
+```
+
+* decides which server should process the request based on the **request’s header** field `Host`
+* If its value does not match any server name then nginx will route the request to the default server for this port. The default server is the first one
+* If requests without the “Host” header field should not be allowed, a server that just drops the requests can be defined:
+```
+server {
+    listen      80;
+    server_name "";
+    return      444;
+}
+```
+
+#### if listen diretive are different:
+
+```
+server {
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
+    ...
+}
+
+server {
+    listen      192.168.1.1:80;
+    server_name example.net www.example.net;
+    ...
+}
+
+server {
+    listen      192.168.1.2:80;
+    server_name example.com www.example.com;
+    ...
+}
+```
+
+* first tests the IP address and port of the request against the listen directives of the server blocks
+* then tests the “Host” header field of the request against the server_name entries of the server blocks that matched the IP address and port
+*If the server name is not found, the request will be processed by the default server (first of the possibles ones)
+
+[more infos](http://nginx.org/en/docs/http/request_processing.html)
 
 ## specific_functions_overview
 
@@ -242,3 +350,4 @@ The response-header fields allow the server to pass additional information about
 * [HTTP Server: Everything you need to know to Build a simple HTTP server from scratch](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
 * [How the web works: HTTP and CGI explained](https://www.garshol.priv.no/download/text/http-tut.html)
 * [RFC 2616](https://datatracker.ietf.org/doc/html/rfc2616)
+* [How nginx processes a request](http://nginx.org/en/docs/http/request_processing.html)
