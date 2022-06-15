@@ -283,6 +283,17 @@ Allows multiple domains to be served from a single IP address. Ideally, it shoul
 
 [NGINX server_name docs](http://nginx.org/en/docs/http/server_names.html)
 
+#### error_page
+
+Defines the URI that will be shown for the specified errors.
+
+```
+error_page 404             /404.html;
+error_page 500 502 503 504 /50x.html;
+```
+
+[NGINX error_page docs](https://nginx.org/en/docs/http/ngx_http_core_module.html#error_page)
+
 ### how_nginx_processes_a_request
 
 #### if listen diretive are the same:
