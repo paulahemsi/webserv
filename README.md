@@ -21,7 +21,9 @@
     * [server_blocks](#server_blocks)
       * [listen](#listen)
       * [server_name](#server_name)
+      * [location](#location)
       * [client_body_size](#client_body_size)
+      * [error_page](#error_page)
     * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
@@ -284,6 +286,98 @@ Allows multiple domains to be served from a single IP address. Ideally, it shoul
 
 [NGINX server_name docs](http://nginx.org/en/docs/http/server_names.html)
 
+#### location
+
+Location directives cover requests for specific files and folders. It also allows NGINX to respond to requests for resources within the server.
+
+The locations are literal string matches:
+
+```
+server_name example.com
+
+location / { }
+location /images/ { }
+location /blog/ { }
+location /planet/ { }
+location /planet/blog/ { }
+```
+a request to http://example.com/planet/blog/ or http://example.com/planet/blog/about/ is fulfilled by location /planet/blog/ , even though location /planet/ also matches this request.
+
+##### Set location to a different directory
+
+```
+location /subdir {
+    root /srv/http/someplace;
+    index index.html;
+   ...
+}
+```
+
+##### Methods allowed
+
+`allow_methods "^(GET|POST|PUT|DELETE|PATCH|LINK|COPY)$";`
+[module to allow http methods on nginx](https://github.com/pschultz/ngx_http_allow_methods_module):
+```
+    server {
+
+        location /api/ {
+            allow_methods ".*";
+        }
+
+    }
+```
+
+##### Redirection
+
+HTTP redirection is way to point one domain or address to another. There are a few different kinds of redirects, each of which mean something different to the client browser. The two most common types are temporary redirects and permanent redirects.
+
+Temporary redirects (response status code 302 Found) are useful if a URL temporarily needs to be served from a different location. For example, if you are performing site maintenance, you may wish to use a temporary redirect from your domain to an explanation page to inform your visitors that you will be back shortly.
+
+Permanent redirects (response status code 301 Moved Permanently), on the other hand, inform the browser that it should forget the old address completely and not attempt to access it anymore. These are useful when your content has been permanently moved to a new location, such as when you change domain names.
+
+Temporary redirect:
+```
+server {
+    . . .
+    server_name www.domain1.com;
+    rewrite ^/$ http://www.domain2.com redirect;
+    . . .
+}
+```
+
+Permanent redirect:
+```
+rewrite ^/$ http://www.domain2.com permanent;
+```
+
+From Digital Ocean [How To Create Temporary and Permanent Redirects with Nginx](https://www.digitalocean.com/community/tutorials/how-to-create-temporary-and-permanent-redirects-with-nginx)
+
+
+##### autoindex
+
+Without `autoindex` option you should be getting Error 403 for** requests that end with / on directories that do not have an index.html file**. With this option you should be getting a simple listing:
+
+```html
+<html>
+<head><title>Index of /</title></head>
+<body bgcolor="white">
+<h1>Index of /test/</h1><hr><pre><a href="../">../</a>
+<a href="test.txt">test.txt</a>
+</pre><hr></body>
+</html>
+```
+
+##### default files
+
+`index` defines files that will be used as an index to requests ending with the slash character (‘/’).
+
+````
+location / {
+  index index.html;
+}
+````
+
+[Nginx index](http://nginx.org/en/docs/http/ngx_http_index_module.html)
 
 #### client_body_size
 
