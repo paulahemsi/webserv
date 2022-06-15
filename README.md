@@ -21,6 +21,7 @@
     * [server_blocks](#server_blocks)
       * [listen](#listen)
       * [server_name](#server_name)
+      * [client_body_size](#client_body_size)
     * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
@@ -283,6 +284,19 @@ Allows multiple domains to be served from a single IP address. Ideally, it shoul
 
 [NGINX server_name docs](http://nginx.org/en/docs/http/server_names.html)
 
+
+#### client_body_size
+
+On Nginx `client_max_body_size` sets the maximum allowed size of the **client request body**. If the size in a request exceeds the configured value, the **413** (Request Entity Too Large) error is returned to the client. Please be aware that browsers cannot correctly display this error. Setting size to 0 disables checking of client request body size.
+
+Default:
+
+```
+client_max_body_size 1m
+```
+
+[NGINX client_max_body_size docs](https://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size)
+
 #### error_page
 
 Defines the URI that will be shown for the specified errors.
@@ -293,6 +307,7 @@ error_page 500 502 503 504 /50x.html;
 ```
 
 [NGINX error_page docs](https://nginx.org/en/docs/http/ngx_http_core_module.html#error_page)
+
 
 ### how_nginx_processes_a_request
 
