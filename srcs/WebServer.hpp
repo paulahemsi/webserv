@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.hpp                                         :+:      :+:    :+:   */
+/*   WebServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 21:45:50 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/12 22:21:50 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 
 namespace ft
 {
-	class Server
+	class WebServer
 	{
 		private:
 			size_t					_size;
 			size_t					_backlog;
-			std::vector<ft::Socket> _sockets;
+			std::vector<ft::Socket> _servers;
 
 			void	_start_listening(void);
 			void	_event_loop(void);
@@ -36,11 +36,11 @@ namespace ft
 			void	_connect_with_client(int server_fd);
 
 		public:
-			Server(void);
-			Server(size_t size, int *ports, size_t backlog);
-			~Server(void);
+			WebServer(void);
+			WebServer(size_t size, int *ports, size_t backlog);
+			~WebServer(void);
 	
-			void	create_sockets(void);
+			void	create_servers(void);
 			void	run(void);
 	};
 }
