@@ -375,7 +375,28 @@ server {
 
 ## parser
 
-![image](https://user-images.githubusercontent.com/63563271/173970934-ab89c0d7-d4fb-46e4-9e3a-0c0455953f25.png)
+![image](https://user-images.githubusercontent.com/63563271/173972162-e835b91f-f4bd-48d6-a46f-6a6cb8c98b3c.png)
+
+
+**SERVER**
+| quantity | directive | type | mandatory |
+|----------|-----------|-------|---------|
+|1 (or + ?)|listen|string|:heavy_check_mark: 80 by default?|
+|1|server_name|string/string list|:heavy_check_mark:|
+|1|root|string|:heavy_check_mark:|
+|1|error pages|string|:x:|
+|1|client body size|string/int|:x:|
+|1 or +|location|string|:x:|
+
+**LOCATION**
+| quantity | directive | type | mandatory |
+|----------|-----------|-------|---------|
+|1|accepted methods|string/string list|:x: GET by default?|
+|1|redirection|string|:x:|
+|1|root|string|:x: if not, location path is used|
+|1|autoindex|bool|:x: false by default|
+|1|index|string/string list|:x:|
+|1|client body size|string/int|:x:|
 
 
 ## specific_functions_overview
