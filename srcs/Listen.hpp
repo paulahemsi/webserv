@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:15:49 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/16 18:32:23 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:18:44 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 
 			std::string get_host(void);
 			std::string get_port(void);
-		};
+	};
 }
 
 #endif
