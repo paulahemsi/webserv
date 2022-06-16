@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   socket.hpp                                         :+:      :+:    :+:   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/12 21:58:37 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:38:17 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOCKET_HPP
-#define SOCKET_HPP
+#ifndef SERVER_HPP
+#define SERVER_HPP
 
 #include <unistd.h> //read() write()
 #include <string.h> //memset()
@@ -25,7 +25,7 @@
 
 namespace ft
 {
-	class Socket
+	class Server
 	{
 		private:
 			int					_port;
@@ -38,9 +38,9 @@ namespace ft
 
 
 		public:
-			Socket(void);
-			Socket(int port);
-			~Socket(void);
+			Server(void);
+			Server(int port);
+			~Server(void);
 			
 			void	start_listening(int backlog);
 			void	create(void);

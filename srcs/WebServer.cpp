@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/16 12:49:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:40:53 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ _servers(ports, ports + size)
 
 void	ft::WebServer::create_servers(void)
 {
-	std::vector<ft::Socket>::iterator socket;
+	std::vector<ft::Server>::iterator server;
 
-	socket = this->_servers.begin();
-	for (; socket != this->_servers.end(); socket++)
-		socket->create();
+	server = this->_servers.begin();
+	for (; server != this->_servers.end(); server++)
+		server->create();
 }
 
 void	ft::WebServer::run(void)
@@ -55,7 +55,7 @@ void ft::WebServer::_event_loop(void)
 	}
 }
 
-void	ft::WebServer::_connect_with_client(ft::Socket &server)
+void	ft::WebServer::_connect_with_client(ft::Server &server)
 {
 	ft::Client	client;
 	size_t		size = 10000;
@@ -79,11 +79,11 @@ void	ft::WebServer::_check_event(ft::Poll &poll, size_t index)
 
 void ft::WebServer::_start_listening(void)
 {
-	std::vector<ft::Socket>::iterator socket;
+	std::vector<ft::Server>::iterator server;
 
-	socket = this->_servers.begin();
-	for (; socket != this->_servers.end(); socket++)
-		socket->start_listening(this->_backlog);
+	server = this->_servers.begin();
+	for (; server != this->_servers.end(); server++)
+		server->start_listening(this->_backlog);
 }
 
 bool	ft::WebServer::_check_event_mask(short revents)

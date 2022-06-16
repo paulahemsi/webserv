@@ -11,7 +11,7 @@ RM			:=	rm -rf
 SRCS_DIR	:=	./srcs/
 SRCS		:=	main.cpp \
 				WebServer.cpp \
-				socket.cpp \
+				Server.cpp \
 				Poll.cpp \
 				Client.cpp \
 				Request.cpp \
@@ -21,7 +21,7 @@ OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
 HEADER		=	WebServer.hpp \
-				socket.hpp \
+				Server.hpp \
 				Poll.hpp \
 				Client.hpp \
 				Request.hpp \
