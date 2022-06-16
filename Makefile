@@ -12,6 +12,7 @@ SRCS_DIR	:=	./srcs/
 SRCS		:=	main.cpp \
 				LocationData.cpp \
 				Listen.cpp \
+				ServerData.cpp \
 				WebServer.cpp \
 				Server.cpp \
 				Poll.cpp \
@@ -24,6 +25,7 @@ OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
 HEADER		=	LocationData.hpp \
 				Listen.hpp \
+				ServerData.hpp \
 				WebServer.hpp \
 				Server.hpp \
 				Poll.hpp \
