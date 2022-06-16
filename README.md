@@ -25,6 +25,7 @@
       * [client_body_size](#client_body_size)
       * [error_page](#error_page)
     * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
+* [parser](#parser)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
 
@@ -465,6 +466,36 @@ server {
 *If the server name is not found, the request will be processed by the default server (first of the possibles ones)
 
 [more infos](http://nginx.org/en/docs/http/request_processing.html)
+
+## parser
+
+![image](https://user-images.githubusercontent.com/63563271/173972162-e835b91f-f4bd-48d6-a46f-6a6cb8c98b3c.png)
+
+
+**SERVER**
+| directive | quantity | type | mandatory |
+|----------|-----------|-------|---------|
+|listen|1 (or + ?)|pair/struct/class|:heavy_check_mark: 80 by default?|
+|server_name|1|string/string list|:heavy_check_mark:|
+|root|string|1|:heavy_check_mark:|
+|error pages|1|string|:x:|
+|client body size|1|string/int|:x:|
+|location|1 or +|string|:x:|
+
+**LOCATION**
+| directive | quantity | type | mandatory |
+|----------|-----------|-------|---------|
+|accepted methods|1|string/string list|:x: GET by default?|
+|redirection|1|string|:x:|
+|root|1|string|:x: if not, location path is used|
+|autoindex|1|bool|:x: false by default|
+|index|1|string/string list|:x:|
+|client body size|1|string/int|:x:|
+
+Other important infos:
+
+* Make the route able to accept uploaded files and configure where they should be saved
+* The first server for a host:port will be the default for this host:port
 
 ## specific_functions_overview
 
