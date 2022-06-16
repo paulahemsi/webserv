@@ -398,6 +398,10 @@ server {
 |1|index|string/string list|:x:|
 |1|client body size|string/int|:x:|
 
+Other important infos:
+
+* Make the route able to accept uploaded files and configure where they should be saved
+* The first server for a host:port will be the default for this host:port
 
 ## specific_functions_overview
 
