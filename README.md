@@ -381,7 +381,7 @@ server {
 **SERVER**
 | directive | quantity | type | mandatory |
 |----------|-----------|-------|---------|
-|listen|1 (or + ?)|string|:heavy_check_mark: 80 by default?|
+|listen|1 (or + ?)|pair/struct/class|:heavy_check_mark: 80 by default?|
 |server_name|1|string/string list|:heavy_check_mark:|
 |root|string|1|:heavy_check_mark:|
 |error pages|1|string|:x:|
