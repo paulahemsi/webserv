@@ -379,24 +379,24 @@ server {
 
 
 **SERVER**
-| quantity | directive | type | mandatory |
+| directive | quantity | type | mandatory |
 |----------|-----------|-------|---------|
-|1 (or + ?)|listen|string|:heavy_check_mark: 80 by default?|
-|1|server_name|string/string list|:heavy_check_mark:|
-|1|root|string|:heavy_check_mark:|
-|1|error pages|string|:x:|
-|1|client body size|string/int|:x:|
-|1 or +|location|string|:x:|
+|listen|1 (or + ?)|string|:heavy_check_mark: 80 by default?|
+|server_name|1|string/string list|:heavy_check_mark:|
+|root|string|1|:heavy_check_mark:|
+|error pages|1|string|:x:|
+|client body size|1|string/int|:x:|
+|location|1 or +|string|:x:|
 
 **LOCATION**
-| quantity | directive | type | mandatory |
+| directive | quantity | type | mandatory |
 |----------|-----------|-------|---------|
-|1|accepted methods|string/string list|:x: GET by default?|
-|1|redirection|string|:x:|
-|1|root|string|:x: if not, location path is used|
-|1|autoindex|bool|:x: false by default|
-|1|index|string/string list|:x:|
-|1|client body size|string/int|:x:|
+|accepted methods|1|string/string list|:x: GET by default?|
+|redirection|1|string|:x:|
+|root|1|string|:x: if not, location path is used|
+|autoindex|1|bool|:x: false by default|
+|index|1|string/string list|:x:|
+|client body size|1|string/int|:x:|
 
 Other important infos:
 
