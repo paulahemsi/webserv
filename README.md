@@ -23,6 +23,7 @@
       * [server_name](#server_name)
       * [client_body_size](#client_body_size)
     * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
+* [parser](#parser)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
 
@@ -371,6 +372,11 @@ server {
 *If the server name is not found, the request will be processed by the default server (first of the possibles ones)
 
 [more infos](http://nginx.org/en/docs/http/request_processing.html)
+
+## parser
+
+![image](https://user-images.githubusercontent.com/63563271/173964633-15b96267-bb67-42cb-b539-428a2f375780.png)
+
 
 ## specific_functions_overview
 
