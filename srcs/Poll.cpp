@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   Poll.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 19:49:23 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 22:33:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/16 12:47:49 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Poll.hpp"
 
-ft::Poll::Poll(std::vector<ft::Socket> &sockets):
-_size(sockets.size()),
+ft::Poll::Poll(std::vector<ft::Socket> &servers):
+_size(servers.size()),
+_servers(servers),
 _interest_list(new struct pollfd[_size])
 {
 	for (size_t i = 0; i < this->_size; i++)
 	{
-		this->_interest_list[i].fd = sockets[i].get_fd();
+		this->_interest_list[i].fd = servers[i].get_fd();
 		this->_interest_list[i].events = POLLIN | POLLPRI | POLLOUT | POLLWRBAND;
 	}
 }
@@ -36,9 +37,9 @@ void	ft::Poll::exec(void)
 
 }
 
-int		ft::Poll::get_fd(size_t index)
+ft::Socket	& ft::Poll::get_server(size_t index)
 {
-	return (this->_interest_list[index].fd);
+	return (this->_servers[index]);
 }
 
 short	ft::Poll::get_event_return(size_t index)
