@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   Listen.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:36 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/16 18:33:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:32:04 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Listen.hpp"
 
 ft::Listen::Listen(void):
-_listen(std::pair<std::string, std::string>())
+_host(std::string()),
+_port(std::string())
 {
 	return ;
 }
 
-ft::Listen::Listen(std::pair<std::string, std::string> const other):
-_listen(std::pair<std::string, std::string>())
+ft::Listen::Listen(ft::Listen const &other)
 {
 	*this = other;
 }
 
 ft::Listen &ft::Listen::operator=(ft::Listen const &right_hand_side)
 {
-	this->_listen = right_hand_side._listen;
+	this->_host = right_hand_side._host;
+	this->_port = right_hand_side._port;
 	return (*this);
 }
 
@@ -37,20 +38,20 @@ ft::Listen::~Listen(void)
 
 void ft::Listen::set_host(std::string host)
 {
-	this->_listen.first = host;
+	this->_host = host;
 }
 
 void ft::Listen::set_port(std::string port)
 {
-	this->_listen.second = port;
+	this->_port = port;
 }
 
 std::string ft::Listen::get_host(void)
 {
-	return (this->_listen.first);
+	return (this->_host);
 }
 
 std::string ft::Listen::get_port(void)
 {
-	return (this->_listen.second);
+	return (this->_port);
 }
