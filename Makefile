@@ -10,8 +10,11 @@ RM			:=	rm -rf
 
 SRCS_DIR	:=	./srcs/
 SRCS		:=	main.cpp \
+				LocationData.cpp \
+				Listen.cpp \
+				ServerData.cpp \
 				WebServer.cpp \
-				socket.cpp \
+				Server.cpp \
 				Poll.cpp \
 				Client.cpp \
 				Request.cpp \
@@ -20,8 +23,11 @@ SRCS		:=	main.cpp \
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
-HEADER		=	WebServer.hpp \
-				socket.hpp \
+HEADER		=	LocationData.hpp \
+				Listen.hpp \
+				ServerData.hpp \
+				WebServer.hpp \
+				Server.hpp \
 				Poll.hpp \
 				Client.hpp \
 				Request.hpp \

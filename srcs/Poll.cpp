@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Poll.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 19:49:23 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/16 12:47:49 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:37:37 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Poll.hpp"
 
-ft::Poll::Poll(std::vector<ft::Socket> &servers):
+ft::Poll::Poll(std::vector<ft::Server> &servers):
 _size(servers.size()),
 _servers(servers),
 _interest_list(new struct pollfd[_size])
@@ -37,7 +37,7 @@ void	ft::Poll::exec(void)
 
 }
 
-ft::Socket	& ft::Poll::get_server(size_t index)
+ft::Server	& ft::Poll::get_server(size_t index)
 {
 	return (this->_servers[index]);
 }
