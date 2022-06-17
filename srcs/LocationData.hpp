@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/16 16:18:32 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:40:32 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ namespace ft
 			bool						get_autoindex(void);
 			int							get_body_size(void);
 
-			void	set_accepted_methods(std::string new_method);
-			void	set_index(std::string new_index);
+			void	add_accepted_method(std::string new_method);
+			void	add_index(std::string new_index);
 			void	set_redirection(std::string redirection_path);
 			void	set_root(std::string root_path);
 			void	set_autoindex(bool autoindex_value);

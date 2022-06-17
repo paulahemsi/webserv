@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 20:36:58 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:40:19 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 	{
 	}
 	
-	void ft::LocationData::set_accepted_methods(std::string new_method)
+	void ft::LocationData::add_accepted_method(std::string new_method)
 	{
 		this->_accepted_methods.push_back(new_method);
 	}
 	
-	void ft::LocationData::set_index(std::string new_index)
+	void ft::LocationData::add_index(std::string new_index)
 	{
 		this->_index.push_back(new_index);
 	}
