@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 17:32:13 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:37:45 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void ft::Parser::_set_location_conf(ft::LocationData &location)
 {
 	if (_line_begins_with(ACCEPTED_METHODS))
 		_set_accepted_methods_conf(location);
-	if (_line_begins_with(INDEX))
+	else if (_line_begins_with(INDEX))
 		_set_index_conf(location);
 	else if (_line_begins_with(REDIRECTION))
 		_set_redirection_conf(location);
@@ -105,6 +105,8 @@ void ft::Parser::_set_location_conf(ft::LocationData &location)
 		_set_autoindex_conf(location);
 	else if (_line_begins_with(BODY_SIZE))
 		_set_body_size_conf(location);
+	else
+		throw (LocationConfigurationError());
 }
 
 bool ft::Parser::_line_begins_with(const char *directive)

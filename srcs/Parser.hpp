@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 17:31:38 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:36:54 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,15 @@ namespace ft
 					virtual const char* what() const throw()
 					{
 						return ("\e[0;31merror setting server block\e[0m");
+					}
+			};
+
+			class LocationConfigurationError : public std::exception
+			{
+				public:
+					virtual const char* what() const throw()
+					{
+						return ("\e[0;31merror setting location block\e[0m");
 					}
 			};
 	};
