@@ -26,6 +26,7 @@
       * [error_page](#error_page)
     * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
 * [parser](#parser)
+    * [ifstream](#ifstream)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
 
@@ -496,6 +497,20 @@ Other important infos:
 
 * Make the route able to accept uploaded files and configure where they should be saved
 * The first server for a host:port will be the default for this host:port
+
+### ifstream
+
+Flags describing the requested i/o mode for the file:
+(These flags can be combined with the bitwise OR operator `|`)
+
+|member constant|stands for|access|
+|---------------|----------|------|
+|in |input|File open for reading: the internal stream buffer supports input operations.|
+|out|output|File open for writing: the internal stream buffer supports output operations.|
+|binary|binary|Operations are performed in binary mode rather than text.|
+|ate|at end|The output position starts at the end of the file.|
+|app|append|All output operations happen at the end of the file, appending to its existing contents.|
+|trunc|truncate|Any contents that existed in the file before it is open are discarded.|
 
 ## specific_functions_overview
 
