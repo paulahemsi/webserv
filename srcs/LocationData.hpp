@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 20:40:32 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:43:38 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 namespace ft 
 {
 	class LocationData
 	{
 		private:
-			std::vector<std::string>	_accepted_methods;
+			std::set<std::string>		_accepted_methods;
 			std::vector<std::string>	_index;
 			std::string					_redirection;
 			std::string					_root;
@@ -32,7 +33,7 @@ namespace ft
 			LocationData(void);
 			~LocationData(void);
 
-			std::vector<std::string>	get_accepted_methods(void);
+			std::set<std::string>		get_accepted_methods(void);
 			std::vector<std::string>	get_index(void);
 			std::string					get_redirection(void);
 			std::string					get_root(void);
