@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 17:37:45 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:30:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,31 @@ ft::Parser::~Parser(void)
 	_file_stream.close();
 }
 
-static bool not_empty(std::string &line)
+void ft::Parser::_trim_line(const char c)
 {
-	line.erase(line.find_last_not_of(' ') + 1);
-	line.erase(0, line.find_first_not_of(' '));
-	return (line != "");
+	this->_line.erase(this->_line.find_last_not_of(c) + 1);
+	this->_line.erase(0, this->_line.find_first_not_of(c));
+}
+
+bool ft::Parser::_line_is_not_empty(void)
+{
+	_trim_line(' ');
+	return (this->_line != "");
+}
+
+bool ft::Parser::_line_begins_with(const char *directive)
+{
+	return (this->_line.find(directive, 0) == 0);
 }
 
 void ft::Parser::_parse_file(void)
 {
-	std::string line;
 	while (this->_file_stream.good())
 	{
-		std::getline(this->_file_stream, line);
-		if (not_empty(line))
+		std::getline(this->_file_stream, this->_line);
+		if (_line_is_not_empty())
 		{
-			if (line == SERVER_BEGIN)
+			if (this->_line == SERVER_BEGIN)
 				_parse_server_block();
 			else
 				throw (ServerConfigurationError());
@@ -60,7 +69,7 @@ void ft::Parser::_parse_server_block(void)
 	while (this->_file_stream.good())
 	{
 		std::getline(this->_file_stream, this->_line);
-		if (not_empty(this->_line))
+		if (_line_is_not_empty())
 		{
 			if (this->_line == SERVER_END)
 			{
@@ -79,7 +88,7 @@ void ft::Parser::_parse_location_block(ft::ServerData &server)
 	while (this->_file_stream.good())
 	{
 		std::getline(this->_file_stream, this->_line);
-		if (not_empty(this->_line))
+		if (_line_is_not_empty())
 		{
 			if (this->_line == LOCATION_END)
 			{
@@ -107,11 +116,6 @@ void ft::Parser::_set_location_conf(ft::LocationData &location)
 		_set_body_size_conf(location);
 	else
 		throw (LocationConfigurationError());
-}
-
-bool ft::Parser::_line_begins_with(const char *directive)
-{
-	return (this->_line.find(directive, 0) == 0);
 }
 
 void ft::Parser::_set_server_conf(ft::ServerData &server)
@@ -157,34 +161,46 @@ void ft::Parser::_set_body_size_conf(ft::ServerData &server)
 	std::cout << "****************************" << BODY_SIZE << std::endl;
 }
 
+void ft::Parser::_extract_value(const char *directive)
+{
+	this->_line.erase(0, strlen(directive));
+	_trim_line(' ');
+}
+
 void ft::Parser::_set_body_size_conf(ft::LocationData &location)
 {
-	std::cout << "-----------------------" << BODY_SIZE << std::endl;
+	_extract_value(BODY_SIZE);
+	std::cout << '|' << this->_line << '|' << std::endl;
 }
 
 void ft::Parser::_set_root_conf(ft::LocationData &location)
 {
-	std::cout << "-----------------------" << ROOT << std::endl;
+	_extract_value(ROOT);
+	std::cout << '|' << this->_line << '|' << std::endl;
 }
 
 void ft::Parser::_set_index_conf(ft::LocationData &location)
 {
-	std::cout << "-----------------------" << INDEX << std::endl;
+	_extract_value(INDEX);
+	std::cout << '|' << this->_line << '|' << std::endl;
 }
 
 void ft::Parser::_set_redirection_conf(ft::LocationData &location)
 {
-	std::cout << "-----------------------" << REDIRECTION << std::endl;
+	_extract_value(REDIRECTION);
+	std::cout << '|' << this->_line << '|' << std::endl;
 }
 
 void ft::Parser::_set_autoindex_conf(ft::LocationData &location)
 {
-	std::cout << "-----------------------" << AUTOINDEX << std::endl;
+	_extract_value(AUTOINDEX);
+	std::cout << '|' << this->_line << '|' << std::endl;
 }
 
 void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
 {
-	std::cout << "-----------------------" << ACCEPTED_METHODS << std::endl;
+	_extract_value(ACCEPTED_METHODS);
+	std::cout << '|' << this->_line << '|' << std::endl;
 }
 
 std::vector<ft::ServerData> ft::Parser::get_servers(void)

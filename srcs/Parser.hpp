@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 17:36:54 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:23:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <string.h>
 #include <fstream>
 #include "ServerData.hpp"
 #include "LocationData.hpp"
@@ -62,7 +63,11 @@ namespace ft
 			void	_set_autoindex_conf(ft::LocationData &location);
 			void	_set_accepted_methods_conf(ft::LocationData &location);
 
+			bool	_line_is_not_empty(void);
 			bool	_line_begins_with(const char *directive);
+			void	_trim_line(const char c);
+			void	_extract_value(const char *directive);
+			
 			Parser(void);
 
 		public:
