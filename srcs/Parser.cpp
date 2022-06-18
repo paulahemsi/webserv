@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 19:09:04 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:20:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,25 @@ void ft::Parser::_set_server_conf(ft::ServerData &server)
 
 void ft::Parser::_set_listen_conf(ft::ServerData &server)
 {
-	std::cout << "****************************" << LISTEN << std::endl;
+	ft::Listen listen;
+
+	_reduce_line_to_value(LISTEN);
+	_check_if_only_one_argument();
+	if (this->_line.find(":") == std::string::npos)
+	{
+		listen.set_port(this->_line);
+	}
+	else
+	{
+		std::stringstream host_port(this->_line);
+		std::string host;
+		std::string port;
+		std::getline(host_port, host, ':');
+		listen.set_host(host);
+		std::getline(host_port, port);
+		listen.set_port(port);
+	}
+	server.set_listen(listen);
 }
 
 void ft::Parser::_set_server_name_conf(ft::ServerData &server)
@@ -265,6 +283,7 @@ void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
 		location.add_accepted_method(accepted_methods_value);
 	}
 }
+
 void ft::Parser::_check_if_only_one_argument(void)
 { 
 	if (this->_line.find(' ') != std::string::npos)
