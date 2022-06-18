@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 19:20:46 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:11:21 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,28 @@ ft::Parser::Parser(void)
 	return ;
 }
 
-ft::Parser::Parser(const char* filename)
+ft::Parser::Parser(ft::Parser const &other)
 {
-	this->_file_stream.open(filename, std::ifstream::in);
-	if(!this->_file_stream)
-		throw (OpenFileError());
-	_parse_file();
+	*this = other;
+}
+
+ft::Parser &ft::Parser::operator=(ft::Parser const &right_hand_side)
+{
+	this->_servers = right_hand_side._servers;
+	return (*this);
 }
 
 ft::Parser::~Parser(void)
 {
 	_file_stream.close();
+}
+
+void ft::Parser::exec(const char* filename)
+{
+	this->_file_stream.open(filename, std::ifstream::in);
+	if(!this->_file_stream)
+		throw (OpenFileError());
+	_parse_file();
 }
 
 void ft::Parser::_trim_line(const std::string chars_to_trim)

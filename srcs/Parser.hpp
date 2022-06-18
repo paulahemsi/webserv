@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 18:33:44 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:09:34 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,21 @@ namespace ft
 			void	_set_autoindex_conf(ft::LocationData &location);
 			void	_set_accepted_methods_conf(ft::LocationData &location);
 
-			bool		_line_is_not_empty(void);
-			bool		_line_is_number(void);
-			bool		_line_begins_with(const char *directive);
-			void		_trim_line(const std::string chars_to_trim);
-			void		_reduce_line_to_value(const char *directive);
-			void		_check_if_only_one_argument(void);
-
-			Parser(void);
+			bool	_line_is_not_empty(void);
+			bool	_line_is_number(void);
+			bool	_line_begins_with(const char *directive);
+			void	_trim_line(const std::string chars_to_trim);
+			void	_reduce_line_to_value(const char *directive);
+			void	_check_if_only_one_argument(void);
 
 		public:
-			Parser(const char* filename);
+			Parser(void);
+			Parser(ft::Parser const &other);
 			~Parser(void);
 			
+			ft::Parser	&operator=(ft::Parser const &right_hand_side);
+
+			void		exec(const char* filename);
 			std::vector<ft::ServerData> get_servers(void);
 			
 			class OpenFileError : public std::exception
