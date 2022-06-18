@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 18:30:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 21:27:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,21 @@ ft::Parser::~Parser(void)
 	_file_stream.close();
 }
 
-void ft::Parser::_trim_line(const char c)
+void ft::Parser::_trim_line(const std::string chars_to_trim)
 {
-	this->_line.erase(this->_line.find_last_not_of(c) + 1);
-	this->_line.erase(0, this->_line.find_first_not_of(c));
+	this->_line.erase(this->_line.find_last_not_of(chars_to_trim) + 1);
+	this->_line.erase(0, this->_line.find_first_not_of(chars_to_trim));
 }
 
 bool ft::Parser::_line_is_not_empty(void)
 {
-	_trim_line(' ');
+	_trim_line(" \t");
 	return (this->_line != "");
+}
+
+bool ft::Parser::_line_is_number(void)
+{
+	return (this->_line.find_first_not_of("0123456789") == std::string::npos);
 }
 
 bool ft::Parser::_line_begins_with(const char *directive)
@@ -161,46 +166,68 @@ void ft::Parser::_set_body_size_conf(ft::ServerData &server)
 	std::cout << "****************************" << BODY_SIZE << std::endl;
 }
 
-void ft::Parser::_extract_value(const char *directive)
+void ft::Parser::_reduce_line_to_value(const char *directive)
 {
 	this->_line.erase(0, strlen(directive));
-	_trim_line(' ');
+	_trim_line(" \t");
 }
 
 void ft::Parser::_set_body_size_conf(ft::LocationData &location)
 {
-	_extract_value(BODY_SIZE);
-	std::cout << '|' << this->_line << '|' << std::endl;
+	_reduce_line_to_value(BODY_SIZE);
+	if (_line_is_number())
+		location.set_body_size(atoi(this->_line.c_str()));
+	else
+		throw (LocationConfigurationError());
 }
 
 void ft::Parser::_set_root_conf(ft::LocationData &location)
 {
-	_extract_value(ROOT);
-	std::cout << '|' << this->_line << '|' << std::endl;
+	_reduce_line_to_value(ROOT);
+	location.set_root(this->_line);
 }
 
 void ft::Parser::_set_index_conf(ft::LocationData &location)
 {
-	_extract_value(INDEX);
-	std::cout << '|' << this->_line << '|' << std::endl;
+	_reduce_line_to_value(INDEX);
+
+	std::stringstream index_line(this->_line);
+	std::string index_value;
+	while (index_line.good())
+	{
+		std::getline(index_line, index_value, ' ');
+		location.set_index(index_value);
+	}
 }
 
 void ft::Parser::_set_redirection_conf(ft::LocationData &location)
 {
-	_extract_value(REDIRECTION);
-	std::cout << '|' << this->_line << '|' << std::endl;
+	_reduce_line_to_value(REDIRECTION);
+	location.set_redirection(this->_line);
 }
 
 void ft::Parser::_set_autoindex_conf(ft::LocationData &location)
 {
-	_extract_value(AUTOINDEX);
-	std::cout << '|' << this->_line << '|' << std::endl;
+	_reduce_line_to_value(AUTOINDEX);
+	if (this->_line == "on")
+		location.set_autoindex(true);
+	else if (this->_line == "off")
+		location.set_autoindex(false);
+	else
+		throw (LocationConfigurationError());
 }
 
 void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
 {
-	_extract_value(ACCEPTED_METHODS);
-	std::cout << '|' << this->_line << '|' << std::endl;
+	_reduce_line_to_value(ACCEPTED_METHODS);
+	
+	std::stringstream accepted_methods_line(this->_line);
+	std::string accepted_methods_value;
+	while (accepted_methods_line.good())
+	{
+		std::getline(accepted_methods_line, accepted_methods_value, ' ');
+		location.set_accepted_methods(accepted_methods_value);
+	}
 }
 
 std::vector<ft::ServerData> ft::Parser::get_servers(void)
