@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 20:43:38 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/17 21:35:32 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ namespace ft
 			std::vector<std::string>	_index;
 			std::string					_redirection;
 			std::string					_root;
+			// std::string					_prefix;
 			bool						_autoindex;
 			int							_body_size;
 			
@@ -37,6 +38,7 @@ namespace ft
 			std::vector<std::string>	get_index(void);
 			std::string					get_redirection(void);
 			std::string					get_root(void);
+			// std::string					get_prefix(void);
 			bool						get_autoindex(void);
 			int							get_body_size(void);
 
@@ -44,6 +46,7 @@ namespace ft
 			void	add_index(std::string new_index);
 			void	set_redirection(std::string redirection_path);
 			void	set_root(std::string root_path);
+			// void	set_prefix(std::string prefix);
 			void	set_autoindex(bool autoindex_value);
 			void	set_body_size(int size_limit);
 	};

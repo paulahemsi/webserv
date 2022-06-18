@@ -1,7 +1,7 @@
 NAME		:=	webserv
 
 CC			:=	c++
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:=
 CFLAGS		+= -g
 CFLAGS		+= -std=c++98
 #CFLAGS		+= -fstandalone-debug

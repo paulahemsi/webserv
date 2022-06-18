@@ -6,11 +6,63 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 12:57:03 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 18:04:48 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
+
+
+static void debug_location_data(ft::LocationData& location_data)
+{
+	std::cout << "TEST LOCATION DATA" << std::endl;
+
+	std::cout << "Accepted methods: " << std::endl;
+	
+	std::set<std::string> accepted_methods = location_data.get_accepted_methods();
+	std::set<std::string>::iterator it = accepted_methods.begin();
+	for (; it != accepted_methods.end(); it++)
+		std::cout << *it << std::endl;
+	
+	std::cout << "Index: " << std::endl;
+	
+	std::vector<std::string> index = location_data.get_index();
+	std::vector<std::string>::iterator it_index = index.begin();
+	for (; it_index != index.end(); it_index++)
+		std::cout << *it_index << std::endl;
+	
+	std::cout << "Redirection: " << location_data.get_redirection() << std::endl;
+	std::cout << "Root: " << location_data.get_root() << std::endl;
+	std::cout << "Autoindex: " << location_data.get_autoindex() << std::endl;
+	std::cout << "body_size: " << location_data.get_body_size() << std::endl;
+}
+
+static void debug_server_data(ft::ServerData& server_data)
+{
+	std::cout << "TEST SERVER DATA" << std::endl;
+
+	std::cout << "Listen: " << server_data.get_listen().get_host() << ":" << server_data.get_listen().get_port() << std::endl;
+	
+	std::cout << "Server Name: " << std::endl;
+	for (int i = 0; i < server_data.get_server_name().size(); i++)
+		std::cout << server_data.get_server_name()[i];
+	
+	std::cout << "Root: " << server_data.get_root() << std::endl;
+	std::cout << "error_pages: " << server_data.get_error_pages() << std::endl;
+	std::cout << "body_size: " << server_data.get_body_size() << std::endl;
+	
+	std::cout << "Location: " << std::endl;
+	std::vector<ft::LocationData>::iterator it_location = server_data.get_location().begin();
+	for (; it_location != server_data.get_location().end(); it_location++)
+	{
+		std::cout << "vou testar a location\n";
+		debug_location_data(*it_location);
+	}
+}
+
+
+
+
 
 ft::Parser::Parser(void)
 {
@@ -79,6 +131,7 @@ void ft::Parser::_parse_server_block(void)
 			if (this->_line == SERVER_END)
 			{
 				this->_servers.push_back(new_server);
+				debug_server_data(new_server);
 				return ;
 			}
 			_set_server_conf(new_server);
@@ -98,6 +151,7 @@ void ft::Parser::_parse_location_block(ft::ServerData &server)
 			if (this->_line == LOCATION_END)
 			{
 				server.set_location(new_location);
+				debug_location_data(new_location);
 				return ;
 			}
 			_set_location_conf(new_location);
