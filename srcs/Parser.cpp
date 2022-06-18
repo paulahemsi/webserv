@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 21:27:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 21:40:47 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void ft::Parser::_set_index_conf(ft::LocationData &location)
 	while (index_line.good())
 	{
 		std::getline(index_line, index_value, ' ');
-		location.set_index(index_value);
+		location.add_index(index_value);
 	}
 }
 
@@ -226,7 +226,7 @@ void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
 	while (accepted_methods_line.good())
 	{
 		std::getline(accepted_methods_line, accepted_methods_value, ' ');
-		location.set_accepted_methods(accepted_methods_value);
+		location.add_accepted_method(accepted_methods_value);
 	}
 }
 
