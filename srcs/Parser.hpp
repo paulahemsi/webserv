@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 20:35:56 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 21:45:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ namespace ft
 			bool		_line_begins_with(const char *directive);
 			void		_trim_line(const std::string chars_to_trim);
 			void		_reduce_line_to_value(const char *directive);
-			
+			void		_check_if_only_one_argument(void);
+
 			Parser(void);
 
 		public:

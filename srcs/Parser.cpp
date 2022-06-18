@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 21:40:47 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 21:52:04 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void ft::Parser::_reduce_line_to_value(const char *directive)
 void ft::Parser::_set_body_size_conf(ft::LocationData &location)
 {
 	_reduce_line_to_value(BODY_SIZE);
+	_check_if_only_one_argument();
 	if (_line_is_number())
 		location.set_body_size(atoi(this->_line.c_str()));
 	else
@@ -184,6 +185,7 @@ void ft::Parser::_set_body_size_conf(ft::LocationData &location)
 void ft::Parser::_set_root_conf(ft::LocationData &location)
 {
 	_reduce_line_to_value(ROOT);
+	_check_if_only_one_argument();
 	location.set_root(this->_line);
 }
 
@@ -203,6 +205,7 @@ void ft::Parser::_set_index_conf(ft::LocationData &location)
 void ft::Parser::_set_redirection_conf(ft::LocationData &location)
 {
 	_reduce_line_to_value(REDIRECTION);
+	_check_if_only_one_argument();
 	location.set_redirection(this->_line);
 }
 
@@ -228,6 +231,13 @@ void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
 		std::getline(accepted_methods_line, accepted_methods_value, ' ');
 		location.add_accepted_method(accepted_methods_value);
 	}
+}
+void ft::Parser::_check_if_only_one_argument(void)
+{ 
+	if (this->_line.find(' ') != std::string::npos)
+		throw (LocationConfigurationError());
+	if (this->_line.find('\t') != std::string::npos)
+		throw (LocationConfigurationError());
 }
 
 std::vector<ft::ServerData> ft::Parser::get_servers(void)
