@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 21:52:04 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 12:57:03 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void ft::Parser::_parse_server_block(void)
 
 void ft::Parser::_parse_location_block(ft::ServerData &server)
 {
-	ft::LocationData location;
+	ft::LocationData new_location;
 
 	while (this->_file_stream.good())
 	{
@@ -97,10 +97,10 @@ void ft::Parser::_parse_location_block(ft::ServerData &server)
 		{
 			if (this->_line == LOCATION_END)
 			{
-				server.set_location(location);
+				server.set_location(new_location);
 				return ;
 			}
-			_set_location_conf(location);
+			_set_location_conf(new_location);
 		}
 	}
 }
@@ -148,22 +148,39 @@ void ft::Parser::_set_listen_conf(ft::ServerData &server)
 
 void ft::Parser::_set_server_name_conf(ft::ServerData &server)
 {
-	std::cout << "****************************" << SERVER_NAME << std::endl;
+	_reduce_line_to_value(SERVER_NAME);
+
+	std::stringstream server_name_line(this->_line);
+	std::string server_name_value;
+	while (server_name_line.good())
+	{
+		std::getline(server_name_line, server_name_value, ' ');
+		server.set_server_name(server_name_value);
+	}
 }
 
 void ft::Parser::_set_root_conf(ft::ServerData &server)
 {
-	std::cout << "****************************" << ROOT << std::endl;
+	_reduce_line_to_value(ROOT);
+	_check_if_only_one_argument();
+	server.set_root(this->_line);
 }
 
 void ft::Parser::_set_error_page_conf(ft::ServerData &server)
 {
-	std::cout << "****************************" << ERROR_PAGE << std::endl;
+	_reduce_line_to_value(ERROR_PAGE);
+	_check_if_only_one_argument();
+	server.set_error_pages(this->_line);
 }
 
 void ft::Parser::_set_body_size_conf(ft::ServerData &server)
 {
-	std::cout << "****************************" << BODY_SIZE << std::endl;
+	_reduce_line_to_value(BODY_SIZE);
+	_check_if_only_one_argument();
+	if (_line_is_number())
+		server.set_body_size(atoi(this->_line.c_str()));
+	else
+		throw (ServerConfigurationError());
 }
 
 void ft::Parser::_reduce_line_to_value(const char *directive)
