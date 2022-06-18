@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Listen.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:15:49 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/16 18:32:23 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:31:49 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LISTEN_HPP
 #define LISTEN_HPP
 
-#include <utility>
 #include <string>
 
 namespace ft
@@ -21,11 +20,12 @@ namespace ft
 	class Listen
 	{
 		private:
-			std::pair<std::string, std::string> _listen;
+			std::string	_host;
+			std::string	_port;
 
 		public:
 			Listen(void);
-			Listen(std::pair<std::string, std::string> const other);
+			Listen(ft::Listen const &other);
 			~Listen(void);
 
 			ft::Listen	&operator=(ft::Listen const &right_hand_side);

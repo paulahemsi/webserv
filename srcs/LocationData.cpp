@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/16 16:20:33 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/17 20:48:03 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 	#include "LocationData.hpp"
 
 	ft::LocationData::LocationData(void):
-	_accepted_methods(std::vector<std::string>()),
+	_accepted_methods(std::set<std::string>()),
 	_index(std::vector<std::string>()),
 	_redirection(""),
 	_root(""),
 	_autoindex(false),
 	_body_size(10000)
 	{
-		_accepted_methods.push_back(static_cast<std::string>("GET"));
+		this->_accepted_methods.insert("GET");
 	}
 	
 	ft::LocationData::~LocationData(void)
 	{
 	}
 	
-	void ft::LocationData::set_accepted_methods(std::string new_method)
+	void ft::LocationData::add_accepted_method(std::string new_method)
 	{
-		this->_accepted_methods.push_back(new_method);
+		this->_accepted_methods.insert(new_method);
 	}
 	
-	void ft::LocationData::set_index(std::string new_index)
+	void ft::LocationData::add_index(std::string new_index)
 	{
 		this->_index.push_back(new_index);
 	}
@@ -57,7 +57,7 @@
 		this->_body_size = size_limit;
 	}
 	
-	std::vector<std::string> ft::LocationData::get_accepted_methods(void)
+	std::set<std::string> ft::LocationData::get_accepted_methods(void)
 	{
 		return (this->_accepted_methods);
 	}
