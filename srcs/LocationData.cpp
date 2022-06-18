@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 20:48:03 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/18 18:29:06 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 	_index(std::vector<std::string>()),
 	_redirection(""),
 	_root(""),
+	_prefix(""),
 	_autoindex(false),
 	_body_size(10000)
 	{
@@ -47,6 +48,11 @@
 		this->_root = root_path;
 	}
 	
+	void ft::LocationData::set_prefix(std::string prefix)
+	{
+		this->_prefix = prefix;
+	}
+	
 	void ft::LocationData::set_autoindex(bool autoindex_value)
 	{
 		this->_autoindex = autoindex_value;
@@ -75,6 +81,11 @@
 	std::string ft::LocationData::get_root(void)
 	{
 		return (this->_root);
+	}
+	
+	std::string ft::LocationData::get_prefix(void)
+	{
+		return (this->_prefix);
 	}
 	
 	bool ft::LocationData::get_autoindex(void)

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 12:57:03 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:09:04 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void ft::Parser::_parse_location_block(ft::ServerData &server)
 {
 	ft::LocationData new_location;
 
+	_set_prefix(new_location);
 	while (this->_file_stream.good())
 	{
 		std::getline(this->_file_stream, this->_line);
@@ -187,6 +188,21 @@ void ft::Parser::_reduce_line_to_value(const char *directive)
 {
 	this->_line.erase(0, strlen(directive));
 	_trim_line(" \t");
+}
+
+void ft::Parser::_set_prefix(ft::LocationData &location)
+{
+	_reduce_line_to_value(LOCATION_BEGIN);
+
+	std::stringstream location_line(this->_line);
+	std::string splited;
+
+	std::getline(location_line, splited, ' ');
+	location.set_prefix(splited);
+	std::getline(location_line, splited, ' ');
+	splited.erase(splited.find_last_not_of(" \t") + 1);
+	if (splited != "{")
+		throw (LocationConfigurationError());
 }
 
 void ft::Parser::_set_body_size_conf(ft::LocationData &location)

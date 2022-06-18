@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 21:45:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 18:33:44 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ namespace ft
 			void	_set_root_conf(ft::ServerData &server);
 			void	_set_body_size_conf(ft::ServerData &server);
 
+			void	_set_prefix(ft::LocationData &location);
 			void	_set_root_conf(ft::LocationData &location);
 			void	_set_body_size_conf(ft::LocationData &location);
 			void	_set_index_conf(ft::LocationData &location);
