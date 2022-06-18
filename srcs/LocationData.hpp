@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 18:29:21 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:12:02 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ namespace ft
 			
 		public:
 			LocationData(void);
+			LocationData(ft::LocationData const &other);
 			~LocationData(void);
 
+			ft::LocationData	&operator=(ft::LocationData const &right_hand_side);
+		
 			std::set<std::string>		get_accepted_methods(void);
 			std::vector<std::string>	get_index(void);
 			std::string					get_redirection(void);

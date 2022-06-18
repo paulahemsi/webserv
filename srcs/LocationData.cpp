@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 18:29:06 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:11:44 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,23 @@
 		this->_accepted_methods.insert("GET");
 	}
 	
+	ft::LocationData::LocationData(ft::LocationData const &other)
+	{
+		*this = other;
+	}
+
+	ft::LocationData &ft::LocationData::operator=(ft::LocationData const &right_hand_side)
+	{
+		this->_accepted_methods = right_hand_side._accepted_methods;
+		this->_index = right_hand_side._index;
+		this->_redirection = right_hand_side._redirection;
+		this->_root = right_hand_side._root;
+		//this->_prefix = right_hand_side._prefix;
+		this->_autoindex = right_hand_side._autoindex;
+		this->_body_size = right_hand_side._body_size;
+		return (*this);
+	}
+
 	ft::LocationData::~LocationData(void)
 	{
 	}
