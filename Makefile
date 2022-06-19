@@ -11,6 +11,9 @@ RM			:=	rm -rf
 SRCS_DIR	:=	./srcs/
 SRCS		:=	main.cpp \
 				Parser.cpp \
+				parser_utils.cpp \
+				LocationParser.cpp \
+				ServerParser.cpp \
 				LocationData.cpp \
 				Listen.cpp \
 				ServerData.cpp \
@@ -25,6 +28,9 @@ OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
 HEADER		=	Parser.hpp \
+				parser_utils.hpp \
+				LocationParser.hpp \
+				ServerParser.hpp \
 				LocationData.hpp \
 				Listen.hpp \
 				ServerData.hpp \

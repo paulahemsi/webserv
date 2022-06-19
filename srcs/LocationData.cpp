@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 20:45:27 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 11:29:27 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ ft::LocationData &ft::LocationData::operator=(ft::LocationData const &right_hand
 	this->_index = right_hand_side._index;
 	this->_redirection = right_hand_side._redirection;
 	this->_root = right_hand_side._root;
-	//this->_prefix = right_hand_side._prefix;
+	this->_prefix = right_hand_side._prefix;
 	this->_autoindex = right_hand_side._autoindex;
 	this->_body_size = right_hand_side._body_size;
 	return (*this);
@@ -123,7 +123,7 @@ std::string ft::LocationData::accepted_methods_to_string(void) const
 	while (it_begin != it_end)
 	{
 		accepted_methods_str += *it_begin;
-		accepted_methods_str += "\n";
+		accepted_methods_str += " ";
 		it_begin++;
 	}
 	return (accepted_methods_str);
@@ -135,7 +135,7 @@ std::string ft::LocationData::index_to_string(void) const
 	for (size_t i = 0; i < this->_index.size(); i++)
 	{
 		index_str += this->_index[i];
-		index_str += "\n";
+		index_str += " ";
 	}
 	return (index_str);
 }
