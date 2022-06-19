@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Listen.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:15:49 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/17 20:31:49 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:51:36 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LISTEN_HPP
 #define LISTEN_HPP
 
+#include <iostream>
 #include <string>
 
 namespace ft
@@ -33,9 +34,11 @@ namespace ft
 			void set_host(std::string host);
 			void set_port(std::string port);
 
-			std::string get_host(void);
-			std::string get_port(void);
+			std::string get_host(void) const ;
+			std::string get_port(void) const ;
 		};
 }
+
+std::ostream &operator<<(std::ostream &outputFile, const ft::Listen &object);
 
 #endif
