@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 15:59:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 16:12:18 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ namespace ft
 	class Socket
 	{
 		private:
-			int					_port;
-			int					_fd;
-			struct	sockaddr_in	_infos;
-			ft::ServerData		_conf;
+			int								_port;
+			int								_fd;
+			struct	sockaddr_in				_infos;
+			std::vector<ft::ServerData>		_server;
 
 			void	_create(void);
 			void	_set_infos(void);
@@ -40,7 +40,7 @@ namespace ft
 
 
 		public:
-			Socket(ft::ServerData conf);
+			Socket(std::vector<ft::ServerData> server);
 			Socket(void);
 			~Socket(void);
 			
