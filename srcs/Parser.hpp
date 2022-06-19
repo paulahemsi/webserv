@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 09:41:47 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 11:09:20 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <sstream> 
+#include <sstream>
 #include <string>
 #include <string.h>
-#include <stdlib.h>
 #include "ServerData.hpp"
 #include "LocationData.hpp"
 #include "parser_utils.hpp"
+#include "LocationParser.hpp"
 
 #define SERVER_BEGIN "server {"
 #define SERVER_END "};"
@@ -59,14 +59,6 @@ namespace ft
 			void	_set_root_conf(ft::ServerData &server);
 			void	_set_body_size_conf(ft::ServerData &server);
 
-			void	_set_prefix(ft::LocationData &location);
-			void	_set_root_conf(ft::LocationData &location);
-			void	_set_body_size_conf(ft::LocationData &location);
-			void	_set_index_conf(ft::LocationData &location);
-			void	_set_redirection_conf(ft::LocationData &location);
-			void	_set_autoindex_conf(ft::LocationData &location);
-			void	_set_accepted_methods_conf(ft::LocationData &location);
-
 		public:
 			Parser(void);
 			Parser(ft::Parser const &other);
@@ -92,15 +84,6 @@ namespace ft
 					virtual const char* what() const throw()
 					{
 						return ("\e[0;31merror setting server block\e[0m");
-					}
-			};
-
-			class LocationConfigurationError : public std::exception
-			{
-				public:
-					virtual const char* what() const throw()
-					{
-						return ("\e[0;31merror setting location block\e[0m");
 					}
 			};
 	};

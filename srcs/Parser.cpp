@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 09:42:27 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 11:33:15 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,40 +77,10 @@ void ft::Parser::_parse_server_block(void)
 
 void ft::Parser::_parse_location_block(ft::ServerData &server)
 {
-	ft::LocationData new_location;
+	ft::LocationParser new_location;
 
-	_set_prefix(new_location);
-	while (this->_file_stream.good())
-	{
-		std::getline(this->_file_stream, this->_line);
-		if (ft::is_not_empty(this->_line))
-		{
-			if (this->_line == LOCATION_END)
-			{
-				server.set_location(new_location);
-				return ;
-			}
-			_set_location_conf(new_location);
-		}
-	}
-}
-
-void ft::Parser::_set_location_conf(ft::LocationData &location)
-{
-	if (ft::begins_with(this->_line, ACCEPTED_METHODS))
-		_set_accepted_methods_conf(location);
-	else if (ft::begins_with(this->_line, INDEX))
-		_set_index_conf(location);
-	else if (ft::begins_with(this->_line, REDIRECTION))
-		_set_redirection_conf(location);
-	else if (ft::begins_with(this->_line, ROOT))
-		_set_root_conf(location);
-	else if (ft::begins_with(this->_line, AUTOINDEX))
-		_set_autoindex_conf(location);
-	else if (ft::begins_with(this->_line, BODY_SIZE))
-		_set_body_size_conf(location);
-	else
-		throw (LocationConfigurationError());
+	new_location.exec(this->_file_stream, this->_line);
+	server.set_location(new_location.get_location());
 }
 
 void ft::Parser::_set_server_conf(ft::ServerData &server)
@@ -189,82 +159,6 @@ void ft::Parser::_set_body_size_conf(ft::ServerData &server)
 		server.set_body_size(atoi(this->_line.c_str()));
 	else
 		throw (ServerConfigurationError());
-}
-
-void ft::Parser::_set_prefix(ft::LocationData &location)
-{
-	ft::reduce_to_value(this->_line, LOCATION_BEGIN);
-
-	std::stringstream location_line(this->_line);
-	std::string splited;
-
-	std::getline(location_line, splited, ' ');
-	location.set_prefix(splited);
-	std::getline(location_line, splited, ' ');
-	splited.erase(splited.find_last_not_of(" \t") + 1);
-	if (splited != "{")
-		throw (LocationConfigurationError());
-}
-
-void ft::Parser::_set_body_size_conf(ft::LocationData &location)
-{
-	ft::reduce_to_value(this->_line, BODY_SIZE);
-	ft::check_if_only_one_argument(this->_line);
-	if (ft::is_number(this->_line))
-		location.set_body_size(atoi(this->_line.c_str()));
-	else
-		throw (LocationConfigurationError());
-}
-
-void ft::Parser::_set_root_conf(ft::LocationData &location)
-{
-	ft::reduce_to_value(this->_line, ROOT);
-	ft::check_if_only_one_argument(this->_line);
-	location.set_root(this->_line);
-}
-
-void ft::Parser::_set_index_conf(ft::LocationData &location)
-{
-	ft::reduce_to_value(this->_line, INDEX);
-
-	std::stringstream index_line(this->_line);
-	std::string index_value;
-	while (index_line.good())
-	{
-		std::getline(index_line, index_value, ' ');
-		location.add_index(index_value);
-	}
-}
-
-void ft::Parser::_set_redirection_conf(ft::LocationData &location)
-{
-	ft::reduce_to_value(this->_line, REDIRECTION);
-	ft::check_if_only_one_argument(this->_line);
-	location.set_redirection(this->_line);
-}
-
-void ft::Parser::_set_autoindex_conf(ft::LocationData &location)
-{
-	ft::reduce_to_value(this->_line, AUTOINDEX);
-	if (this->_line == "on")
-		location.set_autoindex(true);
-	else if (this->_line == "off")
-		location.set_autoindex(false);
-	else
-		throw (LocationConfigurationError());
-}
-
-void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
-{
-	ft::reduce_to_value(this->_line, ACCEPTED_METHODS);
-	
-	std::stringstream accepted_methods_line(this->_line);
-	std::string accepted_methods_value;
-	while (accepted_methods_line.good())
-	{
-		std::getline(accepted_methods_line, accepted_methods_value, ' ');
-		location.add_accepted_method(accepted_methods_value);
-	}
 }
 
 std::vector<ft::ServerData> ft::Parser::get_servers(void)
