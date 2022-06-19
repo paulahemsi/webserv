@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:33:15 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 11:42:23 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void ft::Parser::_set_listen_conf(ft::ServerData &server)
 	ft::Listen listen;
 
 	ft::reduce_to_value(this->_line, LISTEN);
-	ft::check_if_only_one_argument(this->_line);
+	if (ft::more_than_one_argument(this->_line))
+		throw (ServerConfigurationError());
 	if (this->_line.find(":") == std::string::npos)
 	{
 		listen.set_port(this->_line);
@@ -140,21 +141,24 @@ void ft::Parser::_set_server_name_conf(ft::ServerData &server)
 void ft::Parser::_set_root_conf(ft::ServerData &server)
 {
 	ft::reduce_to_value(this->_line, ROOT);
-	ft::check_if_only_one_argument(this->_line);
+	if (ft::more_than_one_argument(this->_line))
+		throw (ServerConfigurationError());
 	server.set_root(this->_line);
 }
 
 void ft::Parser::_set_error_page_conf(ft::ServerData &server)
 {
 	ft::reduce_to_value(this->_line, ERROR_PAGE);
-	ft::check_if_only_one_argument(this->_line);
+	if (ft::more_than_one_argument(this->_line))
+		throw (ServerConfigurationError());
 	server.set_error_pages(this->_line);
 }
 
 void ft::Parser::_set_body_size_conf(ft::ServerData &server)
 {
 	ft::reduce_to_value(this->_line, BODY_SIZE);
-	ft::check_if_only_one_argument(this->_line);
+	if (ft::more_than_one_argument(this->_line))
+		throw (ServerConfigurationError());
 	if (ft::is_number(this->_line))
 		server.set_body_size(atoi(this->_line.c_str()));
 	else

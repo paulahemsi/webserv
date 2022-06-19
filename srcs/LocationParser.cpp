@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:21:51 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 11:42:51 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void ft::LocationParser::_set_prefix(void)
 void ft::LocationParser::_set_body_size_conf(void)
 {
 	ft::reduce_to_value(this->_line, BODY_SIZE);
-	ft::check_if_only_one_argument(this->_line);
+	if (ft::more_than_one_argument(this->_line))
+		throw (LocationConfigurationError());
 	if (ft::is_number(this->_line))
 		this->_location.set_body_size(atoi(this->_line.c_str()));
 	else
@@ -88,7 +89,8 @@ void ft::LocationParser::_set_body_size_conf(void)
 void ft::LocationParser::_set_root_conf(void)
 {
 	ft::reduce_to_value(this->_line, ROOT);
-	ft::check_if_only_one_argument(this->_line);
+	if (ft::more_than_one_argument(this->_line))
+		throw (LocationConfigurationError());
 	this->_location.set_root(this->_line);
 }
 
@@ -108,7 +110,8 @@ void ft::LocationParser::_set_index_conf(void)
 void ft::LocationParser::_set_redirection_conf(void)
 {
 	ft::reduce_to_value(this->_line, REDIRECTION);
-	ft::check_if_only_one_argument(this->_line);
+	if (ft::more_than_one_argument(this->_line))
+		throw (LocationConfigurationError());
 	this->_location.set_redirection(this->_line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:22:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 09:37:35 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 11:41:05 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	ft::reduce_to_value(std::string &line, const char *directive)
 	ft::trim(line, " \t");
 }
 
-bool	ft::check_if_only_one_argument(const std::string &line)
+bool	ft::more_than_one_argument(const std::string &line)
 {
 	if (line.find(' ') != std::string::npos)
-		return (false);
+		return (true);
 	if (line.find('\t') != std::string::npos)
-		return (false);
-	return (true);
+		return (true);
+	return (false);
 }
 
