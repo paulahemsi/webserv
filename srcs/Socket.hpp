@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 15:59:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 20:25:11 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ namespace ft
 			void	_create(void);
 			void	_set_infos(void);
 			void	_bind(void);
-
 
 		public:
 			Socket(ft::ServerData conf);
