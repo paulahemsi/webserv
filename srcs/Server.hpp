@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/16 14:38:17 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 09:04:44 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <sys/socket.h> //socket()
 #include <arpa/inet.h> //htons()
 #include <netinet/in.h> //sockaddr_in
+#include "ServerData.hpp"
 
 #define PORT		4444
 #define ERROR		-1
@@ -31,15 +32,16 @@ namespace ft
 			int					_port;
 			int					_fd;
 			struct	sockaddr_in	_infos;
+			ft::ServerData		_conf;
 
 			void	_create(void);
 			void	_set_infos(void);
 			void	_bind(void);
 
+			Server(void);
 
 		public:
-			Server(void);
-			Server(int port);
+			Server(ft::ServerData conf);
 			~Server(void);
 			
 			void	start_listening(int backlog);
