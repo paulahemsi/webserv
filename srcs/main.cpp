@@ -6,23 +6,45 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/16 16:05:28 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:16:43 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include "Parser.hpp"
 #include "LocationData.hpp"
+#include "ServerData.hpp"
 #include "WebServer.hpp"
 
 #define ERROR		-1
 #define BACKLOG		100
 
-int main(void)
+static bool wrong_arguments(int argc)
 {
-	ft::LocationData	location_data;
-	int				ports[2] = {4444, 4445};
-	ft::WebServer	web_server(2, ports, BACKLOG);
+	if (argc != 2)
+	{
+		std::cout << "\e[0;31mUsage: ./webserv path_to_configuration_file\e[0m" << std::endl;
+		return (true);
+	}
+	return (false);
+}
 
+static int parse_configuration_file(ft::Parser &parser, char *filename)
+{
+	try
+	{
+		parser.exec(filename);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << e.what() << '\n';
+		return(ERROR);
+	}
+	return (0);
+}
+
+int run_web_server(ft::WebServer &web_server)
+{
 	try
 	{
 		web_server.create_servers();
@@ -33,5 +55,23 @@ int main(void)
 		std::cout << e.what() << '\n';
 		return(ERROR);
 	}
+	return (0);
+}
+
+int main(int argc, char **argv)
+{
+	int				ports[2] = {4444, 4445};
+	ft::Parser		parser;
+	ft::WebServer	web_server(2, ports, BACKLOG);
+
+	if (wrong_arguments(argc))
+		return (ERROR);
+
+	if (parse_configuration_file(parser, argv[1]) == ERROR)
+		return(ERROR);
+
+	if (run_web_server(web_server) == ERROR)
+		return (ERROR);
+
 	return (0);
 }
