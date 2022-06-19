@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/18 20:16:43 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 09:13:12 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ static int parse_configuration_file(ft::Parser &parser, char *filename)
 	return (0);
 }
 
-int run_web_server(ft::WebServer &web_server)
+int run_web_server(ft::Parser &parser)
 {
+	ft::WebServer	web_server(parser.get_servers(), BACKLOG);
+	
 	try
 	{
 		web_server.create_servers();
@@ -60,9 +62,7 @@ int run_web_server(ft::WebServer &web_server)
 
 int main(int argc, char **argv)
 {
-	int				ports[2] = {4444, 4445};
 	ft::Parser		parser;
-	ft::WebServer	web_server(2, ports, BACKLOG);
 
 	if (wrong_arguments(argc))
 		return (ERROR);
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 	if (parse_configuration_file(parser, argv[1]) == ERROR)
 		return(ERROR);
 
-	if (run_web_server(web_server) == ERROR)
+	if (run_web_server(parser) == ERROR)
 		return (ERROR);
 
 	return (0);

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/16 14:39:42 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 08:32:47 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WEBSERVER_HPP
 #define WEBSERVER_HPP
 
+#include "ServerData.hpp"
 #include "Server.hpp"
 #include "Poll.hpp"
 #include "Client.hpp"
@@ -37,7 +38,7 @@ namespace ft
 
 		public:
 			WebServer(void);
-			WebServer(size_t size, int *ports, size_t backlog);
+			WebServer(std::vector<ft::ServerData> server_data, size_t backlog);
 			~WebServer(void);
 	
 			void	create_servers(void);

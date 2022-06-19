@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/16 14:40:53 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 08:49:07 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ _servers(_size)
 	return ;
 }
 
-ft::WebServer::WebServer(size_t size, int *ports, size_t backlog):
-_size(size),
+ft::WebServer::WebServer(std::vector<ft::ServerData> server_data, size_t backlog):
+_size(server_data.size()),
 _backlog(backlog),
-_servers(ports, ports + size)
+_servers(server_data.begin(), server_data.end())
 {
 	return ;
 }
