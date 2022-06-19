@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 09:04:44 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:27:34 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ namespace ft
 			void	_set_infos(void);
 			void	_bind(void);
 
-			Server(void);
-
 		public:
+			Server(void);
 			Server(ft::ServerData conf);
 			~Server(void);
 			

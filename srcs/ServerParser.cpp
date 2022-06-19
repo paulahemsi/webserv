@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:11:45 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:22:12 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void ft::ServerParser::_parse_location_block(std::ifstream &file_stream)
 void ft::ServerParser::_set_server_conf()
 {
 	if (ft::begins_with(this->_line, LISTEN))
-		_set_listen_conf();
+		_check_listen_conf();
 	else if (ft::begins_with(this->_line, SERVER_NAME))
 		_set_server_name_conf();
 	else if (ft::begins_with(this->_line, ROOT))
@@ -81,7 +81,8 @@ void ft::ServerParser::_set_server_conf()
 		throw (ServerConfigurationError());
 }
 
-void ft::ServerParser::_set_listen_conf()
+
+void ft::ServerParser::_check_listen_conf()
 {
 	ft::Listen listen;
 
@@ -89,20 +90,29 @@ void ft::ServerParser::_set_listen_conf()
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
 	if (this->_line.find(":") == std::string::npos)
-	{
-		listen.set_port(this->_line);
-	}
+		_set_port_conf(listen, this->_line);
 	else
-	{
-		std::stringstream host_port(this->_line);
-		std::string host;
-		std::string port;
-		std::getline(host_port, host, ':');
-		listen.set_host(host);
-		std::getline(host_port, port);
-		listen.set_port(port);
-	}
+		_set_listen_conf(listen);
 	this->_server.set_listen(listen);
+}
+
+void ft::ServerParser::_set_listen_conf(ft::Listen &listen)
+{
+	std::stringstream host_port(this->_line);
+	std::string host;
+	std::string port;
+	std::getline(host_port, host, ':');
+	listen.set_host(host);
+	std::getline(host_port, port);
+	_set_port_conf(listen, port);
+}
+
+void ft::ServerParser::_set_port_conf(ft::Listen &listen, std::string port)
+{
+	if (ft::is_number(port))
+		listen.set_port(atoi(port.c_str()));
+	else
+		throw (ServerConfigurationError());
 }
 
 void ft::ServerParser::_set_server_name_conf()

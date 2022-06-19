@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:49:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:10:53 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:22:01 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ namespace ft
 
 			void	_parse_location_block(std::ifstream &file_stream);
 			void	_set_server_conf(void);
-			void	_set_listen_conf(void);
+			void	_check_listen_conf(void);
+			void	_set_listen_conf(ft::Listen &listen);
+			void	_set_port_conf(ft::Listen &listen, std::string port);
 			void	_set_server_name_conf(void);
 			void	_set_error_page_conf(void);
 			void	_set_root_conf(void);

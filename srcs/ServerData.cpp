@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:09:25 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:25:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ _error_pages(""),
 _body_size(10000),
 _location(std::vector<ft::LocationData>())
 {
-	this->_listen.set_host("localhost");
-	this->_listen.set_port("80");
 	return ;
 }
 

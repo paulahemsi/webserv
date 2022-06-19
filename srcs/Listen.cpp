@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Listen.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:36 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 08:45:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:23:59 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 ft::Listen::Listen(void):
 _host(std::string()),
-_port(std::string())
+_port(int())
 {
 	return ;
 }
@@ -41,7 +41,7 @@ void ft::Listen::set_host(std::string host)
 	this->_host = host;
 }
 
-void ft::Listen::set_port(std::string port)
+void ft::Listen::set_port(int port)
 {
 	this->_port = port;
 }
@@ -53,7 +53,7 @@ std::string ft::Listen::get_host(void) const
 
 int	ft::Listen::get_port(void) const
 {
-	return (std::stoi(this->_port));
+	return (this->_port);
 }
 
 std::ostream &operator<<(std::ostream &outputFile, const ft::Listen &object)
