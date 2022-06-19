@@ -1,43 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.cpp                                         :+:      :+:    :+:   */
+/*   Socket.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:17 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 09:06:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:50:21 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
+#include "Socket.hpp"
 
-ft::Server::Server(void)
+ft::Socket::Socket(void)
 {
 	return ;
 }
 
-ft::Server::Server(ft::ServerData conf):
+ft::Socket::Socket(ft::ServerData conf):
 _port(conf.get_listen().get_port()),
 _conf(conf)
 {
 	_set_infos();
 }
 
-void	ft::Server::create()
+void	ft::Socket::create()
 {
 	_create();
 	_bind();
 }
 
-void	ft::Server::_create()
+void	ft::Socket::_create()
 {
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd == ERROR)
 		throw (CreateSocketError());
 }
 
-void	ft::Server::_set_infos()
+void	ft::Socket::_set_infos()
 {
 	memset((char*)&this->_infos, 0, sizeof(this->_infos));
 	this->_infos.sin_family = AF_INET;
@@ -45,23 +45,23 @@ void	ft::Server::_set_infos()
 	this->_infos.sin_addr.s_addr = htonl(INADDR_ANY);
 }
 
-void	ft::Server::_bind()
+void	ft::Socket::_bind()
 {
 	if (bind(this->_fd, (struct sockaddr *)&this->_infos, sizeof(this->_infos)) == ERROR)
 		throw (BindSocketError());
 }
 
-void ft::Server::start_listening(int backlog)
+void ft::Socket::start_listening(int backlog)
 {
 	listen(this->_fd, backlog);
 }
 
-int ft::Server::get_fd(void)
+int ft::Socket::get_fd(void)
 {
 	return (this->_fd);
 }
 
-ft::Server::~Server(void)
+ft::Socket::~Socket(void)
 {
 	close(this->_fd);
 }
