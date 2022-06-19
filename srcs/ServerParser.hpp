@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:49:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 12:40:45 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:10:53 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ namespace ft
 
 		public:
 			ServerParser(void);
+			ServerParser(ft::ServerParser const &other);
 			~ServerParser(void);
+
+			ft::ServerParser	&operator=(ft::ServerParser const &right_hand_side);
 
 			void				exec(std::ifstream &file_stream, std::string line);
 			ft::ServerData		get_server(void);

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 12:43:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:11:45 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ ft::ServerParser::ServerParser(void)
 ft::ServerParser::~ServerParser(void)
 {
 	return ;
+}
+
+ft::ServerParser::ServerParser(ft::ServerParser const &other)
+{
+	*this = other;
+}
+
+ft::ServerParser &ft::ServerParser::operator=(ft::ServerParser const &right_hand_side)
+{
+	this->_server = right_hand_side._server;
+	this->_line = right_hand_side._line;
+	return (*this);
 }
 
 void ft::ServerParser::exec(std::ifstream &file_stream, std::string line)
