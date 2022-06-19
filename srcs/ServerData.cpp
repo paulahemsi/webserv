@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:25:46 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:45:14 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void ft::ServerData::set_listen(ft::Listen listen)
 }
 
 
-void ft::ServerData::set_server_name(std::string new_server_name)
+void ft::ServerData::add_server_name(std::string new_server_name)
 {
 	this->_server_name.push_back(new_server_name);
 }
@@ -100,7 +100,7 @@ void ft::ServerData::set_body_size(int size_limit)
 	this->_body_size = size_limit;
 }
 
-void ft::ServerData::set_location(ft::LocationData new_location_block)
+void ft::ServerData::add_location(ft::LocationData new_location_block)
 {
 	this->_location.push_back(new_location_block);
 }

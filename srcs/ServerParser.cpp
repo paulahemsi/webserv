@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:22:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:45:42 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void ft::ServerParser::_parse_location_block(std::ifstream &file_stream)
 	ft::LocationParser new_location;
 
 	new_location.exec(file_stream, this->_line);
-	this->_server.set_location(new_location.get_location());
+	this->_server.add_location(new_location.get_location());
 }
 
 void ft::ServerParser::_set_server_conf()
@@ -124,7 +124,7 @@ void ft::ServerParser::_set_server_name_conf()
 	while (server_name_line.good())
 	{
 		std::getline(server_name_line, server_name_value, ' ');
-		this->_server.set_server_name(server_name_value);
+		this->_server.add_server_name(server_name_value);
 	}
 }
 
