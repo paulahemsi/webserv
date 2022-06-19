@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 20:09:34 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 09:41:47 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include "ServerData.hpp"
 #include "LocationData.hpp"
+#include "parser_utils.hpp"
 
 #define SERVER_BEGIN "server {"
 #define SERVER_END "};"
@@ -65,13 +66,6 @@ namespace ft
 			void	_set_redirection_conf(ft::LocationData &location);
 			void	_set_autoindex_conf(ft::LocationData &location);
 			void	_set_accepted_methods_conf(ft::LocationData &location);
-
-			bool	_line_is_not_empty(void);
-			bool	_line_is_number(void);
-			bool	_line_begins_with(const char *directive);
-			void	_trim_line(const std::string chars_to_trim);
-			void	_reduce_line_to_value(const char *directive);
-			void	_check_if_only_one_argument(void);
 
 		public:
 			Parser(void);

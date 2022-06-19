@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 20:11:21 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 09:42:27 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,34 +41,12 @@ void ft::Parser::exec(const char* filename)
 	_parse_file();
 }
 
-void ft::Parser::_trim_line(const std::string chars_to_trim)
-{
-	this->_line.erase(this->_line.find_last_not_of(chars_to_trim) + 1);
-	this->_line.erase(0, this->_line.find_first_not_of(chars_to_trim));
-}
-
-bool ft::Parser::_line_is_not_empty(void)
-{
-	_trim_line(" \t");
-	return (this->_line != "");
-}
-
-bool ft::Parser::_line_is_number(void)
-{
-	return (this->_line.find_first_not_of("0123456789") == std::string::npos);
-}
-
-bool ft::Parser::_line_begins_with(const char *directive)
-{
-	return (this->_line.find(directive, 0) == 0);
-}
-
 void ft::Parser::_parse_file(void)
 {
 	while (this->_file_stream.good())
 	{
 		std::getline(this->_file_stream, this->_line);
-		if (_line_is_not_empty())
+		if (ft::is_not_empty(this->_line))
 		{
 			if (this->_line == SERVER_BEGIN)
 				_parse_server_block();
@@ -85,7 +63,7 @@ void ft::Parser::_parse_server_block(void)
 	while (this->_file_stream.good())
 	{
 		std::getline(this->_file_stream, this->_line);
-		if (_line_is_not_empty())
+		if (ft::is_not_empty(this->_line))
 		{
 			if (this->_line == SERVER_END)
 			{
@@ -105,7 +83,7 @@ void ft::Parser::_parse_location_block(ft::ServerData &server)
 	while (this->_file_stream.good())
 	{
 		std::getline(this->_file_stream, this->_line);
-		if (_line_is_not_empty())
+		if (ft::is_not_empty(this->_line))
 		{
 			if (this->_line == LOCATION_END)
 			{
@@ -119,17 +97,17 @@ void ft::Parser::_parse_location_block(ft::ServerData &server)
 
 void ft::Parser::_set_location_conf(ft::LocationData &location)
 {
-	if (_line_begins_with(ACCEPTED_METHODS))
+	if (ft::begins_with(this->_line, ACCEPTED_METHODS))
 		_set_accepted_methods_conf(location);
-	else if (_line_begins_with(INDEX))
+	else if (ft::begins_with(this->_line, INDEX))
 		_set_index_conf(location);
-	else if (_line_begins_with(REDIRECTION))
+	else if (ft::begins_with(this->_line, REDIRECTION))
 		_set_redirection_conf(location);
-	else if (_line_begins_with(ROOT))
+	else if (ft::begins_with(this->_line, ROOT))
 		_set_root_conf(location);
-	else if (_line_begins_with(AUTOINDEX))
+	else if (ft::begins_with(this->_line, AUTOINDEX))
 		_set_autoindex_conf(location);
-	else if (_line_begins_with(BODY_SIZE))
+	else if (ft::begins_with(this->_line, BODY_SIZE))
 		_set_body_size_conf(location);
 	else
 		throw (LocationConfigurationError());
@@ -137,17 +115,17 @@ void ft::Parser::_set_location_conf(ft::LocationData &location)
 
 void ft::Parser::_set_server_conf(ft::ServerData &server)
 {
-	if (_line_begins_with(LOCATION_BEGIN))
+	if (ft::begins_with(this->_line, LOCATION_BEGIN))
 		_parse_location_block(server);
-	else if (_line_begins_with(LISTEN))
+	else if (ft::begins_with(this->_line, LISTEN))
 		_set_listen_conf(server);
-	else if (_line_begins_with(SERVER_NAME))
+	else if (ft::begins_with(this->_line, SERVER_NAME))
 		_set_server_name_conf(server);
-	else if (_line_begins_with(ROOT))
+	else if (ft::begins_with(this->_line, ROOT))
 		_set_root_conf(server);
-	else if (_line_begins_with(ERROR_PAGE))
+	else if (ft::begins_with(this->_line, ERROR_PAGE))
 		_set_error_page_conf(server);
-	else if (_line_begins_with(BODY_SIZE))
+	else if (ft::begins_with(this->_line, BODY_SIZE))
 		_set_body_size_conf(server);
 	else
 		throw (ServerConfigurationError());
@@ -157,8 +135,8 @@ void ft::Parser::_set_listen_conf(ft::ServerData &server)
 {
 	ft::Listen listen;
 
-	_reduce_line_to_value(LISTEN);
-	_check_if_only_one_argument();
+	ft::reduce_to_value(this->_line, LISTEN);
+	ft::check_if_only_one_argument(this->_line);
 	if (this->_line.find(":") == std::string::npos)
 	{
 		listen.set_port(this->_line);
@@ -178,7 +156,7 @@ void ft::Parser::_set_listen_conf(ft::ServerData &server)
 
 void ft::Parser::_set_server_name_conf(ft::ServerData &server)
 {
-	_reduce_line_to_value(SERVER_NAME);
+	ft::reduce_to_value(this->_line, SERVER_NAME);
 
 	std::stringstream server_name_line(this->_line);
 	std::string server_name_value;
@@ -191,37 +169,31 @@ void ft::Parser::_set_server_name_conf(ft::ServerData &server)
 
 void ft::Parser::_set_root_conf(ft::ServerData &server)
 {
-	_reduce_line_to_value(ROOT);
-	_check_if_only_one_argument();
+	ft::reduce_to_value(this->_line, ROOT);
+	ft::check_if_only_one_argument(this->_line);
 	server.set_root(this->_line);
 }
 
 void ft::Parser::_set_error_page_conf(ft::ServerData &server)
 {
-	_reduce_line_to_value(ERROR_PAGE);
-	_check_if_only_one_argument();
+	ft::reduce_to_value(this->_line, ERROR_PAGE);
+	ft::check_if_only_one_argument(this->_line);
 	server.set_error_pages(this->_line);
 }
 
 void ft::Parser::_set_body_size_conf(ft::ServerData &server)
 {
-	_reduce_line_to_value(BODY_SIZE);
-	_check_if_only_one_argument();
-	if (_line_is_number())
+	ft::reduce_to_value(this->_line, BODY_SIZE);
+	ft::check_if_only_one_argument(this->_line);
+	if (ft::is_number(this->_line))
 		server.set_body_size(atoi(this->_line.c_str()));
 	else
 		throw (ServerConfigurationError());
 }
 
-void ft::Parser::_reduce_line_to_value(const char *directive)
-{
-	this->_line.erase(0, strlen(directive));
-	_trim_line(" \t");
-}
-
 void ft::Parser::_set_prefix(ft::LocationData &location)
 {
-	_reduce_line_to_value(LOCATION_BEGIN);
+	ft::reduce_to_value(this->_line, LOCATION_BEGIN);
 
 	std::stringstream location_line(this->_line);
 	std::string splited;
@@ -236,9 +208,9 @@ void ft::Parser::_set_prefix(ft::LocationData &location)
 
 void ft::Parser::_set_body_size_conf(ft::LocationData &location)
 {
-	_reduce_line_to_value(BODY_SIZE);
-	_check_if_only_one_argument();
-	if (_line_is_number())
+	ft::reduce_to_value(this->_line, BODY_SIZE);
+	ft::check_if_only_one_argument(this->_line);
+	if (ft::is_number(this->_line))
 		location.set_body_size(atoi(this->_line.c_str()));
 	else
 		throw (LocationConfigurationError());
@@ -246,14 +218,14 @@ void ft::Parser::_set_body_size_conf(ft::LocationData &location)
 
 void ft::Parser::_set_root_conf(ft::LocationData &location)
 {
-	_reduce_line_to_value(ROOT);
-	_check_if_only_one_argument();
+	ft::reduce_to_value(this->_line, ROOT);
+	ft::check_if_only_one_argument(this->_line);
 	location.set_root(this->_line);
 }
 
 void ft::Parser::_set_index_conf(ft::LocationData &location)
 {
-	_reduce_line_to_value(INDEX);
+	ft::reduce_to_value(this->_line, INDEX);
 
 	std::stringstream index_line(this->_line);
 	std::string index_value;
@@ -266,14 +238,14 @@ void ft::Parser::_set_index_conf(ft::LocationData &location)
 
 void ft::Parser::_set_redirection_conf(ft::LocationData &location)
 {
-	_reduce_line_to_value(REDIRECTION);
-	_check_if_only_one_argument();
+	ft::reduce_to_value(this->_line, REDIRECTION);
+	ft::check_if_only_one_argument(this->_line);
 	location.set_redirection(this->_line);
 }
 
 void ft::Parser::_set_autoindex_conf(ft::LocationData &location)
 {
-	_reduce_line_to_value(AUTOINDEX);
+	ft::reduce_to_value(this->_line, AUTOINDEX);
 	if (this->_line == "on")
 		location.set_autoindex(true);
 	else if (this->_line == "off")
@@ -284,7 +256,7 @@ void ft::Parser::_set_autoindex_conf(ft::LocationData &location)
 
 void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
 {
-	_reduce_line_to_value(ACCEPTED_METHODS);
+	ft::reduce_to_value(this->_line, ACCEPTED_METHODS);
 	
 	std::stringstream accepted_methods_line(this->_line);
 	std::string accepted_methods_value;
@@ -293,14 +265,6 @@ void ft::Parser::_set_accepted_methods_conf(ft::LocationData &location)
 		std::getline(accepted_methods_line, accepted_methods_value, ' ');
 		location.add_accepted_method(accepted_methods_value);
 	}
-}
-
-void ft::Parser::_check_if_only_one_argument(void)
-{ 
-	if (this->_line.find(' ') != std::string::npos)
-		throw (LocationConfigurationError());
-	if (this->_line.find('\t') != std::string::npos)
-		throw (LocationConfigurationError());
 }
 
 std::vector<ft::ServerData> ft::Parser::get_servers(void)
