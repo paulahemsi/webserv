@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 20:58:25 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 11:31:17 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ std::string ft::ServerData::server_name_to_string(void) const
 	for (size_t i = 0; i < this->_server_name.size(); i++)
 	{
 		server_name_str += this->_server_name[i];
-		server_name_str += "\n";
+		server_name_str += " ";
 	}
 	return (server_name_str);
 }
@@ -105,15 +105,16 @@ std::string ft::ServerData::server_name_to_string(void) const
 std::ostream &operator<<(std::ostream &outputFile, const ft::ServerData &object)
 {
 	ft::LocationData location_data_str;
-	
-	for (size_t i = 0; i < object.get_location().size(); i++)
-		outputFile	<< object.get_location()[i];
 
-	outputFile	<< "Listen: " << object.get_listen() << std::endl
+	outputFile	<< "Listen: " << std::endl << object.get_listen()
 				<< "Server Name: " << object.server_name_to_string() << std::endl
 				<< "Root : " << object.get_root() << std::endl
 				<< "BodySize : " << object.get_body_size() << std::endl
-				<< "Error Page: " << object.get_error_pages() << std::endl;
+				<< "Error Page: " << object.get_error_pages() << std::endl
+				<< "Location: " << std::endl;
+
+	for (size_t i = 0; i < object.get_location().size(); i++)
+		outputFile	<< object.get_location()[i];
 
 	return outputFile;
 }
