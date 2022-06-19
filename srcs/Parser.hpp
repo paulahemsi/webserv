@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:09:20 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 12:50:31 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,10 @@
 #include <string>
 #include <string.h>
 #include "ServerData.hpp"
-#include "LocationData.hpp"
 #include "parser_utils.hpp"
-#include "LocationParser.hpp"
+#include "ServerParser.hpp"
 
 #define SERVER_BEGIN "server {"
-#define SERVER_END "};"
-#define LOCATION_BEGIN "location"
-#define LOCATION_END "}"
-#define LISTEN "listen"
-#define SERVER_NAME "server_name"
-#define ROOT "root"
-#define ERROR_PAGE "error_page"
-#define BODY_SIZE "client_body_size"
-#define ACCEPTED_METHODS "accepted_methods"
-#define INDEX "index"
-#define REDIRECTION "redirection"
-#define AUTOINDEX "autoindex"
 
 namespace ft
 {
@@ -49,15 +36,6 @@ namespace ft
 
 			void	_parse_file(void);
 			void	_parse_server_block(void);
-			void	_parse_location_block(ft::ServerData &server);
-
-			void	_set_server_conf(ft::ServerData &server);
-			void	_set_location_conf(ft::LocationData &location);
-			void	_set_listen_conf(ft::ServerData &server);
-			void	_set_server_name_conf(ft::ServerData &server);
-			void	_set_error_page_conf(ft::ServerData &server);
-			void	_set_root_conf(ft::ServerData &server);
-			void	_set_body_size_conf(ft::ServerData &server);
 
 		public:
 			Parser(void);
@@ -66,8 +44,8 @@ namespace ft
 			
 			ft::Parser	&operator=(ft::Parser const &right_hand_side);
 
-			void		exec(const char* filename);
-			std::vector<ft::ServerData> get_servers(void);
+			void						exec(const char* filename);
+			std::vector<ft::ServerData>	get_servers(void) const ;
 			
 			class OpenFileError : public std::exception
 			{
@@ -88,5 +66,7 @@ namespace ft
 			};
 	};
 }
+
+std::ostream &operator<<(std::ostream &outputFile, const ft::Parser &object);
 
 #endif
