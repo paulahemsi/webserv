@@ -15,7 +15,7 @@ SRCS		:=	main.cpp \
 				Listen.cpp \
 				ServerData.cpp \
 				WebServer.cpp \
-				Server.cpp \
+				Socket.cpp \
 				Poll.cpp \
 				Client.cpp \
 				Request.cpp \
@@ -29,7 +29,7 @@ HEADER		=	Parser.hpp \
 				Listen.hpp \
 				ServerData.hpp \
 				WebServer.hpp \
-				Server.hpp \
+				Socket.hpp \
 				Poll.hpp \
 				Client.hpp \
 				Request.hpp \

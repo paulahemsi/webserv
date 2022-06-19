@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.hpp                                         :+:      :+:    :+:   */
+/*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 09:04:44 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:59:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 namespace ft
 {
-	class Server
+	class Socket
 	{
 		private:
 			int					_port;
@@ -38,11 +38,11 @@ namespace ft
 			void	_set_infos(void);
 			void	_bind(void);
 
-			Server(void);
 
 		public:
-			Server(ft::ServerData conf);
-			~Server(void);
+			Socket(ft::ServerData conf);
+			Socket(void);
+			~Socket(void);
 			
 			void	start_listening(int backlog);
 			void	create(void);
