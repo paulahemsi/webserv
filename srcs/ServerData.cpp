@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:31:17 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:09:25 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ _location(std::vector<ft::LocationData>())
 	this->_listen.set_host("localhost");
 	this->_listen.set_port("80");
 	return ;
+}
+
+ft::ServerData::ServerData(ft::ServerData const &other)
+{
+	*this = other;
+}
+
+ft::ServerData &ft::ServerData::operator=(ft::ServerData const &right_hand_side)
+{
+	this->_listen = right_hand_side._listen;
+	this->_server_name = right_hand_side._server_name;
+	this->_root = right_hand_side._root;
+	this->_error_pages = right_hand_side._error_pages;
+	this->_body_size = right_hand_side._body_size;
+	this->_location = right_hand_side._location;
+	return (*this);
 }
 
 ft::ServerData::~ServerData(void)
