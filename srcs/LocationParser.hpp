@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:43:39 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:34:35 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:04:36 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,11 @@ namespace ft
 
 		public:
 			LocationParser(void);
+			LocationParser(ft::LocationParser const &other);
 			~LocationParser(void);
-			
+
+			ft::LocationParser	&operator=(ft::LocationParser const &right_hand_side);
+
 			void				exec(std::ifstream &file_stream, std::string line);
 			ft::LocationData	get_location(void);
 

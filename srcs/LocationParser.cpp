@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:42:51 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:05:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 ft::LocationParser::LocationParser(void)
 {
 	return ;
+}
+
+ft::LocationParser::LocationParser(ft::LocationParser const &other)
+{
+	*this = other;
+}
+
+ft::LocationParser &ft::LocationParser::operator=(ft::LocationParser const &right_hand_side)
+{
+	this->_location = right_hand_side._location;
+	this->_line = right_hand_side._line;
+	return (*this);
 }
 
 ft::LocationParser::~LocationParser(void)
