@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:17 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/16 14:33:41 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 09:06:35 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
-ft::Server::Server(void): _port(PORT)
+ft::Server::Server(void)
 {
-	_set_infos();
+	return ;
 }
 
-ft::Server::Server(int port): _port(port)
+ft::Server::Server(ft::ServerData conf):
+_port(conf.get_listen().get_port()),
+_conf(conf)
 {
 	_set_infos();
 }
