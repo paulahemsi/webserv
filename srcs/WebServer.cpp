@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/20 20:55:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:19:37 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ ft::WebServer::WebServer(std::vector<ft::ServerData> server_data, size_t backlog
 _size(server_data.size()),
 _backlog(backlog)
 {
-	std::map<int, std::vector<ft::ServerData> > ports;
+	server_data_map ports;
 
-	for (size_t i = 0; i < server_data.size(); i++)
-	{
-		int port = server_data[i].get_listen().get_port();
-		ports[port].push_back(server_data[i]);
-	}
-	
-	std::map<int, std::vector<ft::ServerData> >::iterator it_begin = ports.begin();
-	std::map<int, std::vector<ft::ServerData> >::iterator it_end = ports.end();
+	ports = _group_servers_by_port(server_data);
+	_init_servers(ports);
+}
+
+void ft::WebServer::_init_servers(ft::WebServer::server_data_map &ports)
+{
+	server_data_map::iterator it_begin = ports.begin();
+	server_data_map::iterator it_end = ports.end();
 	
 	for (; it_begin != it_end; it_begin++)
 	{
@@ -38,6 +38,18 @@ _backlog(backlog)
 		_servers.push_back(new_server);
 	}
 	return ;
+}
+
+ft::WebServer::server_data_map ft::WebServer::_group_servers_by_port(std::vector<ft::ServerData> server_data)
+{
+	server_data_map ports;
+
+	for (size_t i = 0; i < server_data.size(); i++)
+	{
+		int port = server_data[i].get_listen().get_port();
+		ports[port].push_back(server_data[i]);
+	}
+	return (ports);
 }
 
 void	ft::WebServer::create_servers(void)

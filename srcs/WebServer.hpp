@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/20 20:51:17 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:17:54 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ namespace ft
 {
 	class WebServer
 	{
+		typedef std::map<int, std::vector<ft::ServerData> > server_data_map;
+
 		private:
 			size_t					_size;
 			size_t					_backlog;
@@ -36,6 +38,9 @@ namespace ft
 			void	_check_event(ft::Poll &poll, size_t index);
 			bool	_check_event_mask(short revent);
 			void	_connect_with_client(ft::Server &server);
+
+			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
+			void			_init_servers(server_data_map &ports);
 
 		public:
 			WebServer(void);
