@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:17 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 15:50:21 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:25:47 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ ft::Socket::Socket(void)
 	return ;
 }
 
-ft::Socket::Socket(ft::ServerData conf):
-_port(conf.get_listen().get_port()),
-_conf(conf)
+ft::Socket::Socket(int port, std::vector<ft::ServerData> confs):
+_port(port),
+_conf(confs)
 {
 	_set_infos();
 }

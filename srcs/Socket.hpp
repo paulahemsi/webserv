@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 20:25:11 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:26:09 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ namespace ft
 	class Socket
 	{
 		private:
-			int					_port;
-			int					_fd;
-			struct	sockaddr_in	_infos;
-			ft::ServerData		_conf;
+			int							_port;
+			int							_fd;
+			struct	sockaddr_in			_infos;
+			std::vector<ft::ServerData>	_conf;
 
-			void	_create(void);
-			void	_set_infos(void);
-			void	_bind(void);
+			void						_create(void);
+			void						_set_infos(void);
+			void						_bind(void);
 
 		public:
-			Socket(ft::ServerData conf);
 			Socket(void);
+			Socket(int port, std::vector<ft::ServerData> confs);
 			~Socket(void);
 			
 			void	start_listening(int backlog);

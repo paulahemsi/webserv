@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 12:50:31 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 16:54:14 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ namespace ft
 
 			void						exec(const char* filename);
 			std::vector<ft::ServerData>	get_servers(void) const ;
-			
+			std::vector<ft::ServerData>	get_servers(int port) const ;
+
 			class OpenFileError : public std::exception
 			{
 				public:

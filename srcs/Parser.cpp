@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 12:50:22 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/19 16:56:20 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,18 @@ std::vector<ft::ServerData> ft::Parser::get_servers(void) const
 {
 	return (this->_servers);
 }
+
+std::vector<ft::ServerData> ft::Parser::get_servers(int port) const
+{
+	std::vector<ft::ServerData> servers;
+
+	for (size_t i = 0; i < this->_servers.size(); i++)
+		if (this->_servers[i].get_listen().get_port() == port)
+			servers.push_back(this->_servers[i]);
+	
+	return (servers);
+}
+
 
 std::ostream &operator<<(std::ostream &outputFile, const ft::Parser &object)
 {
