@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/19 08:32:47 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:51:17 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "Request.hpp"
 #include "Response.hpp"
 #include <vector>
+#include <map>
 
 namespace ft
 {
