@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/20 21:19:37 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:27:14 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void ft::WebServer::_init_servers(ft::WebServer::server_data_map &ports)
 	
 	for (; it_begin != it_end; it_begin++)
 	{
-		ft::Server new_server(it_begin->first, it_begin->second);
-		_servers.push_back(new_server);
+		ft::Socket new_server(it_begin->first, it_begin->second);
+		_sockets.push_back(new_server);
 	}
 	return ;
 }
@@ -52,13 +52,13 @@ ft::WebServer::server_data_map ft::WebServer::_group_servers_by_port(std::vector
 	return (ports);
 }
 
-void	ft::WebServer::create_servers(void)
+void	ft::WebServer::create_sockets(void)
 {
-	std::vector<ft::Server>::iterator server;
+	std::vector<ft::Socket>::iterator socket;
 
-	server = this->_servers.begin();
-	for (; server != this->_servers.end(); server++)
-		server->create();
+	socket = this->_sockets.begin();
+	for (; socket != this->_sockets.end(); socket++)
+		socket->create();
 }
 
 void	ft::WebServer::run(void)
@@ -69,7 +69,7 @@ void	ft::WebServer::run(void)
 
 void ft::WebServer::_event_loop(void)
 {
-	Poll	poll(this->_servers);
+	Poll	poll(this->_sockets);
 
 	std::cout << "waiting........." << std::endl;
 	while (true)
@@ -80,13 +80,13 @@ void ft::WebServer::_event_loop(void)
 	}
 }
 
-void	ft::WebServer::_connect_with_client(ft::Server &server)
+void	ft::WebServer::_connect_with_client(ft::Socket &socket)
 {
 	ft::Client	client;
 	size_t		size = 10000;
 	char		buffer[size];
 
-	client.connect(server.get_fd());
+	client.connect(socket.get_fd());
 	while(client.send_request(buffer, size))
 	{
 		ft::Request	request(buffer);
@@ -99,16 +99,16 @@ void	ft::WebServer::_connect_with_client(ft::Server &server)
 void	ft::WebServer::_check_event(ft::Poll &poll, size_t index)
 {
 	if (this->_check_event_mask(poll.get_event_return(index)))
-		this->_connect_with_client(poll.get_server(index));
+		this->_connect_with_client(poll.get_socket(index));
 }
 
 void ft::WebServer::_start_listening(void)
 {
-	std::vector<ft::Server>::iterator server;
+	std::vector<ft::Socket>::iterator socket;
 
-	server = this->_servers.begin();
-	for (; server != this->_servers.end(); server++)
-		server->start_listening(this->_backlog);
+	socket = this->_sockets.begin();
+	for (; socket != this->_sockets.end(); socket++)
+		socket->start_listening(this->_backlog);
 }
 
 bool	ft::WebServer::_check_event_mask(short revents)
