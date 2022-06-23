@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:17 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/20 21:25:47 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/22 21:40:26 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Socket.hpp"
 
-ft::Socket::Socket(void)
+ft::Socket::Socket(void):
+_fd(-1)
 {
 	return ;
 }
 
 ft::Socket::Socket(int port, std::vector<ft::ServerData> confs):
 _port(port),
+_fd(-1),
 _conf(confs)
 {
 	_set_infos();
