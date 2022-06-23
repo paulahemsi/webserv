@@ -12,7 +12,7 @@ body {
     background-color: #17046D;
 }
 
-.tabuleiro {
+.board {
     width: 700px;
     width: 700px;
     display: flex;
@@ -22,7 +22,7 @@ body {
 }
 
 
-.cartas {
+.carts {
     width: calc(20% - 3px);
     height: calc(25% - 3px);
     margin: 1.5px;
