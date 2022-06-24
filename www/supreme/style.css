@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {      
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #17046D;
+}
+
+.board {
+    width: 700px;
+    width: 700px;
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+.carts {
+    width: calc(20% - 3px);
+    height: calc(25% - 3px);
+    margin: 1.5px;
+    position: relative;
+    transform: scale(1);
+}
+
+.cartas:active {
+    transform: scale(.95);
+    transition: transform .2s;
+}
