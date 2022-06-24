@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/23 20:55:19 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:59:12 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,15 @@ void ft::WebServer::_event_loop(void)
 	}
 }
 
+ft::ServerData	ft::WebServer::_define_server_block(std::string	server_name, ft::Socket *socket)
+{
+	std::vector<ft::ServerData>	confs;
+
+	std::cout << server_name << std::endl;
+	confs = socket->get_confs();
+	return (confs[0]);
+}
+
 void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 {
 	ft::Client	client;
@@ -91,6 +100,8 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	{
 		ft::Request	request(buffer);
 		std::cout << "Executing the request" << std::endl;
+		ft::ServerData	server_data;
+		server_data = _define_server_block(request.get_server_name(), socket);
 		ft::Response response;
 		response.send(client.get_fd());
 	}

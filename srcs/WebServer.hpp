@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/23 20:01:50 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:59:45 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ namespace ft
 			void	_check_event(ft::Poll &poll, size_t index);
 			bool	_check_event_mask(short revent);
 			void	_connect_with_client(ft::Socket *socket);
-
-			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
+			
 			void			_init_servers(server_data_map &ports);
+			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
+			ft::ServerData	_define_server_block(std::string server_name, ft::Socket *socket);
 
 		public:
 			WebServer(void);
