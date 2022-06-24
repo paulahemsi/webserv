@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/24 20:18:50 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/24 20:44:47 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,11 @@ bool	ft::WebServer::_is_server_name_match(std::string request_server_name, std::
 	return (false);
 }
 
-ft::ServerData	ft::WebServer::_define_server_block(std::string	server_name, ft::Socket *socket)
+ft::ServerData	ft::WebServer::_define_server_block(std::string server_name, server_data_vector confs)
 {
-	server_data_vector confs;
-
-	std::cout << server_name << std::endl;
-	confs = socket->get_confs();
-	
 	server_data_vector::iterator it = confs.begin();
 	server_data_vector::iterator it_end = confs.end();
+
 	for (; it != it_end; it++)
 		if (_is_server_name_match(server_name, it->get_server_name()))
 			return (*it);
@@ -116,7 +112,7 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 		std::cout << "Executing the request" << std::endl;
 		
 		ft::ServerData	server_data;
-		server_data = _define_server_block(request.get_server_name(), socket);
+		server_data = _define_server_block(request.get_server_name(), socket->get_confs());
 		std::cout << server_data << std::endl;
 		
 		ft::Response response;

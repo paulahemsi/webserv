@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/24 20:18:50 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/24 20:44:02 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft
 			
 			void			_init_servers(server_data_map &ports);
 			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
-			ft::ServerData	_define_server_block(std::string server_name, ft::Socket *socket);
+			ft::ServerData	_define_server_block(std::string server_name, server_data_vector confs);
 			bool			_is_server_name_match(std::string request_server_name, std::vector<std::string> server_names);
 
 		public:
