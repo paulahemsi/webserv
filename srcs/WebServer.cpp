@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/24 23:00:06 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/24 23:05:17 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,14 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	{
 		ft::Request	request(buffer);
 		request.debugging_request();
+
+		ft::ServerData	server_data;
+		ft::LocationData	location_data;
+		server_data = _select_server(request.get_server_name(), socket->get_confs());
 		try
 		{
-			std::cout << "*************\n" << this->_select_location(request.get_request_field("URI"), socket->get_confs()[0]).get_prefix() << std::endl;
+			location_data = this->_select_location(request.get_request_field("URI"), server_data);
+			std::cout << location_data << std::endl;
 		}
 		catch(const std::exception& e)
 		{
@@ -120,11 +125,6 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 		}
 		
 		std::cout << "Executing the request" << std::endl;
-		
-		ft::ServerData	server_data;
-		server_data = _select_server(request.get_server_name(), socket->get_confs());
-		//std::cout << server_data << std::endl;
-		
 		ft::Response response;
 		response.send(client.get_fd());
 	}
