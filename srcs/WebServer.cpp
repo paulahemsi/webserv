@@ -80,12 +80,11 @@ void ft::WebServer::_event_loop(void)
 	}
 }
 
-bool	ft::WebServer::_is_server_name_match(std::string request_server_name, std::vector<std::string> server_names)
-{
-	for (size_t i = 0; i < server_names.size(); i++)
-		if (server_names[i] == request_server_name)
-			return (true);
-	return (false);
+int	ft::WebServer::_is_match(std::string name, std::vector<std::string> names)
+	for (size_t i = 0; i < names.size(); i++)
+		if (names[i] == name)
+			return (i);
+	return (ERROR);
 }
 
 ft::ServerData	ft::WebServer::_define_server_block(std::string server_name, server_data_vector confs)
@@ -94,7 +93,7 @@ ft::ServerData	ft::WebServer::_define_server_block(std::string server_name, serv
 	server_data_vector::iterator it_end = confs.end();
 
 	for (; it != it_end; it++)
-		if (_is_server_name_match(server_name, it->get_server_name()))
+		if (_is_match(server_name, it->get_server_name()) != ERROR)
 			return (*it);
 	return (confs[0]);
 }
@@ -112,7 +111,7 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 		std::cout << "Executing the request" << std::endl;
 		
 		ft::ServerData	server_data;
-		server_data = _define_server_block(request.get_server_name(), socket->get_confs());
+		server_data = _select_server(request.get_server_name(), socket->get_confs());
 		std::cout << server_data << std::endl;
 		
 		ft::Response response;

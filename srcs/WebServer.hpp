@@ -42,8 +42,8 @@ namespace ft
 			
 			void			_init_servers(server_data_map &ports);
 			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
-			ft::ServerData	_define_server_block(std::string server_name, server_data_vector confs);
-			bool			_is_server_name_match(std::string request_server_name, std::vector<std::string> server_names);
+			ft::ServerData	_select_server(std::string server_name, server_data_vector confs);
+			bool			_is_match(std::string request_server_name, std::vector<std::string> server_names);
 
 		public:
 			WebServer(void);
