@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/23 20:55:19 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/24 20:44:47 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,24 @@ void ft::WebServer::_event_loop(void)
 	}
 }
 
+int	ft::WebServer::_is_match(std::string name, std::vector<std::string> names)
+	for (size_t i = 0; i < names.size(); i++)
+		if (names[i] == name)
+			return (i);
+	return (ERROR);
+}
+
+ft::ServerData	ft::WebServer::_define_server_block(std::string server_name, server_data_vector confs)
+{
+	server_data_vector::iterator it = confs.begin();
+	server_data_vector::iterator it_end = confs.end();
+
+	for (; it != it_end; it++)
+		if (_is_match(server_name, it->get_server_name()) != ERROR)
+			return (*it);
+	return (confs[0]);
+}
+
 void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 {
 	ft::Client	client;
@@ -91,6 +109,11 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	{
 		ft::Request	request(buffer);
 		std::cout << "Executing the request" << std::endl;
+		
+		ft::ServerData	server_data;
+		server_data = _select_server(request.get_server_name(), socket->get_confs());
+		std::cout << server_data << std::endl;
+		
 		ft::Response response;
 		response.send(client.get_fd());
 	}
