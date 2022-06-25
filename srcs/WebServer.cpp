@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/25 10:44:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/25 17:26:42 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,23 @@ ft::ServerData	ft::WebServer::_select_server(std::string server_name, server_dat
 	return (confs[0]);
 }
 
+void	ft::WebServer::_execute_request(std::string server_name, std::string uri, server_data_vector confs)
+{
+	ft::ServerData		server_data;
+	ft::LocationData	location_data;
+	std::cout << "Executing the request" << std::endl;
+	server_data = _select_server(server_name, confs);
+	try
+	{
+		location_data = this->_select_location(uri, server_data);
+		std::cout << location_data << "********************************************************" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << e.what() << '\n';
+	}
+}
+
 void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 {
 	ft::Client	client;
@@ -110,21 +127,7 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	{
 		ft::Request	request(buffer);
 		request.debugging_request();
-
-		ft::ServerData	server_data;
-		ft::LocationData	location_data;
-		server_data = _select_server(request.get_server_name(), socket->get_confs());
-		try
-		{
-			location_data = this->_select_location(request.get_request_field("URI"), server_data);
-			std::cout << location_data << std::endl;
-		}
-		catch(const std::exception& e)
-		{
-			std::cout << e.what() << '\n';
-		}
-		
-		std::cout << "Executing the request" << std::endl;
+		_execute_request(request.get_server_name(), request.get_request_field("URI"), socket->get_confs());
 		ft::Response response;
 		response.send(client.get_fd());
 	}
@@ -158,7 +161,7 @@ bool	ft::WebServer::_check_event_mask(short revents)
 	return (false);
 }
 
-std::priority_queue<ft::LocationData>	ft::WebServer::_check_locations(std::string uri, ft::ServerData &server)
+ft::WebServer::location_data_queue	ft::WebServer::_check_locations(std::string uri, ft::ServerData &server)
 {
 	std::priority_queue<ft::LocationData> locations;
 	for (size_t i = 0; i < server.get_location().size(); i++)
