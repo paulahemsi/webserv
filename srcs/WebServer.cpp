@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/23 20:55:19 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:51:09 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,16 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	while(client.send_request(buffer, size))
 	{
 		ft::Request	request(buffer);
+		request.debugging_request();
+		try
+		{
+			std::cout << "*************\n" << this->_select_location(request.get_request_field("URI"), socket->get_confs()[0]).get_prefix() << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cout << e.what() << '\n';
+		}
+		
 		std::cout << "Executing the request" << std::endl;
 		ft::Response response;
 		response.send(client.get_fd());
@@ -122,6 +132,22 @@ bool	ft::WebServer::_check_event_mask(short revents)
 	if ((revents & POLLWRBAND) == POLLWRBAND)
 		return (true);
 	return (false);
+}
+
+ft::LocationData	ft::WebServer::_select_location(std::string uri, ft::ServerData &server)
+{
+	if (*uri.rbegin() != '/')
+		uri.push_back('/');
+	std::priority_queue<ft::LocationData> locations;
+	for (size_t i = 0; i < server.get_location().size(); i++)
+	{
+		size_t found = uri.find(server.get_location()[i].get_prefix());
+		if (found == 0)
+			locations.push(server.get_location()[i]);
+	}
+	if (locations.empty())
+		throw (NotFound());
+	return (locations.top());
 }
 
 ft::WebServer::~WebServer(void)
