@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/12 21:57:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:44:24 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ void ft::Request::_parse_body(std::string request_string)
 std::string ft::Request::get_request_field(std::string key)
 {
 	return (this->_request[(key + ":")]);
+}
+
+std::string ft::Request::get_server_name(void)
+{
+	std::string host = get_request_field("\nHost");
+	return (host.substr(0, host.find(':')));
 }
 
 ft::Request& ft::Request::operator= (const Request& other)

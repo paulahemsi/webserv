@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:17 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/23 20:03:16 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:51:23 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void ft::Socket::start_listening(int backlog)
 int ft::Socket::get_fd(void)
 {
 	return (this->_fd);
+}
+std::vector<ft::ServerData> ft::Socket::get_confs(void)
+{
+	return (this->_conf);
 }
 
 ft::Socket::~Socket(void)

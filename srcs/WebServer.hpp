@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/24 22:36:42 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:57:40 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ namespace ft
 	class WebServer
 	{
 		typedef std::map<int, std::vector<ft::ServerData> > server_data_map;
+		typedef std::vector<ft::ServerData> server_data_vector;
 
 		private:
 			size_t						_size;
@@ -44,6 +45,8 @@ namespace ft
 
 			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
 			void			_init_servers(server_data_map &ports);
+			ft::ServerData	_select_server(std::string server_name, server_data_vector confs);
+			int				_is_match(std::string name, std::vector<std::string> names);
 
 		public:
 			WebServer(void);
