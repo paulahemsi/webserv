@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/24 23:05:17 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/25 10:44:48 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,8 @@ bool	ft::WebServer::_check_event_mask(short revents)
 	return (false);
 }
 
-ft::LocationData	ft::WebServer::_select_location(std::string uri, ft::ServerData &server)
+std::priority_queue<ft::LocationData>	ft::WebServer::_check_locations(std::string uri, ft::ServerData &server)
 {
-	if (*uri.rbegin() != '/')
-		uri.push_back('/');
 	std::priority_queue<ft::LocationData> locations;
 	for (size_t i = 0; i < server.get_location().size(); i++)
 	{
@@ -169,6 +167,14 @@ ft::LocationData	ft::WebServer::_select_location(std::string uri, ft::ServerData
 		if (found == 0)
 			locations.push(server.get_location()[i]);
 	}
+	return (locations);
+}
+
+ft::LocationData	ft::WebServer::_select_location(std::string uri, ft::ServerData &server)
+{
+	if (*uri.rbegin() != '/')
+		uri.push_back('/');
+	std::priority_queue<ft::LocationData> locations = _check_locations(uri, server);
 	if (locations.empty())
 		throw (NotFound());
 	return (locations.top());

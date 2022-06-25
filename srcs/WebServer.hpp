@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/24 22:57:40 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/25 10:45:28 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,15 @@ namespace ft
 			bool	_check_event_mask(short revent);
 			void	_connect_with_client(ft::Socket *socket);
 
-			ft::LocationData	_select_location(std::string uri, ft::ServerData &server);
 
 			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
 			void			_init_servers(server_data_map &ports);
+
 			ft::ServerData	_select_server(std::string server_name, server_data_vector confs);
 			int				_is_match(std::string name, std::vector<std::string> names);
+
+			ft::LocationData						_select_location(std::string uri, ft::ServerData &server);
+			std::priority_queue<ft::LocationData>	_check_locations(std::string uri, ft::ServerData &server);
 
 		public:
 			WebServer(void);
