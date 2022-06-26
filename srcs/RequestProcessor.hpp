@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 13:21:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 13:56:36 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ namespace ft
 			std::string			_server_name;
 			ft::ServerData		_server_data;
 			ft::LocationData	_location_data;
+			std::string			_body;
 
 			RequestProcessor(void);
 
@@ -49,6 +50,7 @@ namespace ft
 			void				_define_server(ft::ServerData server);
 			int					_is_match(std::vector<std::string> names);
 			void				_select_location(void);
+			bool				_is_redirection(void);
 			location_data_queue	_check_locations(void);
 			void				_check_method(void);
 

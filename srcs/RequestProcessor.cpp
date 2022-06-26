@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 13:24:26 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 14:09:49 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ void ft::RequestProcessor::run(std::string request_string, int client_fd)
 	this->_request.init(request_string);
 	_define_server_name();
 	_define_uri();
+	//define response fields that do not depend on the request
 	_execute_request();
-
-	ft::Response response;
-	response.send(client_fd);
+	this->_response.send(client_fd);
 }
 
 void ft::RequestProcessor::_define_server_name(void)
@@ -57,18 +56,16 @@ void	ft::RequestProcessor::_execute_request(void)
 	try
 	{
 		_select_location();
-		std::string redirection = this->_location_data.get_redirection();
-		if (redirection != "")
-			std::cout << "REDIR\n";
+		if (_is_redirection())
+			return ;
 		_check_method();
-		
 	}
 	catch(const std::exception& e)
 	{
-		//build error responses
+		//build error responses accordingly with exception thrown
 		std::cout << e.what() << '\n';
 	}
-}
+} 
 
 void	ft::RequestProcessor::_select_server(void)
 {
@@ -103,7 +100,7 @@ void	ft::RequestProcessor::_select_location(void)
 	this->_location_data = locations.top();
 }
 
-ft::RequestProcessor::location_data_queue	ft::RequestProcessor::_check_locations(void)
+ft::RequestProcessor::location_data_queue ft::RequestProcessor::_check_locations(void)
 {
 	location_data_vector all_locations = this->_server_data.get_location();
 	std::priority_queue<ft::LocationData> match_locations;
@@ -117,6 +114,17 @@ ft::RequestProcessor::location_data_queue	ft::RequestProcessor::_check_locations
 			match_locations.push(all_locations[i]);
 	}
 	return (match_locations);
+}
+
+bool	ft::RequestProcessor::_is_redirection(void)
+{
+	std::string redirection;
+	redirection = this->_location_data.get_redirection();
+	if (redirection == "")
+		return (false);
+	this->_response.set_header_field("Location", redirection);
+	this->_response.set_status_code(301);
+	return (true);
 }
 
 void	ft::RequestProcessor::_check_method(void)
