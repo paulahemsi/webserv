@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 13:35:04 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/26 13:53:20 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ std::string ft::Response::_to_string(void)
 				+ this->_reason_phrase + CRLF;
 	header = _header_to_string();
 	return (status_line + header + CRLF + this->_body );
+}
+
+void	ft::Response::set_header_field(std::string key, std::string value)
+{
+	this->_header[key] = value;
 }
 
 void	ft::Response::send(int client)
