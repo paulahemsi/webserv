@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/24 20:44:02 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/25 10:45:28 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "Client.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
+#include <queue>
 #include <vector>
 #include <map>
 
@@ -39,11 +40,16 @@ namespace ft
 			void	_check_event(ft::Poll &poll, size_t index);
 			bool	_check_event_mask(short revent);
 			void	_connect_with_client(ft::Socket *socket);
-			
-			void			_init_servers(server_data_map &ports);
+
+
 			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
+			void			_init_servers(server_data_map &ports);
+
 			ft::ServerData	_select_server(std::string server_name, server_data_vector confs);
-			bool			_is_match(std::string request_server_name, std::vector<std::string> server_names);
+			int				_is_match(std::string name, std::vector<std::string> names);
+
+			ft::LocationData						_select_location(std::string uri, ft::ServerData &server);
+			std::priority_queue<ft::LocationData>	_check_locations(std::string uri, ft::ServerData &server);
 
 		public:
 			WebServer(void);
@@ -52,6 +58,15 @@ namespace ft
 	
 			void	create_sockets(void);
 			void	run(void);
+			
+			class NotFound : public std::exception
+			{
+				public:
+					virtual const char* what() const throw()
+					{
+						return ("\e[0;31mLocation not found\e[0m");
+					}
+			};
 	};
 }
 

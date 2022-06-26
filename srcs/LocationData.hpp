@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/18 20:40:16 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:16:08 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ namespace ft
 			void	set_prefix(std::string prefix);
 			void	set_autoindex(bool autoindex_value);
 			void	set_body_size(int size_limit);
+			
+			bool	operator>(ft::LocationData const &right_hand_side) const;
+			bool	operator>=(ft::LocationData const &right_hand_side) const;
+			bool	operator<(ft::LocationData const &right_hand_side) const;
+			bool	operator<=(ft::LocationData const &right_hand_side) const;
+			bool	operator==(ft::LocationData const &right_hand_side) const;
+			bool	operator!=(ft::LocationData const &right_hand_side) const;
 	};
 	
 }

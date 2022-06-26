@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:29:27 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:19:23 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,36 @@ std::string ft::LocationData::index_to_string(void) const
 		index_str += " ";
 	}
 	return (index_str);
+}
+
+bool	ft::LocationData::operator>(ft::LocationData const &right_hand_side) const
+{
+	return (this->_prefix > right_hand_side._prefix);
+}
+
+bool	ft::LocationData::operator>=(ft::LocationData const &right_hand_side) const
+{
+	return (this->_prefix >= right_hand_side._prefix);
+}
+
+bool	ft::LocationData::operator<(ft::LocationData const &right_hand_side) const
+{
+	return (this->_prefix < right_hand_side._prefix);
+}
+
+bool	ft::LocationData::operator<=(ft::LocationData const &right_hand_side) const
+{
+	return (this->_prefix <= right_hand_side._prefix);
+}
+
+bool	ft::LocationData::operator==(ft::LocationData const &right_hand_side) const
+{
+	return (this->_prefix == right_hand_side._prefix);
+}
+
+bool	ft::LocationData::operator!=(ft::LocationData const &right_hand_side) const
+{
+	return (this->_prefix != right_hand_side._prefix);
 }
 
 std::ostream &operator<<(std::ostream &outputFile, const ft::LocationData &object)
