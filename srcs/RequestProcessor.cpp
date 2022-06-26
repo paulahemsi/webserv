@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 14:09:49 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 17:26:23 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,26 @@ void	ft::RequestProcessor::_execute_request(void)
 			return ;
 		_check_method();
 	}
-	catch(const std::exception& e)
+	catch(const ft::RequestProcessor::NotFound& e)
 	{
-		//build error responses accordingly with exception thrown
-		std::cout << e.what() << '\n';
+		_set_error(NOT_FOUND_CODE, NOT_FOUND_REASON, NOT_FOUND_PATH);
+	}
+	catch(const ft::RequestProcessor::MethodNotAllowed& e)
+	{
+		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON, NOT_ALLOWED_PATH);
 	}
 } 
+
+void	ft::RequestProcessor::_set_error(unsigned int code, std::string reason, std::string path)
+{
+	this->_response.set_status_code(code);
+	std::ifstream file(path.c_str());
+	this->_response.set_reason_phrase(reason);
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	this->_response.set_body(buffer.str());
+	this->_response.set_content_length(buffer.str().length());
+}
 
 void	ft::RequestProcessor::_select_server(void)
 {
