@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/19 15:57:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/25 11:04:22 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,21 @@
 #define ERROR		-1
 #define BACKLOG		100
 
-static bool wrong_arguments(int argc)
+static int define_configuration_file(int argc, char **argv, std::string& filename)
 {
-	if (argc != 2)
+	if (argc > 2)
 	{
 		std::cout << "\e[0;31mUsage: ./webserv path_to_configuration_file\e[0m" << std::endl;
-		return (true);
+		return (ERROR);
 	}
-	return (false);
+	if (argc == 1)
+		filename = "./conf/webserv.conf";
+	else if (argc == 2)
+		filename = argv[1];
+	return (0);
 }
 
-static int parse_configuration_file(ft::Parser &parser, char *filename)
+static int parse_configuration_file(ft::Parser &parser,std::string filename)
 {
 	try
 	{
@@ -63,11 +67,12 @@ int run_web_server(ft::Parser &parser)
 int main(int argc, char **argv)
 {
 	ft::Parser		parser;
+	std::string		file;
 
-	if (wrong_arguments(argc))
+	if (define_configuration_file(argc, argv, file) == ERROR)
 		return (ERROR);
 
-	if (parse_configuration_file(parser, argv[1]) == ERROR)
+	if (parse_configuration_file(parser, file) == ERROR)
 		return(ERROR);
 
 	if (run_web_server(parser) == ERROR)
