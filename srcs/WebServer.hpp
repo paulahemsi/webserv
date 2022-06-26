@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/25 10:45:28 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 12:00:35 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 #include "Socket.hpp"
 #include "Poll.hpp"
 #include "Client.hpp"
-#include "Request.hpp"
-#include "Response.hpp"
-#include <queue>
+#include "RequestProcessor.hpp"
 #include <vector>
 #include <map>
 
@@ -28,7 +26,6 @@ namespace ft
 	class WebServer
 	{
 		typedef std::map<int, std::vector<ft::ServerData> > server_data_map;
-		typedef std::vector<ft::ServerData> server_data_vector;
 
 		private:
 			size_t						_size;
@@ -42,14 +39,8 @@ namespace ft
 			void	_connect_with_client(ft::Socket *socket);
 
 
-			server_data_map	_group_servers_by_port(std::vector<ft::ServerData> server_data);
-			void			_init_servers(server_data_map &ports);
-
-			ft::ServerData	_select_server(std::string server_name, server_data_vector confs);
-			int				_is_match(std::string name, std::vector<std::string> names);
-
-			ft::LocationData						_select_location(std::string uri, ft::ServerData &server);
-			std::priority_queue<ft::LocationData>	_check_locations(std::string uri, ft::ServerData &server);
+			server_data_map		_group_servers_by_port(std::vector<ft::ServerData> server_data);
+			void				_init_servers(server_data_map &ports);
 
 		public:
 			WebServer(void);
@@ -58,15 +49,6 @@ namespace ft
 	
 			void	create_sockets(void);
 			void	run(void);
-			
-			class NotFound : public std::exception
-			{
-				public:
-					virtual const char* what() const throw()
-					{
-						return ("\e[0;31mLocation not found\e[0m");
-					}
-			};
 	};
 }
 

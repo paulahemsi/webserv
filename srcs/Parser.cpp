@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/25 11:02:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:47:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ ft::Parser::~Parser(void)
 
 void ft::Parser::exec(std::string filename)
 {
-	std::cout << filename << std::endl;
 	this->_file_stream.open(filename.c_str(), std::ifstream::in);
 	if(!this->_file_stream)
 		throw (OpenFileError());

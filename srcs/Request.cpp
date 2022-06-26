@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/23 21:44:24 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/26 11:40:31 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ ft::Request::Request(const ft::Request& other)
 	*this = other;
 }
 
-ft::Request::Request(std::string request_string)
+ft::Request::Request(void)
+{
+	return ;
+}
+
+void ft::Request::init(std::string request_string)
 {
 	std::stringstream request_(request_string);
 	std::string line;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 13:35:04 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/26 16:41:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,31 @@ std::string ft::Response::_to_string(void)
 				+ this->_reason_phrase + CRLF;
 	header = _header_to_string();
 	return (status_line + header + CRLF + this->_body );
+}
+
+void	ft::Response::set_header_field(std::string key, std::string value)
+{
+	this->_header[key] = value;
+}
+
+void	ft::Response::set_status_code(unsigned int stauts_code)
+{
+	this->_status_code = stauts_code;
+}
+
+void	ft::Response::set_reason_phrase(std::string reason)
+{
+	this->_reason_phrase = reason;
+}
+
+void	ft::Response::set_body(std::string body)
+{
+	this->_body = body;
+}
+
+void	ft::Response::set_content_length(unsigned int length)
+{
+	this->_header["Content-Length"] = length;
 }
 
 void	ft::Response::send(int client)

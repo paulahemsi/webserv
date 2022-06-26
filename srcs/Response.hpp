@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 22:23:47 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 16:41:49 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ namespace ft
 
 			void	send(int client);
 			void	show(void);
+			void	set_header_field(std::string key, std::string value);
+			void	set_status_code(unsigned int status_code);
+			void	set_reason_phrase(std::string reason);
+			void	set_content_length(unsigned int length);
+			void	set_body(std::string body);
 	};
 }
 

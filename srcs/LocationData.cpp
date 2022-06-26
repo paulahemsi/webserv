@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/24 22:19:23 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:55:49 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ _prefix(""),
 _autoindex(false),
 _body_size(10000)
 {
-	this->_accepted_methods.insert("GET");
+	return ;
 }
 
 ft::LocationData::LocationData(ft::LocationData const &other)
