@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/26 16:41:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:32:52 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,21 @@ std::string ft::Response::_header_to_string(void)
 	return (header);
 }
 
+std::string ft::Response::_int_to_string(int integer)
+{
+	std::stringstream str_stream;
+
+	str_stream << integer;
+	return (str_stream.str());
+}
+
 std::string ft::Response::_to_string(void)
 {
-	std::stringstream status_code;
 	std::string status_line;
 	std::string header;
 
-	status_code << this->_status_code;
 	status_line = this->_http_version + SP
-				+ status_code.str() + SP
+				+ _int_to_string(this->_status_code) + SP
 				+ this->_reason_phrase + CRLF;
 	header = _header_to_string();
 	return (status_line + header + CRLF + this->_body );
@@ -85,7 +91,7 @@ void	ft::Response::set_body(std::string body)
 
 void	ft::Response::set_content_length(unsigned int length)
 {
-	this->_header["Content-Length"] = length;
+	this->_header["Content-Length"] = _int_to_string(length);
 }
 
 void	ft::Response::send(int client)
