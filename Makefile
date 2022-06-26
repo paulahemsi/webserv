@@ -22,7 +22,8 @@ SRCS		:=	main.cpp \
 				Poll.cpp \
 				Client.cpp \
 				Request.cpp \
-				Response.cpp
+				Response.cpp \
+				RequestProcessor.cpp \
 
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
@@ -39,7 +40,9 @@ HEADER		=	Parser.hpp \
 				Poll.hpp \
 				Client.hpp \
 				Request.hpp \
-				Response.hpp
+				Response.hpp \
+				RequestProcessor.hpp \
+
 INCLUDES	=
 
 VPATH		:=	$(SRCS_DIR)
