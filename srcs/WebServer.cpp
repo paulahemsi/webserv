@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/26 00:48:34 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 11:40:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,14 @@ void	ft::WebServer::_execute_request(ft::Request& request, server_data_vector co
 		if (redirection != "")
 			std::cout << "--------Build Response with REDIRECTION--------" << std::endl;
 		_check_method(location_data.get_accepted_methods(), request.get_request_field("Method"));
+		std::ifstream file_stream;
+		//ver se tem root ou não para abrir arquivo
+		//index ou não
+		//file_stream.open();
 	}
 	catch(const std::exception& e)
 	{
+		//build error responses
 		std::cout << e.what() << '\n';
 	}
 }
@@ -135,7 +140,8 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	client.connect(socket->get_fd());
 	while(client.send_request(buffer, size))
 	{
-		ft::Request	request(buffer);
+		ft::Request	request;
+		request.init(buffer);
 		_execute_request(request, socket->get_confs());
 		ft::Response response;
 		response.send(client.get_fd());

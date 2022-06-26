@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/21 20:11:12 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/26 11:39:41 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ namespace ft
 		private:
 			
 			std::map<std::string, std::string> _request;
-			Request(void);
 			
 			void _parse_request_line(std::string request_line);
 			void _parse_header(std::stringstream &header);
 			void _parse_body(std::string request_string);
 
 		public:
-			Request(std::string request_string);
+			Request(void);
 			Request(const Request& other);
 			~Request(void);
 
 			Request& operator= (const Request& other);
 
+			void		init(std::string request_string);
 			std::string get_request_field(std::string key);
 			std::string get_server_name(void);
 			//DEBUGGING FUNCTION
