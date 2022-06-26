@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 12:20:05 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 13:24:26 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,17 @@ ft::RequestProcessor::~RequestProcessor(void)
 void ft::RequestProcessor::run(std::string request_string, int client_fd)
 {
 	this->_request.init(request_string);
-	this->_server_name = this->_request.get_server_name();
+	_define_server_name();
 	_define_uri();
 	_execute_request();
+
 	ft::Response response;
 	response.send(client_fd);
+}
+
+void ft::RequestProcessor::_define_server_name(void)
+{
+	this->_server_name = this->_request.get_server_name();
 }
 
 void ft::RequestProcessor::_define_uri(void)
@@ -47,21 +53,15 @@ void ft::RequestProcessor::_define_uri(void)
 
 void	ft::RequestProcessor::_execute_request(void)
 {
-	ft::ServerData		server_data;
-	ft::LocationData	location_data;
-	std::cout << "Executing the request" << std::endl;
-	server_data = _select_server();
+	_select_server();
 	try
 	{
-		location_data = _select_location(server_data);
-		std::string redirection = location_data.get_redirection();
+		_select_location();
+		std::string redirection = this->_location_data.get_redirection();
 		if (redirection != "")
-			std::cout << "--------Build Response with REDIRECTION--------" << std::endl;
-		_check_method(location_data.get_accepted_methods(), this->_request.get_request_field("Method"));
-		std::ifstream file_stream;
-		//ver se tem root ou não para abrir arquivo
-		//index ou não
-		//file_stream.open();
+			std::cout << "REDIR\n";
+		_check_method();
+		
 	}
 	catch(const std::exception& e)
 	{
@@ -70,7 +70,7 @@ void	ft::RequestProcessor::_execute_request(void)
 	}
 }
 
-ft::ServerData	ft::RequestProcessor::_select_server(void)
+void	ft::RequestProcessor::_select_server(void)
 {
 	server_data_vector confs = this->_socket->get_confs();
 	server_data_vector::iterator it = confs.begin();
@@ -78,8 +78,8 @@ ft::ServerData	ft::RequestProcessor::_select_server(void)
 
 	for (; it != it_end; it++)
 		if (_is_match(it->get_server_name()) != ERROR)
-			return (*it);
-	return (confs[0]);
+			return (_define_server(*it));
+	_define_server(confs[0]);
 }
 
 int	ft::RequestProcessor::_is_match(std::vector<std::string> names)
@@ -90,29 +90,41 @@ int	ft::RequestProcessor::_is_match(std::vector<std::string> names)
 	return (ERROR);
 }
 
-ft::LocationData	ft::RequestProcessor::_select_location(ft::ServerData &server)
+void	ft::RequestProcessor::_define_server(ft::ServerData server)
 {
-	std::priority_queue<ft::LocationData> locations = _check_locations(server);
+	this->_server_data = server;
+}
+
+void	ft::RequestProcessor::_select_location(void)
+{
+	std::priority_queue<ft::LocationData> locations = _check_locations();
 	if (locations.empty())
 		throw (NotFound());
-	return (locations.top());
+	this->_location_data = locations.top();
 }
 
-ft::RequestProcessor::location_data_queue	ft::RequestProcessor::_check_locations(ft::ServerData &server)
+ft::RequestProcessor::location_data_queue	ft::RequestProcessor::_check_locations(void)
 {
-	std::priority_queue<ft::LocationData> locations;
-	for (size_t i = 0; i < server.get_location().size(); i++)
+	location_data_vector all_locations = this->_server_data.get_location();
+	std::priority_queue<ft::LocationData> match_locations;
+	std::string prefix;
+
+	for (size_t i = 0; i < all_locations.size(); i++)
 	{
-		size_t found = this->_uri.find(server.get_location()[i].get_prefix());
+		prefix = all_locations[i].get_prefix();
+		size_t found = this->_uri.find(prefix);
 		if (found == 0)
-			locations.push(server.get_location()[i]);
+			match_locations.push(all_locations[i]);
 	}
-	return (locations);
+	return (match_locations);
 }
 
-void	ft::RequestProcessor::_check_method(std::set<std::string> methods, std::string request_method)
+void	ft::RequestProcessor::_check_method(void)
 {
+	std::set<std::string> methods = this->_location_data.get_accepted_methods();
+	std::string request_method = this->_request.get_request_field("Method");
+
 	std::set<std::string>::iterator found = methods.find(request_method);
-	if ( found == methods.end())
+	if (found == methods.end())
 			throw (MethodNotAllowed());
 }

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 12:21:05 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 13:21:48 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,29 @@ namespace ft
 	class RequestProcessor
 	{
 		typedef std::vector<ft::ServerData> server_data_vector;
+		typedef std::vector<ft::LocationData> location_data_vector;
 		typedef std::priority_queue<ft::LocationData> location_data_queue;
 
 		private:
-			ft::Request		_request;
-			ft::Response	_response;
-			ft::Socket		*_socket;
-			std::string		_uri;
-			std::string		_server_name;
+			ft::Request			_request;
+			ft::Response		_response;
+			ft::Socket			*_socket;
+			std::string			_uri;
+			std::string			_server_name;
+			ft::ServerData		_server_data;
+			ft::LocationData	_location_data;
 
 			RequestProcessor(void);
 
 			void				_define_uri(void);
+			void				_define_server_name(void);
 			void				_execute_request(void);
-			ft::ServerData		_select_server(void);
+			void				_select_server(void);
+			void				_define_server(ft::ServerData server);
 			int					_is_match(std::vector<std::string> names);
-			ft::LocationData	_select_location(ft::ServerData &server);
-			location_data_queue	_check_locations(ft::ServerData &server);
-			void				_check_method(std::set<std::string> methods, std::string request_method);
+			void				_select_location(void);
+			location_data_queue	_check_locations(void);
+			void				_check_method(void);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
