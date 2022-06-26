@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 17:36:46 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 18:04:39 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ ft::RequestProcessor &ft::RequestProcessor::operator=(ft::RequestProcessor const
 	this->_server_name = right_hand_side._server_name;
 	this->_server_data = right_hand_side._server_data;
 	this->_location_data = right_hand_side._location_data;
-	this->_body = right_hand_side._body;
 	return (*this);
 }
 
