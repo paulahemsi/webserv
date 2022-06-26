@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/25 17:27:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:45:03 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ namespace ft
 			int					_is_match(std::string name, std::vector<std::string> names);
 			ft::LocationData	_select_location(std::string uri, ft::ServerData &server);
 			location_data_queue	_check_locations(std::string uri, ft::ServerData &server);
-			void	_execute_request(std::string server_name, std::string uri, server_data_vector confs);
+			void	_execute_request(ft::Request& request, server_data_vector confs);
+			void	_check_method(std::set<std::string> methods, std::string request_method);
 
 		public:
 			WebServer(void);
@@ -65,6 +66,14 @@ namespace ft
 					virtual const char* what() const throw()
 					{
 						return ("\e[0;31mLocation not found\e[0m");
+					}
+			};
+			class MethodNotAllowed : public std::exception
+			{
+				public:
+					virtual const char* what() const throw()
+					{
+						return ("\e[0;31mMethod Not Allowed\e[0m");
 					}
 			};
 	};

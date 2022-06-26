@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/25 17:26:42 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:48:34 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,26 @@ ft::ServerData	ft::WebServer::_select_server(std::string server_name, server_dat
 	return (confs[0]);
 }
 
-void	ft::WebServer::_execute_request(std::string server_name, std::string uri, server_data_vector confs)
+void	ft::WebServer::_check_method(std::set<std::string> methods, std::string request_method)
+{
+	std::set<std::string>::iterator found = methods.find(request_method);
+	if ( found == methods.end())
+			throw (MethodNotAllowed());
+}
+
+void	ft::WebServer::_execute_request(ft::Request& request, server_data_vector confs)
 {
 	ft::ServerData		server_data;
 	ft::LocationData	location_data;
 	std::cout << "Executing the request" << std::endl;
-	server_data = _select_server(server_name, confs);
+	server_data = _select_server(request.get_server_name(), confs);
 	try
 	{
-		location_data = this->_select_location(uri, server_data);
-		std::cout << location_data << "********************************************************" << std::endl;
+		location_data = this->_select_location(request.get_request_field("URI"), server_data);
+		std::string redirection = location_data.get_redirection();
+		if (redirection != "")
+			std::cout << "--------Build Response with REDIRECTION--------" << std::endl;
+		_check_method(location_data.get_accepted_methods(), request.get_request_field("Method"));
 	}
 	catch(const std::exception& e)
 	{
@@ -126,8 +136,7 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	while(client.send_request(buffer, size))
 	{
 		ft::Request	request(buffer);
-		request.debugging_request();
-		_execute_request(request.get_server_name(), request.get_request_field("URI"), socket->get_confs());
+		_execute_request(request, socket->get_confs());
 		ft::Response response;
 		response.send(client.get_fd());
 	}
