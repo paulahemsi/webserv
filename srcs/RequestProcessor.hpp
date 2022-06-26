@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 17:20:56 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 17:34:36 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ namespace ft
 		public:
 			RequestProcessor(ft::Socket *socket);
 			~RequestProcessor(void);
-			
+			RequestProcessor(ft::RequestProcessor const &other);
+
+			ft::RequestProcessor	&operator=(ft::RequestProcessor const &right_hand_side);
+
 			void	run(std::string request_string,  int client_fd);
 			
 			class NotFound : public std::exception

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 17:26:23 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 17:36:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,24 @@ ft::RequestProcessor::RequestProcessor(ft::Socket *socket):
 _socket(socket)
 {
 	return ;
+}
+
+ft::RequestProcessor::RequestProcessor(ft::RequestProcessor const &other)
+{
+	*this = other;
+}
+
+ft::RequestProcessor &ft::RequestProcessor::operator=(ft::RequestProcessor const &right_hand_side)
+{
+	this->_request = right_hand_side._request;
+	this->_response = right_hand_side._response;
+	this->_socket = right_hand_side._socket;
+	this->_uri = right_hand_side._uri;
+	this->_server_name = right_hand_side._server_name;
+	this->_server_data = right_hand_side._server_data;
+	this->_location_data = right_hand_side._location_data;
+	this->_body = right_hand_side._body;
+	return (*this);
 }
 
 ft::RequestProcessor::~RequestProcessor(void)
