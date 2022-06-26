@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 12:00:44 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/26 12:21:05 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,19 @@ namespace ft
 			ft::Request		_request;
 			ft::Response	_response;
 			ft::Socket		*_socket;
+			std::string		_uri;
+			std::string		_server_name;
 
 			RequestProcessor(void);
 
-			void			_execute_request(void);
-			ft::ServerData	_select_server(std::string server_name, server_data_vector confs);
-			int				_is_match(std::string name, std::vector<std::string> names);
-			
-			ft::LocationData	_select_location(std::string uri, ft::ServerData &server);
-			location_data_queue	_check_locations(std::string uri, ft::ServerData &server);
-			void	_check_method(std::set<std::string> methods, std::string request_method);
+			void				_define_uri(void);
+			void				_execute_request(void);
+			ft::ServerData		_select_server(void);
+			int					_is_match(std::vector<std::string> names);
+			ft::LocationData	_select_location(ft::ServerData &server);
+			location_data_queue	_check_locations(ft::ServerData &server);
+			void				_check_method(std::set<std::string> methods, std::string request_method);
+
 		public:
 			RequestProcessor(ft::Socket *socket);
 			~RequestProcessor(void);
