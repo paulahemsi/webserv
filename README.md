@@ -225,6 +225,14 @@ The response-header fields allow the server to pass additional information about
 | Vary               |
 | WWW-Authenticate   |
 
+### Connection_Field
+
+The Connection general-header field allows the sender to specify options that are desired for that particular connection and MUST NOT be communicated by proxies over further connections.
+
+HTTP/1.1 defines the "close" connection option for the sender to signal that the connection will be closed after completion of the response. In either the request or the response header fields indicates that the connection SHOULD NOT be considered [persistent](https://www.rfc-editor.org/rfc/rfc2616#section-8.1) after the current request/response is complete.
+
+HTTP/1.1 applications that do not support persistent connections MUST include the "close" connection option in every message.
+
 ## Configuration_file
 
 (based on NGNIX)
