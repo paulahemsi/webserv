@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/26 19:32:52 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/27 21:11:26 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ ft::Response::Response(void):	_http_version("HTTP/1.1"),
 	this->_header["Last-Modified"] = "Wed, 22 Jul 2009 19:15:56 GMT";
 	this->_header["Content-Length"] = "53";
 	this->_header["Content-Type"] = "text/html";
-	//this->_header["Connection"] = "Closed";
-	this->_header["Connection"] = "keep-alive";
+	this->_header["Connection"] = "close";
 	this->_header["Accept-Ranges"] = "bytes";
 	return ;
 }
