@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 18:04:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/28 22:56:51 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ namespace ft
 			location_data_queue	_check_locations(void);
 			void				_check_method(void);
 			void				_set_error(unsigned int code, std::string reason, std::string path);
+			void				_set_body(void);
+			void				_set_body_type(std::string path);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
