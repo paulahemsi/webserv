@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/26 19:29:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/06/28 21:41:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ namespace ft
 			void	set_status_code(unsigned int status_code);
 			void	set_reason_phrase(std::string reason);
 			void	set_content_length(unsigned int length);
+			void	set_content_type(std::string type);
 			void	set_body(std::string body);
 	};
 }
