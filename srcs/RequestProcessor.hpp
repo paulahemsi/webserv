@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 18:04:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:35:52 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 #define NOT_ALLOWED_PATH "./www/error/405.html"
 #define NOT_FOUND_REASON "Not found"
 #define NOT_ALLOWED_REASON "Method not allowed"
-#define NOT_FOUND_CODE 404
-#define NOT_ALLOWED_CODE 405
+#define NOT_FOUND_CODE		"404"
+#define NOT_ALLOWED_CODE	"405"
 
 namespace ft
 {
@@ -60,7 +60,7 @@ namespace ft
 			bool				_is_redirection(void);
 			location_data_queue	_check_locations(void);
 			void				_check_method(void);
-			void				_set_error(unsigned int code, std::string reason, std::string path);
+			void				_set_error(std::string code, std::string reason);
 
 		public:
 			RequestProcessor(ft::Socket *socket);

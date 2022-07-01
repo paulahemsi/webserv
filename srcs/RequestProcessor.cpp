@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 18:04:39 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:47:09 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,22 @@ void	ft::RequestProcessor::_execute_request(void)
 	}
 	catch(const ft::RequestProcessor::NotFound& e)
 	{
-		_set_error(NOT_FOUND_CODE, NOT_FOUND_REASON, NOT_FOUND_PATH);
+		_set_error(NOT_FOUND_CODE, NOT_FOUND_REASON);
 	}
 	catch(const ft::RequestProcessor::MethodNotAllowed& e)
 	{
-		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON, NOT_ALLOWED_PATH);
+		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON);
 	}
 } 
 
-void	ft::RequestProcessor::_set_error(unsigned int code, std::string reason, std::string path)
+void	ft::RequestProcessor::_set_error(std::string code, std::string reason)
 {
+	std::map<std::string, std::string>	pages;
+	std::string							path;
+
+	pages = this->_server_data.get_error_pages().get_pages();
+	path = pages[code];
+
 	this->_response.set_status_code(code);
 	std::ifstream file(path.c_str());
 	this->_response.set_reason_phrase(reason);
@@ -154,7 +160,7 @@ bool	ft::RequestProcessor::_is_redirection(void)
 	if (redirection == "")
 		return (false);
 	this->_response.set_header_field("Location", redirection);
-	this->_response.set_status_code(301);
+	this->_response.set_status_code("301");
 	return (true);
 }
 
