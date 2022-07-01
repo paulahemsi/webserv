@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerData.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 15:45:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/29 21:12:09 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ ft::ServerData::ServerData(void):
 _listen(ft::Listen()),
 _server_name(std::vector<std::string>()),
 _root(""),
-_error_pages(""),
+_error_pages(ft::ErrorPages()),
 _body_size(10000),
 _location(std::vector<ft::LocationData>())
 {
@@ -59,7 +59,7 @@ std::string	ft::ServerData::get_root(void) const
 	return (this->_root);
 }
 
-std::string	ft::ServerData::get_error_pages(void) const
+ft::ErrorPages	ft::ServerData::get_error_pages(void) const
 {
 	return (this->_error_pages);
 }
@@ -90,9 +90,9 @@ void ft::ServerData::set_root(std::string root)
 	this->_root = root;
 }
 
-void ft::ServerData::set_error_pages(std::string error_pages)
+void ft::ServerData::add_error_page(std::string code, std::string page_path)
 {
-	this->_error_pages = error_pages;
+	this->_error_pages.add_page(code, page_path);
 }
 
 void ft::ServerData::set_body_size(int size_limit)
