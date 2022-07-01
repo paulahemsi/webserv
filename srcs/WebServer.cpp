@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/26 11:58:39 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:14:15 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void ft::WebServer::_event_loop(void)
 {
 	Poll	poll(this->_sockets);
 
-	std::cout << "waiting........." << std::endl;
+	std::cout << WEBSERV << std::endl;
 	while (true)
 	{
 		poll.exec();

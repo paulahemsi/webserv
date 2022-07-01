@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 11:40:31 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/01 17:48:54 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ ft::Request& ft::Request::operator= (const Request& other)
 
 ft::Request::~Request(void)
 {
-	std::cout << "Request destructor called" << std::endl;
+	return ;
 }
 
 //DEBUGGING FUNCTION
