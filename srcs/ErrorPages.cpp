@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:10:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/30 21:03:50 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:19:46 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 
 ft::ErrorPages::ErrorPages(void)
 {
-	_add_default_page("400");
-	_add_default_page("403");
-	_add_default_page("404");
-	_add_default_page("405");
-	_add_default_page("413");
-	_add_default_page("500");
 	return ;
 }
 
@@ -59,6 +53,16 @@ ft::ErrorPages &ft::ErrorPages::operator=(ft::ErrorPages const &right_hand_side)
 std::map<std::string, std::string> ft::ErrorPages::get_pages(void) const
 {
 	return (this->_pages);
+}
+
+void	ft::ErrorPages::set_defaults(void)
+{
+	_add_default_page("400");
+	_add_default_page("403");
+	_add_default_page("404");
+	_add_default_page("405");
+	_add_default_page("413");
+	_add_default_page("500");
 }
 
 std::ostream &operator<<(std::ostream &outputFile, const ft::ErrorPages &object)

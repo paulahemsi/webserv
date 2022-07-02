@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:10:02 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/29 20:35:21 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:18:04 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace ft
 			std::map<std::string, std::string> get_pages(void) const;
 			
 			void	add_page(std::string code, std::string path);
+			void	set_defaults(void);
 	};
 	
 }

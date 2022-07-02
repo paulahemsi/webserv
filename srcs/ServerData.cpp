@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 20:48:21 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:20:36 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ _error_pages_default(ft::ErrorPages()),
 _body_size(10000),
 _location(std::vector<ft::LocationData>())
 {
+	this->_error_pages_default.set_defaults();
 	return ;
 }
 
@@ -131,7 +132,8 @@ std::ostream &operator<<(std::ostream &outputFile, const ft::ServerData &object)
 				<< "Server Name: " << object.server_name_to_string() << std::endl
 				<< "Root : " << object.get_root() << std::endl
 				<< "BodySize : " << object.get_body_size() << std::endl
-				<< "Error Page: " << object.get_error_pages() << std::endl
+				<< "Error Pages: " << object.get_error_pages() << std::endl
+				<< "Error Pages Defaut: " << object.get_error_pages_default() << std::endl
 				<< "Location: " << std::endl;
 
 	for (size_t i = 0; i < object.get_location().size(); i++)
