@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 19:14:21 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 20:14:37 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ void	ft::RequestProcessor::_set_autoindex_body(std::string &body, const char *pa
 	struct dirent *entry;
 	
 	while ((entry = readdir(dir)) != NULL)
-	{
-		std::cout << "path->" << path << std::endl;
 		_add_autoindex_link(body, entry);
-	}
 	body += CLOSE_BODY;
 	closedir(dir);
 }
@@ -122,15 +119,12 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 {
 	if (entry->d_name[0] != '.')
 	{
-		std::cout << "_uri->" << this->_uri << std::endl;
-		std::cout << "host->" << this->_server_data.get_listen().get_host() << std::endl;
-		std::cout << "port->" << this->_server_data.get_listen().get_port() << std::endl;
 		std::string host = this->_server_data.get_listen().get_host();
 		int port = this->_server_data.get_listen().get_port();
 		body +=	OPEN_ANCHOR_TAG +
 				host + DIVIDER + 
 				int_to_string(port) +
-				this->_uri +
+				this->_uri + SLASH +
 				std::string(entry->d_name) + 
 				MIDDLE_ANCHOR_TAG + entry->d_name +CLOSE_ANCHOR_TAG;
 	}

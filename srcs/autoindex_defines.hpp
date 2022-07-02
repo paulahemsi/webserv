@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:43:42 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 19:07:46 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 20:12:51 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define OPEN_BODY_TITLE "<body><h1>Index of "
 
-#define OPEN_ANCHOR_TAG "<p><a href=\""
+#define OPEN_ANCHOR_TAG "<p><a href=\"http://"
 
 #define MIDDLE_ANCHOR_TAG "\">"
 
