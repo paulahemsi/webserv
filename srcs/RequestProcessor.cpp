@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 17:44:04 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:49:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,27 @@ void	ft::RequestProcessor::_execute_request(void)
 	}
 }
 
+void ft::RequestProcessor::_build_autoindex(std::string path)
+{
+	std::string body = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\"content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Autoindex</title></head>";
+	
+	body += "<body><h1>Index of " + this->_uri + "</h1>";
+	
+	DIR *dir = opendir(path.c_str());
+	struct dirent *entry;
+	
+	while ((entry = readdir(dir)) != NULL)
+	{
+		if (entry->d_name[0] != '.')
+		{
+			body += "<p><a href=\"" + this->_uri + "/" + std::string(entry->d_name) +  "\">" + entry->d_name + "</a></p>";
+		}
+	}
+	body += "</body></html>";
+	this->_response.build_body(body, path);
+	closedir(dir);
+}
+
 void	ft::RequestProcessor::_set_body(void)
 {
 	std::string path = this->_server_data.get_root() + this->_uri;
@@ -102,7 +123,7 @@ void	ft::RequestProcessor::_set_body(void)
 		this->_response.build_body(buffer.str(), path);
 	}
 	else if (this->_location_data.get_autoindex())
-		std::cout << "autoindex" << std::endl;
+		_build_autoindex(path);
 	else
 		throw (NotFound());	
 }

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 22:07:51 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:48:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <set>
 #include <fstream>
 #include <streambuf>
+#include <dirent.h>
 
 #define NOT_FOUND_PATH "./www/error/404.html"
 #define NOT_ALLOWED_PATH "./www/error/405.html"
@@ -66,6 +67,7 @@ namespace ft
 			void				_set_body_type(std::string path);
 			bool				_is_file(std::string path, std::string& file_path);
 			bool				_find_index(std::string path, std::string& file_path);
+			void				_build_autoindex(std::string path);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
