@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/28 22:50:16 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:22:51 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,25 @@ void	ft::Response::set_reason_phrase(std::string reason)
 	this->_reason_phrase = reason;
 }
 
-void	ft::Response::set_body(std::string body)
+void	ft::Response::_set_body(std::string body)
 {
 	this->_body = body;
 }
 
-void	ft::Response::set_content_length(unsigned int length)
+void	ft::Response::_set_body_type(std::string path)
+{
+	if (path.find(".jpg") != std::string::npos)
+		this->_set_content_type("jpg");
+	if (path.find(".css") != std::string::npos)
+		this->_set_content_type("text/css");
+}
+
+void	ft::Response::_set_content_length(unsigned int length)
 {
 	this->_header["Content-Length"] = _int_to_string(length);
 }
 
-void	ft::Response::set_content_type(std::string type)
+void	ft::Response::_set_content_type(std::string type)
 {
 	this->_header["Content-Type"] = type;
 }
@@ -110,3 +118,11 @@ void	ft::Response::show(void)
 {
 	std::cout << this->_to_string();
 }
+
+void	ft::Response::build_body(std::string body, std::string path)
+{
+	this->_set_body(body);
+	this->_set_content_length(body.length());
+	_set_body_type(path);
+}
+
