@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 17:56:01 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:40:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,40 @@ void	ft::RequestProcessor::_execute_request(void)
 
 void ft::RequestProcessor::_build_autoindex(std::string path)
 {
-	std::string body = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\"content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Autoindex</title></head>";
+	std::string body(AUTOINDEX_HTML_HEAD);
+
+	_set_autoindex_h1(body);
+	_set_autoindex_body(body, path.c_str());
+	this->_response.build_body(body, path);
+}
+
+void	ft::RequestProcessor::_set_autoindex_h1(std::string &body)
+{
+	body += OPEN_BODY_TITLE + this->_uri + CLOSE_H1;
+}
+
+void	ft::RequestProcessor::_set_autoindex_body(std::string &body, const char *path)
+{
+	DIR *dir;
 	
-	body += "<body><h1>Index of " + this->_uri + "</h1>";
-	
-	DIR *dir = opendir(path.c_str());
+	dir = opendir(path);
 	struct dirent *entry;
 	
 	while ((entry = readdir(dir)) != NULL)
-	{
-		if (entry->d_name[0] != '.')
-		{
-			body += "<p><a href=\"" + this->_uri + "/" + std::string(entry->d_name) +  "\">" + entry->d_name + "</a></p>";
-		}
-	}
-	body += "</body></html>";
-	this->_response.build_body(body, path);
+		_add_autoindex_link(body, entry);
+	body += CLOSE_BODY;
 	closedir(dir);
+}
+
+void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent *entry)
+{
+	if (entry->d_name[0] != '.')
+	{
+		body +=	OPEN_ANCHOR_TAG +
+				this->_uri + SLASH +
+				std::string(entry->d_name) + 
+				MIDDLE_ANCHOR_TAG + entry->d_name +CLOSE_ANCHOR_TAG;
+	}
 }
 
 void	ft::RequestProcessor::_set_body(void)
