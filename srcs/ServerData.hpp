@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:25:56 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 20:48:45 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:39:53 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ namespace ft
 			ft::Listen						get_listen(void) const;
 			std::vector<std::string>		get_server_name(void) const;
 			std::string						get_root(void) const;
+			std::string						get_error_page(std::string code) const;
+			std::string						get_default_error_page(std::string code) const;
 			ft::ErrorPages					get_error_pages(void) const;
 			ft::ErrorPages					get_error_pages_default(void) const;
 			int								get_body_size(void) const;

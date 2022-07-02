@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 15:20:36 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:58:01 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ ft::ErrorPages	ft::ServerData::get_error_pages(void) const
 ft::ErrorPages	ft::ServerData::get_error_pages_default(void) const
 {
 	return (this->_error_pages_default);
+}
+
+std::string	ft::ServerData::get_error_page(std::string code) const
+{
+	return (this->_error_pages.get_page(code));
+}
+
+std::string	ft::ServerData::get_default_error_page(std::string code) const
+{
+	return (this->_error_pages_default.get_page(code));
 }
 
 int	ft::ServerData::get_body_size(void) const

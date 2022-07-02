@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:10:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/02 15:19:46 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:02:05 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ ft::ErrorPages &ft::ErrorPages::operator=(ft::ErrorPages const &right_hand_side)
 std::map<std::string, std::string> ft::ErrorPages::get_pages(void) const
 {
 	return (this->_pages);
+}
+
+std::string    ft::ErrorPages::get_page(std::string code) const
+{
+	if (this->_pages.count(code) == 1)
+		return (this->_pages.at(code));
+	return ("");
 }
 
 void	ft::ErrorPages::set_defaults(void)

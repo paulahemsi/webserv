@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:10:02 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/02 15:18:04 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:50:36 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ namespace ft
 
 			ft::ErrorPages	&operator=(ft::ErrorPages const &right_hand_side);
 
-			std::map<std::string, std::string> get_pages(void) const;
-			
-			void	add_page(std::string code, std::string path);
-			void	set_defaults(void);
+			std::map<std::string, std::string>	get_pages(void) const;
+			std::string     					get_page(std::string code) const;	
+			void								add_page(std::string code, std::string path);
+			void								set_defaults(void);
 	};
 	
 }
