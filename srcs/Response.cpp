@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/28 22:50:16 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/01 21:37:25 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define HELLO_WORLD	"<html>\n<body>\n<h1>Hello, World!</h1>\n</body>\n</html>\n"
 
 ft::Response::Response(void):	_http_version("HTTP/1.1"),
-								_status_code(200),
+								_status_code("200"),
 								_reason_phrase("OK"),
 								_header(),
 								_body(HELLO_WORLD)
@@ -62,7 +62,7 @@ std::string ft::Response::_to_string(void)
 	std::string header;
 
 	status_line = this->_http_version + SP
-				+ _int_to_string(this->_status_code) + SP
+				+ this->_status_code + SP
 				+ this->_reason_phrase + CRLF;
 	header = _header_to_string();
 	return (status_line + header + CRLF + this->_body );
@@ -73,7 +73,7 @@ void	ft::Response::set_header_field(std::string key, std::string value)
 	this->_header[key] = value;
 }
 
-void	ft::Response::set_status_code(unsigned int stauts_code)
+void	ft::Response::set_status_code(std::string stauts_code)
 {
 	this->_status_code = stauts_code;
 }

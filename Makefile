@@ -25,6 +25,7 @@ SRCS		:=	main.cpp \
 				Request.cpp \
 				Response.cpp \
 				RequestProcessor.cpp \
+				ErrorPages.cpp \
 
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
@@ -44,6 +45,7 @@ HEADER		=	utils.hpp \
 				Request.hpp \
 				Response.hpp \
 				RequestProcessor.hpp \
+				ErrorPages.hpp \
 
 INCLUDES	=
 
@@ -51,7 +53,7 @@ VPATH		:=	$(SRCS_DIR)
 
 all:	$(NAME)
 
-$(OBJS_DIR)%.o:	%.cpp
+$(OBJS_DIR)%.o:	%.cpp $(HEADER)
 			$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):	$(OBJS)

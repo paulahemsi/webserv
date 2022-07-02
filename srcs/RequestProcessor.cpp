@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 22:06:19 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:53:37 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void	ft::RequestProcessor::_execute_request(void)
 	}
 	catch(const ft::RequestProcessor::NotFound& e)
 	{
-		_set_error(NOT_FOUND_CODE, NOT_FOUND_REASON, NOT_FOUND_PATH);
+		_set_error(NOT_FOUND_CODE, NOT_FOUND_REASON);
 	}
 	catch(const ft::RequestProcessor::MethodNotAllowed& e)
 	{
-		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON, NOT_ALLOWED_PATH);
+		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON);
 	}
 }
 
@@ -151,13 +151,24 @@ void	ft::RequestProcessor::_set_body_type(std::string path)
 		this->_response.set_content_type("text/css");
 }
 
-void	ft::RequestProcessor::_set_error(unsigned int code, std::string reason, std::string path)
+std::string	ft::RequestProcessor::_get_error_page_path(std::string code)
 {
-	this->_response.set_status_code(code);
-	std::ifstream file(path.c_str());
-	this->_response.set_reason_phrase(reason);
-	std::stringstream buffer;
+	std::string	path;
+
+	path = this->_server_data.get_root() + this->_server_data.get_error_page(code);
+	if (is_file(path))
+		return (path);
+	return (this->_server_data.get_default_error_page(code));
+}
+
+void	ft::RequestProcessor::_set_error(std::string code, std::string reason)
+{
+	std::ifstream		file(_get_error_page_path(code).c_str());
+	std::stringstream	buffer;
+	
 	buffer << file.rdbuf();
+	this->_response.set_status_code(code);
+	this->_response.set_reason_phrase(reason);
 	this->_response.set_body(buffer.str());
 	this->_response.set_content_length(buffer.str().length());
 }
@@ -218,7 +229,7 @@ bool	ft::RequestProcessor::_is_redirection(void)
 	if (redirection == "")
 		return (false);
 	this->_response.set_header_field("Location", redirection);
-	this->_response.set_status_code(301);
+	this->_response.set_status_code("301");
 	return (true);
 }
 
