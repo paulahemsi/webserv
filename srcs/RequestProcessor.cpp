@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 17:49:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:56:01 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,21 +111,27 @@ void ft::RequestProcessor::_build_autoindex(std::string path)
 
 void	ft::RequestProcessor::_set_body(void)
 {
-	std::string path = this->_server_data.get_root() + this->_uri;
+	std::string path;
 	std::string file_path;
+
+ 	path = this->_server_data.get_root() + this->_uri;
 	if (_is_file(path, file_path))
-	{
-		std::ifstream file(file_path.c_str());
-		if (!file)
-			throw (NotFound());
-		std::stringstream buffer;
-		buffer << file.rdbuf();
-		this->_response.build_body(buffer.str(), path);
-	}
+		_get_file(path, file_path);
 	else if (this->_location_data.get_autoindex())
 		_build_autoindex(path);
 	else
 		throw (NotFound());	
+}
+
+void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
+{
+	std::stringstream buffer;
+	std::ifstream file(file_path.c_str());
+
+	if (!file)
+		throw (NotFound());
+	buffer << file.rdbuf();
+	this->_response.build_body(buffer.str(), path);
 }
 
 bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)

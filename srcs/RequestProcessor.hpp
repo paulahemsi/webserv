@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 17:48:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:54:16 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ namespace ft
 			void				_check_method(void);
 			void				_set_error(unsigned int code, std::string reason, std::string path);
 			void				_set_body(void);
+			void				_get_file(std::string path, std::string file_path);
 			void				_set_body_type(std::string path);
 			bool				_is_file(std::string path, std::string& file_path);
 			bool				_find_index(std::string path, std::string& file_path);
