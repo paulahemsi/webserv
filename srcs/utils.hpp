@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef UTILS_HPP
-#define UTILS_CPP
+#define UTILS_HPP
 
 #include <sys/stat.h>
 #include <iostream>
