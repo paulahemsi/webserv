@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 22:06:19 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:44:04 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,7 @@ void	ft::RequestProcessor::_set_body(void)
 			throw (NotFound());
 		std::stringstream buffer;
 		buffer << file.rdbuf();
-		this->_response.set_body(buffer.str());
-		this->_response.set_content_length(buffer.str().length());
-		_set_body_type(path);
+		this->_response.build_body(buffer.str(), path);
 	}
 	else if (this->_location_data.get_autoindex())
 		std::cout << "autoindex" << std::endl;
@@ -143,14 +141,6 @@ bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
 	return (false);
 }
 
-void	ft::RequestProcessor::_set_body_type(std::string path)
-{
-	if (path.find(".jpg") != std::string::npos)
-		this->_response.set_content_type("jpg");
-	if (path.find(".css") != std::string::npos)
-		this->_response.set_content_type("text/css");
-}
-
 void	ft::RequestProcessor::_set_error(unsigned int code, std::string reason, std::string path)
 {
 	this->_response.set_status_code(code);
@@ -158,8 +148,7 @@ void	ft::RequestProcessor::_set_error(unsigned int code, std::string reason, std
 	this->_response.set_reason_phrase(reason);
 	std::stringstream buffer;
 	buffer << file.rdbuf();
-	this->_response.set_body(buffer.str());
-	this->_response.set_content_length(buffer.str().length());
+	this->_response.build_body(buffer.str(), path);
 }
 
 void	ft::RequestProcessor::_select_server(void)
@@ -200,7 +189,6 @@ ft::RequestProcessor::location_data_queue ft::RequestProcessor::_check_locations
 	location_data_vector all_locations = this->_server_data.get_location();
 	std::priority_queue<ft::LocationData> match_locations;
 	std::string prefix;
-
 	for (size_t i = 0; i < all_locations.size(); i++)
 	{
 		prefix = all_locations[i].get_prefix();
