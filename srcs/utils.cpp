@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 22:06:45 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:09:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,12 @@ bool is_dir(std::string path)
 	if ((stat(path.c_str(), &s) == 0) && (s.st_mode & S_IFDIR))
 		return (true);
 	return (false);
+}
+
+std::string int_to_string(int integer)
+{
+	std::stringstream str_stream;
+
+	str_stream << integer;
+	return (str_stream.str());
 }

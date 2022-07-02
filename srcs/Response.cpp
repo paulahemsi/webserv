@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/02 17:22:51 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:10:33 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,13 @@ std::string ft::Response::_header_to_string(void)
 	return (header);
 }
 
-std::string ft::Response::_int_to_string(int integer)
-{
-	std::stringstream str_stream;
-
-	str_stream << integer;
-	return (str_stream.str());
-}
-
 std::string ft::Response::_to_string(void)
 {
 	std::string status_line;
 	std::string header;
 
 	status_line = this->_http_version + SP
-				+ _int_to_string(this->_status_code) + SP
+				+ int_to_string(this->_status_code) + SP
 				+ this->_reason_phrase + CRLF;
 	header = _header_to_string();
 	return (status_line + header + CRLF + this->_body );
@@ -98,7 +90,7 @@ void	ft::Response::_set_body_type(std::string path)
 
 void	ft::Response::_set_content_length(unsigned int length)
 {
-	this->_header["Content-Length"] = _int_to_string(length);
+	this->_header["Content-Length"] = int_to_string(length);
 }
 
 void	ft::Response::_set_content_type(std::string type)

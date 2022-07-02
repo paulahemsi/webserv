@@ -6,13 +6,14 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/02 17:23:04 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:09:33 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RESPONSE_HPP
 #define RESPONSE_HPP
 
+#include "utils.hpp"
 #include <unistd.h>
 #include <iostream>
 #include <string>
@@ -38,7 +39,6 @@ namespace ft
 
 			std::string _header_to_string(void);
 			std::string _to_string(void);
-			std::string	_int_to_string(int integer);
 			void		_set_body(std::string body);
 			void		_set_body_type(std::string path);
 			void		_set_content_type(std::string type);
