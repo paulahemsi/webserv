@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:43:42 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:44:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:07:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@
 #define CLOSE_ANCHOR_TAG "</a></p>"
 
 #define SLASH "/"
+
+#define DIVIDER ":"
 
 #endif
