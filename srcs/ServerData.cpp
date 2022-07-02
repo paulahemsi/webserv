@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/29 21:12:09 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/01 20:48:21 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ _listen(ft::Listen()),
 _server_name(std::vector<std::string>()),
 _root(""),
 _error_pages(ft::ErrorPages()),
+_error_pages_default(ft::ErrorPages()),
 _body_size(10000),
 _location(std::vector<ft::LocationData>())
 {
@@ -34,6 +35,7 @@ ft::ServerData &ft::ServerData::operator=(ft::ServerData const &right_hand_side)
 	this->_server_name = right_hand_side._server_name;
 	this->_root = right_hand_side._root;
 	this->_error_pages = right_hand_side._error_pages;
+	this->_error_pages_default = right_hand_side._error_pages_default;
 	this->_body_size = right_hand_side._body_size;
 	this->_location = right_hand_side._location;
 	return (*this);
@@ -62,6 +64,11 @@ std::string	ft::ServerData::get_root(void) const
 ft::ErrorPages	ft::ServerData::get_error_pages(void) const
 {
 	return (this->_error_pages);
+}
+
+ft::ErrorPages	ft::ServerData::get_error_pages_default(void) const
+{
+	return (this->_error_pages_default);
 }
 
 int	ft::ServerData::get_body_size(void) const

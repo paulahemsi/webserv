@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:25:56 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/29 21:12:01 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/01 20:48:45 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ namespace ft
 			std::vector<std::string>		_server_name;
 			std::string						_root;
 			ft::ErrorPages					_error_pages;
+			ft::ErrorPages					_error_pages_default;
 			int								_body_size;
 			std::vector<ft::LocationData>	_location;
 
@@ -41,6 +42,7 @@ namespace ft
 			std::vector<std::string>		get_server_name(void) const;
 			std::string						get_root(void) const;
 			ft::ErrorPages					get_error_pages(void) const;
+			ft::ErrorPages					get_error_pages_default(void) const;
 			int								get_body_size(void) const;
 			std::vector<ft::LocationData>	get_location(void) const;
 
