@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:40:47 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:43:33 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "ServerData.hpp"
 #include "LocationData.hpp"
 #include "utils.hpp"
+#include "autoindex_defines.hpp"
 #include <queue>
 #include <vector>
 #include <set>
@@ -26,14 +27,6 @@
 #include <streambuf>
 #include <dirent.h>
 
-#define AUTOINDEX_HTML_HEAD "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\"content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Autoindex</title></head>"
-#define CLOSE_BODY "</body></html>"
-#define CLOSE_H1 "</h1>"
-#define OPEN_BODY_TITLE "<body><h1>Index of "
-#define OPEN_ANCHOR_TAG "<p><a href=\""
-#define MIDDLE_ANCHOR_TAG "\">"
-#define CLOSE_ANCHOR_TAG "</a></p>"
-#define SLASH "/"
 #define NOT_FOUND_PATH "./www/error/404.html"
 #define NOT_ALLOWED_PATH "./www/error/405.html"
 #define NOT_FOUND_REASON "Not found"
