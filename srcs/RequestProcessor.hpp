@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 16:03:47 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:26:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ namespace ft
 			void				_set_body_type(std::string path);
 			bool				_is_file(std::string path, std::string& file_path);
 			bool				_find_index(std::string path, std::string& file_path);
+			std::string			_get_error_page_path(std::string code);
 
 		public:
 			RequestProcessor(ft::Socket *socket);

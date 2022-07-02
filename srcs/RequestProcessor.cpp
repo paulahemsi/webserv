@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 16:03:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:30:05 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,27 +151,28 @@ void	ft::RequestProcessor::_set_body_type(std::string path)
 		this->_response.set_content_type("text/css");
 }
 
-void	ft::RequestProcessor::_set_error(std::string code, std::string reason)
+std::string	ft::RequestProcessor::_get_error_page_path(std::string code)
 {
 	std::map<std::string, std::string>	pages;
 	std::string							path;
-	std::ifstream						file;
 
 	pages = this->_server_data.get_error_pages().get_pages();
 	path = this->_server_data.get_root() + pages[code];
+	if (is_file(path))
+		return (path);
+	pages = this->_server_data.get_error_pages_default().get_pages();
+	path = pages[code];
+	return (path);
+}
 
-	file.open(path.c_str());
-	if (!file.is_open())
-	{
-		pages = this->_server_data.get_error_pages_default().get_pages();
-		path = pages[code];
-		file.open(path.c_str());
-	}
-
+void	ft::RequestProcessor::_set_error(std::string code, std::string reason)
+{
+	std::ifstream		file(_get_error_page_path(code).c_str());
+	std::stringstream	buffer;
+	
+	buffer << file.rdbuf();
 	this->_response.set_status_code(code);
 	this->_response.set_reason_phrase(reason);
-	std::stringstream buffer;
-	buffer << file.rdbuf();
 	this->_response.set_body(buffer.str());
 	this->_response.set_content_length(buffer.str().length());
 }
