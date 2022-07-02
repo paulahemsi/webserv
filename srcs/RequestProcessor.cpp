@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 21:36:00 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:03:35 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,56 @@ void	ft::RequestProcessor::_execute_request(void)
 void	ft::RequestProcessor::_set_body(void)
 {
 	std::string path = this->_server_data.get_root() + this->_uri;
-	std::ifstream file(path.c_str());
-	if (!file)
-		throw (NotFound());
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-	this->_response.set_body(buffer.str());
-	this->_response.set_content_length(buffer.str().length());
-	_set_body_type(path);
+	std::string file_path;
+	if (_is_file(path, file_path))
+	{
+		std::ifstream file(file_path.c_str());
+		if (!file)
+			throw (NotFound());
+		std::stringstream buffer;
+		buffer << file.rdbuf();
+		this->_response.set_body(buffer.str());
+		this->_response.set_content_length(buffer.str().length());
+		_set_body_type(path);
+	}
+	else if (this->_location_data.get_autoindex())
+		std::cout << "autoindex" << std::endl;
+	else
+		throw (NotFound());	
+}
+
+bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
+{
+	if (is_file(path))
+	{
+		file_path = path;
+		return (true);
+	}
+	if (is_dir(path))
+	{
+		if (_find_index(path, file_path))
+			return (true);
+		return (false);
+	}
+	throw (NotFound());
+}
+
+bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
+{
+	std::vector<std::string> indexes(this->_location_data.get_index());
+
+	if (indexes.size())
+	{
+		for (size_t i = 0; i < indexes.size(); i++)
+		{
+			if (is_file(path + indexes[i]))
+			{
+				file_path = path + indexes[i];
+				return (true);
+			}
+		}
+	}
+	return (false);
 }
 
 void	ft::RequestProcessor::_set_body_type(std::string path)

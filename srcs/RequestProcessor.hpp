@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 21:39:01 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:03:47 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "Socket.hpp"
 #include "ServerData.hpp"
 #include "LocationData.hpp"
+#include "utils.hpp"
 #include <queue>
 #include <vector>
 #include <set>
@@ -63,6 +64,8 @@ namespace ft
 			void				_set_error(std::string code, std::string reason);
 			void				_set_body(void);
 			void				_set_body_type(std::string path);
+			bool				_is_file(std::string path, std::string& file_path);
+			bool				_find_index(std::string path, std::string& file_path);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
