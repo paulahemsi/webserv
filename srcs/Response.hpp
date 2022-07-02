@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/30 21:37:14 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/01 21:37:23 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ namespace ft
 			void	set_status_code(std::string status_code);
 			void	set_reason_phrase(std::string reason);
 			void	set_content_length(unsigned int length);
+			void	set_content_type(std::string type);
 			void	set_body(std::string body);
 	};
 }

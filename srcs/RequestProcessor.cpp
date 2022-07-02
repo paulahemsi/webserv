@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 21:02:37 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/01 21:36:00 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void ft::RequestProcessor::_define_server_name(void)
 void ft::RequestProcessor::_define_uri(void)
 {
 	this->_uri = this->_request.get_request_field("URI");
-	if (*this->_uri.rbegin() != '/')
-		this->_uri.push_back('/');
+	// if (*this->_uri.rbegin() != '/')
+	// 	this->_uri.push_back('/');
 }
 
 void	ft::RequestProcessor::_execute_request(void)
@@ -76,6 +76,7 @@ void	ft::RequestProcessor::_execute_request(void)
 		if (_is_redirection())
 			return ;
 		_check_method();
+		_set_body();
 	}
 	catch(const ft::RequestProcessor::NotFound& e)
 	{
@@ -85,7 +86,28 @@ void	ft::RequestProcessor::_execute_request(void)
 	{
 		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON);
 	}
-} 
+}
+
+void	ft::RequestProcessor::_set_body(void)
+{
+	std::string path = this->_server_data.get_root() + this->_uri;
+	std::ifstream file(path.c_str());
+	if (!file)
+		throw (NotFound());
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	this->_response.set_body(buffer.str());
+	this->_response.set_content_length(buffer.str().length());
+	_set_body_type(path);
+}
+
+void	ft::RequestProcessor::_set_body_type(std::string path)
+{
+	if (path.find(".jpg") != std::string::npos)
+		this->_response.set_content_type("jpg");
+	if (path.find(".css") != std::string::npos)
+		this->_response.set_content_type("text/css");
+}
 
 void	ft::RequestProcessor::_set_error(std::string code, std::string reason)
 {

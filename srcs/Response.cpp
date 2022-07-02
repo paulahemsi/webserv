@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/30 21:37:55 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/01 21:37:25 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ void	ft::Response::set_body(std::string body)
 void	ft::Response::set_content_length(unsigned int length)
 {
 	this->_header["Content-Length"] = _int_to_string(length);
+}
+
+void	ft::Response::set_content_type(std::string type)
+{
+	this->_header["Content-Type"] = type;
 }
 
 void	ft::Response::send(int client)

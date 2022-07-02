@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 01:00:59 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/28 20:49:17 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void ft::LocationParser::_set_prefix(void)
 	std::string splited;
 
 	std::getline(location_line, splited, ' ');
-	if (*splited.rbegin() != '/')
-		splited.push_back('/');
+	// if (*splited.rbegin() != '/')
+	// 	splited.push_back('/');
 	this->_location.set_prefix(splited);
 	std::getline(location_line, splited, ' ');
 	splited.erase(splited.find_last_not_of(" \t") + 1);
