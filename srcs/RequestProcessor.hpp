@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:43:33 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:47:19 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,13 @@
 #include "LocationData.hpp"
 #include "utils.hpp"
 #include "autoindex_defines.hpp"
+#include "errors_defines.hpp"
 #include <queue>
 #include <vector>
 #include <set>
 #include <fstream>
 #include <streambuf>
 #include <dirent.h>
-
-#define NOT_FOUND_PATH "./www/error/404.html"
-#define NOT_ALLOWED_PATH "./www/error/405.html"
-#define NOT_FOUND_REASON "Not found"
-#define NOT_ALLOWED_REASON "Method not allowed"
-#define NOT_FOUND_CODE 404
-#define NOT_ALLOWED_CODE 405
 
 namespace ft
 {
