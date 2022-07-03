@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 19:09:46 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:27:54 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,16 @@ std::string int_to_string(int integer)
 
 	str_stream << integer;
 	return (str_stream.str());
+}
+
+std::string current_date_time(void)
+{
+	time_t	now;
+	tm		*gmt_time;
+	char	buff[29];
+
+	now = time(NULL);
+	gmt_time = gmtime(&now);
+	strftime(buff, 29, "%a, %d %b %Y %T GMT", gmt_time);
+	return (buff);
 }
