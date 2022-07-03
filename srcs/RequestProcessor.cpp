@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 22:44:29 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/03 14:03:19 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,11 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 {
 	if (entry->d_name[0] != '.')
 	{
+		std::string host = this->_server_data.get_listen().get_host();
+		int port = this->_server_data.get_listen().get_port();
 		body +=	OPEN_ANCHOR_TAG +
+				host + DIVIDER + 
+				int_to_string(port) +
 				this->_uri + SLASH +
 				std::string(entry->d_name) + 
 				MIDDLE_ANCHOR_TAG + entry->d_name +CLOSE_ANCHOR_TAG;
