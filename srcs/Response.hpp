@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/03 14:03:57 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:32:17 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ namespace ft
 			void		_set_body_type(std::string path);
 			void		_set_content_type(std::string type);
 			void		_set_content_length(unsigned int length);
+			void		_set_current_date(void);
 		
 		public:
 			Response(void);

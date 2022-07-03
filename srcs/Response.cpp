@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/03 14:03:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:31:59 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ ft::Response::Response(void):	_http_version("HTTP/1.1"),
 								_header(),
 								_body(HELLO_WORLD)
 {
-	this->_header["Date"] = "Mon, 27 Jul 2009 12:28:53 GMT";
 	this->_header["Server"] = "webserv";
 	this->_header["Last-Modified"] = "Wed, 22 Jul 2009 19:15:56 GMT";
 	this->_header["Content-Length"] = "53";
@@ -98,10 +97,16 @@ void	ft::Response::_set_content_type(std::string type)
 	this->_header["Content-Type"] = type;
 }
 
+void	ft::Response::_set_current_date(void)
+{
+	this->_header["Date"] = current_date_time(); 
+}
+
 void	ft::Response::send(int client)
 {
 	std::string response;
 
+	_set_current_date();
 	response = this->_to_string();
 	write(client, response.c_str(), response.length());
 }
