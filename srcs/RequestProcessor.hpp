@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 22:44:10 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/03 15:51:41 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,16 @@ namespace ft
 						return ("\e[0;31mMethod Not Allowed\e[0m");
 					}
 			};
+			class Forbidden : public std::exception
+			{
+				public:
+					virtual const char* what() const throw()
+					{
+						return ("\e[0;31mForbidden\e[0m");
+					}
+			};
 	};
 }
 
 #endif
+

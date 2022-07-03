@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 14:03:19 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/03 15:54:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ void	ft::RequestProcessor::_execute_request(void)
 	{
 		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON);
 	}
+	catch(const ft::RequestProcessor::Forbidden& e)
+	{
+		_set_error(FORBIDDEN_CODE, FORBIDDEN_REASON);
+	}
 }
 
 void ft::RequestProcessor::_build_autoindex(std::string path)
@@ -141,7 +145,7 @@ void	ft::RequestProcessor::_set_body(void)
 	else if (this->_location_data.get_autoindex())
 		_build_autoindex(path);
 	else
-		throw (NotFound());	
+		throw (Forbidden());	
 }
 
 void ft::RequestProcessor::_get_file(std::string path, std::string file_path)

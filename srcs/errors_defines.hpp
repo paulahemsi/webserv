@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_defines.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:46:23 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 22:47:12 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/03 15:53:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@
 
 #define NOT_ALLOWED_REASON "Method not allowed"
 
+#define FORBIDDEN_REASON "Forbidden"
+
 #define NOT_FOUND_CODE "404"
 
 #define NOT_ALLOWED_CODE "405"
+
+#define FORBIDDEN_CODE "403"
 
 #endif
