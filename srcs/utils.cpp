@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 17:27:54 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/03 18:16:33 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,32 @@ std::string int_to_string(int integer)
 	return (str_stream.str());
 }
 
+static std::string http_date(std::time_t *time)
+{
+	std::tm		*gmt_time;
+	char		buff[64];
+
+	std::memset(buff, 0, 64);
+	gmt_time = gmtime(time);
+	strftime(buff, 64, "%a, %d %b %Y %T GMT", gmt_time);
+	return (buff);
+}
+
 std::string current_date_time(void)
 {
 	time_t	now;
-	tm		*gmt_time;
-	char	buff[29];
 
-	now = time(NULL);
-	gmt_time = gmtime(&now);
-	strftime(buff, 29, "%a, %d %b %Y %T GMT", gmt_time);
-	return (buff);
+	now = std::time(NULL);
+	return (http_date(&now));
+}
+
+std::string last_modification_time(std::string path)
+{
+	struct stat s;
+	
+	if (stat(path.c_str(), &s) != 0)
+	{
+		//lança ServerError?
+	}
+	return (http_date(&s.st_mtimespec.tv_sec));
 }
