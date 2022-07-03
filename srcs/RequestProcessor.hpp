@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:26:56 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/02 22:44:10 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,14 @@
 #include "ServerData.hpp"
 #include "LocationData.hpp"
 #include "utils.hpp"
+#include "autoindex_defines.hpp"
+#include "errors_defines.hpp"
 #include <queue>
 #include <vector>
 #include <set>
 #include <fstream>
 #include <streambuf>
-
-#define NOT_FOUND_PATH "./www/error/404.html"
-#define NOT_ALLOWED_PATH "./www/error/405.html"
-#define NOT_FOUND_REASON "Not found"
-#define NOT_ALLOWED_REASON "Method not allowed"
-#define NOT_FOUND_CODE		"404"
-#define NOT_ALLOWED_CODE	"405"
+#include <dirent.h>
 
 namespace ft
 {
@@ -63,9 +59,13 @@ namespace ft
 			void				_check_method(void);
 			void				_set_error(std::string code, std::string reason);
 			void				_set_body(void);
-			void				_set_body_type(std::string path);
+			void				_get_file(std::string path, std::string file_path);
 			bool				_is_file(std::string path, std::string& file_path);
 			bool				_find_index(std::string path, std::string& file_path);
+			void				_build_autoindex(std::string path);
+			void				_set_autoindex_h1(std::string &body);
+			void				_set_autoindex_body(std::string &body, const char *path);
+			void				_add_autoindex_link(std::string &body, struct dirent *entry);
 			std::string			_get_error_page_path(std::string code);
 
 		public:

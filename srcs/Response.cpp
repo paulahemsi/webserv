@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/01 21:37:25 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/03 14:03:48 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,6 @@ std::string ft::Response::_header_to_string(void)
 	return (header);
 }
 
-std::string ft::Response::_int_to_string(int integer)
-{
-	std::stringstream str_stream;
-
-	str_stream << integer;
-	return (str_stream.str());
-}
-
 std::string ft::Response::_to_string(void)
 {
 	std::string status_line;
@@ -83,17 +75,25 @@ void	ft::Response::set_reason_phrase(std::string reason)
 	this->_reason_phrase = reason;
 }
 
-void	ft::Response::set_body(std::string body)
+void	ft::Response::_set_body(std::string body)
 {
 	this->_body = body;
 }
 
-void	ft::Response::set_content_length(unsigned int length)
+void	ft::Response::_set_body_type(std::string path)
 {
-	this->_header["Content-Length"] = _int_to_string(length);
+	if (path.find(".jpg") != std::string::npos)
+		this->_set_content_type("jpg");
+	if (path.find(".css") != std::string::npos)
+		this->_set_content_type("text/css");
 }
 
-void	ft::Response::set_content_type(std::string type)
+void	ft::Response::_set_content_length(unsigned int length)
+{
+	this->_header["Content-Length"] = int_to_string(length);
+}
+
+void	ft::Response::_set_content_type(std::string type)
 {
 	this->_header["Content-Type"] = type;
 }
@@ -109,4 +109,11 @@ void	ft::Response::send(int client)
 void	ft::Response::show(void)
 {
 	std::cout << this->_to_string();
+}
+
+void	ft::Response::build_body(std::string body, std::string path)
+{
+	this->_set_body(body);
+	this->_set_content_length(body.length());
+	_set_body_type(path);
 }

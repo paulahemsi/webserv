@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:53:37 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/03 14:03:19 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,25 +88,71 @@ void	ft::RequestProcessor::_execute_request(void)
 	}
 }
 
+void ft::RequestProcessor::_build_autoindex(std::string path)
+{
+	std::string body(AUTOINDEX_HTML_HEAD);
+
+	_set_autoindex_h1(body);
+	_set_autoindex_body(body, path.c_str());
+	this->_response.build_body(body, path);
+}
+
+void	ft::RequestProcessor::_set_autoindex_h1(std::string &body)
+{
+	body += OPEN_BODY_TITLE + this->_uri + CLOSE_H1;
+}
+
+void	ft::RequestProcessor::_set_autoindex_body(std::string &body, const char *path)
+{
+	DIR *dir;
+	
+	dir = opendir(path);
+	struct dirent *entry;
+	
+	while ((entry = readdir(dir)) != NULL)
+		_add_autoindex_link(body, entry);
+	body += CLOSE_BODY;
+	closedir(dir);
+}
+
+void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent *entry)
+{
+	if (entry->d_name[0] != '.')
+	{
+		std::string host = this->_server_data.get_listen().get_host();
+		int port = this->_server_data.get_listen().get_port();
+		body +=	OPEN_ANCHOR_TAG +
+				host + DIVIDER + 
+				int_to_string(port) +
+				this->_uri + SLASH +
+				std::string(entry->d_name) + 
+				MIDDLE_ANCHOR_TAG + entry->d_name +CLOSE_ANCHOR_TAG;
+	}
+}
+
 void	ft::RequestProcessor::_set_body(void)
 {
-	std::string path = this->_server_data.get_root() + this->_uri;
+	std::string path;
 	std::string file_path;
+
+ 	path = this->_server_data.get_root() + this->_uri;
 	if (_is_file(path, file_path))
-	{
-		std::ifstream file(file_path.c_str());
-		if (!file)
-			throw (NotFound());
-		std::stringstream buffer;
-		buffer << file.rdbuf();
-		this->_response.set_body(buffer.str());
-		this->_response.set_content_length(buffer.str().length());
-		_set_body_type(path);
-	}
+		_get_file(path, file_path);
 	else if (this->_location_data.get_autoindex())
-		std::cout << "autoindex" << std::endl;
+		_build_autoindex(path);
 	else
 		throw (NotFound());	
+}
+
+void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
+{
+	std::stringstream buffer;
+	std::ifstream file(file_path.c_str());
+
+	if (!file)
+		throw (NotFound());
+	buffer << file.rdbuf();
+	this->_response.build_body(buffer.str(), path);
 }
 
 bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
@@ -143,14 +189,6 @@ bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
 	return (false);
 }
 
-void	ft::RequestProcessor::_set_body_type(std::string path)
-{
-	if (path.find(".jpg") != std::string::npos)
-		this->_response.set_content_type("jpg");
-	if (path.find(".css") != std::string::npos)
-		this->_response.set_content_type("text/css");
-}
-
 std::string	ft::RequestProcessor::_get_error_page_path(std::string code)
 {
 	std::string	path;
@@ -163,14 +201,14 @@ std::string	ft::RequestProcessor::_get_error_page_path(std::string code)
 
 void	ft::RequestProcessor::_set_error(std::string code, std::string reason)
 {
-	std::ifstream		file(_get_error_page_path(code).c_str());
+	std::string			path = _get_error_page_path(code);
+	std::ifstream		file(path.c_str());
 	std::stringstream	buffer;
 	
 	buffer << file.rdbuf();
 	this->_response.set_status_code(code);
 	this->_response.set_reason_phrase(reason);
-	this->_response.set_body(buffer.str());
-	this->_response.set_content_length(buffer.str().length());
+	this->_response.build_body(buffer.str(), path);
 }
 
 void	ft::RequestProcessor::_select_server(void)
@@ -211,7 +249,6 @@ ft::RequestProcessor::location_data_queue ft::RequestProcessor::_check_locations
 	location_data_vector all_locations = this->_server_data.get_location();
 	std::priority_queue<ft::LocationData> match_locations;
 	std::string prefix;
-
 	for (size_t i = 0; i < all_locations.size(); i++)
 	{
 		prefix = all_locations[i].get_prefix();

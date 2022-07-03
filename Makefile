@@ -31,6 +31,8 @@ OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
 HEADER		=	utils.hpp \
+				autoindex_defines.hpp \
+				errors_defines.hpp \
 				Parser.hpp \
 				parser_utils.hpp \
 				LocationParser.hpp \
