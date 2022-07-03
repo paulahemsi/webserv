@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerData.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:25:56 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 15:45:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:39:53 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "LocationData.hpp"
 #include "Listen.hpp"
+#include "ErrorPages.hpp"
 #include <vector>
 
 namespace ft
@@ -25,7 +26,8 @@ namespace ft
 			ft::Listen						_listen;
 			std::vector<std::string>		_server_name;
 			std::string						_root;
-			std::string						_error_pages;
+			ft::ErrorPages					_error_pages;
+			ft::ErrorPages					_error_pages_default;
 			int								_body_size;
 			std::vector<ft::LocationData>	_location;
 
@@ -39,7 +41,10 @@ namespace ft
 			ft::Listen						get_listen(void) const;
 			std::vector<std::string>		get_server_name(void) const;
 			std::string						get_root(void) const;
-			std::string						get_error_pages(void) const;
+			std::string						get_error_page(std::string code) const;
+			std::string						get_default_error_page(std::string code) const;
+			ft::ErrorPages					get_error_pages(void) const;
+			ft::ErrorPages					get_error_pages_default(void) const;
 			int								get_body_size(void) const;
 			std::vector<ft::LocationData>	get_location(void) const;
 
@@ -48,9 +53,9 @@ namespace ft
 			void		set_listen(ft::Listen listen);
 			void		add_server_name(std::string new_server_name);
 			void		set_root(std::string root);
-			void		set_error_pages(std::string error_pages);
 			void		set_body_size(int size_limit);
 			void		add_location(ft::LocationData new_location_block);
+			void		add_error_page(std::string code, std::string page_path);
 	};
 }
 

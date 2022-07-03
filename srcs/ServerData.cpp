@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerData.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 15:45:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:58:01 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ ft::ServerData::ServerData(void):
 _listen(ft::Listen()),
 _server_name(std::vector<std::string>()),
 _root(""),
-_error_pages(""),
+_error_pages(ft::ErrorPages()),
+_error_pages_default(ft::ErrorPages()),
 _body_size(10000),
 _location(std::vector<ft::LocationData>())
 {
+	this->_error_pages_default.set_defaults();
 	return ;
 }
 
@@ -34,6 +36,7 @@ ft::ServerData &ft::ServerData::operator=(ft::ServerData const &right_hand_side)
 	this->_server_name = right_hand_side._server_name;
 	this->_root = right_hand_side._root;
 	this->_error_pages = right_hand_side._error_pages;
+	this->_error_pages_default = right_hand_side._error_pages_default;
 	this->_body_size = right_hand_side._body_size;
 	this->_location = right_hand_side._location;
 	return (*this);
@@ -59,9 +62,24 @@ std::string	ft::ServerData::get_root(void) const
 	return (this->_root);
 }
 
-std::string	ft::ServerData::get_error_pages(void) const
+ft::ErrorPages	ft::ServerData::get_error_pages(void) const
 {
 	return (this->_error_pages);
+}
+
+ft::ErrorPages	ft::ServerData::get_error_pages_default(void) const
+{
+	return (this->_error_pages_default);
+}
+
+std::string	ft::ServerData::get_error_page(std::string code) const
+{
+	return (this->_error_pages.get_page(code));
+}
+
+std::string	ft::ServerData::get_default_error_page(std::string code) const
+{
+	return (this->_error_pages_default.get_page(code));
 }
 
 int	ft::ServerData::get_body_size(void) const
@@ -90,9 +108,9 @@ void ft::ServerData::set_root(std::string root)
 	this->_root = root;
 }
 
-void ft::ServerData::set_error_pages(std::string error_pages)
+void ft::ServerData::add_error_page(std::string code, std::string page_path)
 {
-	this->_error_pages = error_pages;
+	this->_error_pages.add_page(code, page_path);
 }
 
 void ft::ServerData::set_body_size(int size_limit)
@@ -124,7 +142,8 @@ std::ostream &operator<<(std::ostream &outputFile, const ft::ServerData &object)
 				<< "Server Name: " << object.server_name_to_string() << std::endl
 				<< "Root : " << object.get_root() << std::endl
 				<< "BodySize : " << object.get_body_size() << std::endl
-				<< "Error Page: " << object.get_error_pages() << std::endl
+				<< "Error Pages: " << object.get_error_pages() << std::endl
+				<< "Error Pages Defaut: " << object.get_error_pages_default() << std::endl
 				<< "Location: " << std::endl;
 
 	for (size_t i = 0; i < object.get_location().size(); i++)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:47:19 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/02 22:44:10 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,16 @@ namespace ft
 			bool				_is_redirection(void);
 			location_data_queue	_check_locations(void);
 			void				_check_method(void);
-			void				_set_error(unsigned int code, std::string reason, std::string path);
+			void				_set_error(std::string code, std::string reason);
 			void				_set_body(void);
 			void				_get_file(std::string path, std::string file_path);
-			void				_set_body_type(std::string path);
 			bool				_is_file(std::string path, std::string& file_path);
 			bool				_find_index(std::string path, std::string& file_path);
 			void				_build_autoindex(std::string path);
 			void				_set_autoindex_h1(std::string &body);
 			void				_set_autoindex_body(std::string &body, const char *path);
 			void				_add_autoindex_link(std::string &body, struct dirent *entry);
+			std::string			_get_error_page_path(std::string code);
 
 		public:
 			RequestProcessor(ft::Socket *socket);

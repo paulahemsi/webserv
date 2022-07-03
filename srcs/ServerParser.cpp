@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerParser.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 15:45:42 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:38:51 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,21 @@ void ft::ServerParser::_set_root_conf()
 void ft::ServerParser::_set_error_page_conf()
 {
 	ft::reduce_to_value(this->_line, ERROR_PAGE);
-	if (ft::more_than_one_argument(this->_line))
+	if (!ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
-	this->_server.set_error_pages(this->_line);
+
+	size_t				pos = this->_line.find_last_of(' ');
+	std::string 		page_path = this->_line.substr(pos + 1);
+	std::string			codes= this->_line.substr(0, pos);
+	ft::trim(codes, " \t");
+
+	std::stringstream 	ss_codes(codes);
+	std::string 		code;
+	while (ss_codes.good())
+	{
+		std::getline(ss_codes, code, ' ');
+		this->_server.add_error_page(code, page_path);
+	}
 }
 
 void ft::ServerParser::_set_body_size_conf()
