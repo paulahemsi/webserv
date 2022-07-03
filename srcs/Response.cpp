@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/03 17:31:59 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/03 18:03:05 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ ft::Response::Response(void):	_http_version("HTTP/1.1"),
 								_body(HELLO_WORLD)
 {
 	this->_header["Server"] = "webserv";
-	this->_header["Last-Modified"] = "Wed, 22 Jul 2009 19:15:56 GMT";
 	this->_header["Content-Length"] = "53";
 	this->_header["Content-Type"] = "text/html";
 	this->_header["Connection"] = "close";
@@ -102,6 +101,11 @@ void	ft::Response::_set_current_date(void)
 	this->_header["Date"] = current_date_time(); 
 }
 
+void	ft::Response::_set_last_modified(std::string path)
+{
+	this->_header["Last-Modified"] = last_modification_time(path);
+}
+
 void	ft::Response::send(int client)
 {
 	std::string response;
@@ -120,5 +124,6 @@ void	ft::Response::build_body(std::string body, std::string path)
 {
 	this->_set_body(body);
 	this->_set_content_length(body.length());
+	this->_set_last_modified(path);
 	_set_body_type(path);
 }
