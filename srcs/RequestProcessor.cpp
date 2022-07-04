@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 15:54:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/04 20:07:56 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,17 +136,34 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 
 void	ft::RequestProcessor::_set_body(void)
 {
+	if (this->_method == "GET")
+		_execute_get();
+	else if (this->_method == "POST")
+		_execute_post();
+}
+
+void	ft::RequestProcessor::_execute_get(void)
+{
 	std::string path;
 	std::string file_path;
 
- 	path = this->_server_data.get_root() + this->_uri;
+	path = this->_server_data.get_root() + this->_uri;
 	if (_is_file(path, file_path))
 		_get_file(path, file_path);
 	else if (this->_location_data.get_autoindex())
 		_build_autoindex(path);
 	else
-		throw (Forbidden());	
+		throw (Forbidden());
 }
+
+void	ft::RequestProcessor::_execute_post(void)
+{
+	std::ofstream new_file("./www/uploads/files/test");
+	std::string body = this->_request.get_request_field("Body");
+	new_file.write(body.data(), body.length());
+	new_file.close();
+}
+
 
 void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
 {
@@ -277,9 +294,9 @@ bool	ft::RequestProcessor::_is_redirection(void)
 void	ft::RequestProcessor::_check_method(void)
 {
 	std::set<std::string> methods = this->_location_data.get_accepted_methods();
-	std::string request_method = this->_request.get_request_field("Method");
+	this->_method = this->_request.get_request_field("Method");
 
-	std::set<std::string>::iterator found = methods.find(request_method);
+	std::set<std::string>::iterator found = methods.find(this->_method);
 	if (found == methods.end())
 			throw (MethodNotAllowed());
 }

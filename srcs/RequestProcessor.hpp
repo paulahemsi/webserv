@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 15:51:41 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/04 20:03:25 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ namespace ft
 			ft::Socket			*_socket;
 			std::string			_uri;
 			std::string			_server_name;
+			std::string			_method;
 			ft::ServerData		_server_data;
 			ft::LocationData	_location_data;
 
@@ -67,6 +68,8 @@ namespace ft
 			void				_set_autoindex_body(std::string &body, const char *path);
 			void				_add_autoindex_link(std::string &body, struct dirent *entry);
 			std::string			_get_error_page_path(std::string code);
+			void				_execute_get(void);
+			void				_execute_post(void);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
