@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<p>Click on the "Choose File" button to upload a file:</p>
+
+	<p>Formats accepteds: .jpg .jpeg .txt .html .pdf .img .gif</p>
+    <form enctype="multipart/form-data" action="/uploads/files/" method="POST">
+		Choose a file to upload: <input name="uploadedfile" type="file" /><br/>
+		<input type="submit" value="Upload File" />
+	  </form>
+	<!-- <form action="/uploads/files/" method="post">
+		<input type="file" id="myFile" name="filename">
+		<input type="submit">
+	</form> -->
+
+</body>
+</html>

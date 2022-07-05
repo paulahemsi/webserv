@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/04 20:03:25 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:31:52 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,29 +79,74 @@ namespace ft
 			ft::RequestProcessor	&operator=(ft::RequestProcessor const &right_hand_side);
 
 			void	run(std::string request_string,  int client_fd);
+
+			class ErrorsHttp : public std::exception
+			{
+				public:
+					virtual const char* code() const throw()
+					{
+						return ("");
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return ("");
+					}
+			};
+
+			class NotFound : public ft::RequestProcessor::ErrorsHttp
+			{
+				public:
+					virtual const char* code() const throw()
+					{
+						return (NOT_FOUND_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (NOT_FOUND_REASON);
+					}
+			};
 			
-			class NotFound : public std::exception
+			class MethodNotAllowed : public ft::RequestProcessor::ErrorsHttp
 			{
 				public:
-					virtual const char* what() const throw()
+					virtual const char* code() const throw()
 					{
-						return ("\e[0;31mLocation not found\e[0m");
+						return (NOT_ALLOWED_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (NOT_ALLOWED_REASON);
 					}
 			};
-			class MethodNotAllowed : public std::exception
+			
+			class Forbidden : public ft::RequestProcessor::ErrorsHttp
 			{
 				public:
-					virtual const char* what() const throw()
+					virtual const char* code() const throw()
 					{
-						return ("\e[0;31mMethod Not Allowed\e[0m");
+						return (FORBIDDEN_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (FORBIDDEN_REASON);
 					}
 			};
-			class Forbidden : public std::exception
+			
+			class InternalServerError : public ft::RequestProcessor::ErrorsHttp
 			{
 				public:
-					virtual const char* what() const throw()
+					virtual const char* code() const throw()
 					{
-						return ("\e[0;31mForbidden\e[0m");
+						return (SERVER_ERROR_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (SERVER_ERROR_REASON);
 					}
 			};
 	};

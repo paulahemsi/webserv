@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/04 20:07:56 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/04 22:08:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,9 @@ void	ft::RequestProcessor::_execute_request(void)
 		_check_method();
 		_set_body();
 	}
-	catch(const ft::RequestProcessor::NotFound& e)
+	catch(const ft::RequestProcessor::ErrorsHttp& e)
 	{
-		_set_error(NOT_FOUND_CODE, NOT_FOUND_REASON);
-	}
-	catch(const ft::RequestProcessor::MethodNotAllowed& e)
-	{
-		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON);
-	}
-	catch(const ft::RequestProcessor::Forbidden& e)
-	{
-		_set_error(FORBIDDEN_CODE, FORBIDDEN_REASON);
+		_set_error(e.code(), e.reason());
 	}
 }
 
@@ -158,12 +150,29 @@ void	ft::RequestProcessor::_execute_get(void)
 
 void	ft::RequestProcessor::_execute_post(void)
 {
-	std::ofstream new_file("./www/uploads/files/test");
-	std::string body = this->_request.get_request_field("Body");
-	new_file.write(body.data(), body.length());
-	new_file.close();
+	// std::cout << "------------------------------------------\n";
+	// this->_request.debugging_request();
+	// std::cout << "------------------------------------------\n";
+	
+	std::string body(this->_request.get_request_field("Body").data());
+	size_t index_begin =  body.find("filename=\"");
+	if (index_begin == std::string::npos)
+		throw (InternalServerError());
+	else
+	{
+		index_begin += 10;
+		size_t index_end = body.find("\"", index_begin);
+		std::string file_name = "./www/uploads/files/";
+		file_name += body.substr(index_begin, index_end - index_begin);
+		body.erase(0, (body.find("\r\n\r\n") + 4));
+		body.erase((body.rfind("\r\n")), body.length());
+		body.erase((body.rfind("\r\n")), body.length());
+		std::ofstream new_file;
+		new_file.open(file_name.c_str(), std::ios::binary);
+		new_file.write(body.c_str(), body.length());
+		new_file.close();
+	}
 }
-
 
 void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
 {
