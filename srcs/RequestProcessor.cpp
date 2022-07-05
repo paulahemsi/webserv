@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 17:10:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:18:42 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,15 +142,36 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 void	ft::RequestProcessor::_set_body(void)
 {
 	std::string path;
+	std::string method;
 	std::string file_path;
 
+	method = this->_request.get_method();
  	path = this->_server_data.get_root() + this->_uri;
-	if (_is_file(path, file_path))
-		_get_file(path, file_path);
-	else if (this->_location_data.get_autoindex())
-		_build_autoindex(path);
-	else
-		throw (Forbidden());	
+
+	if (!method.compare("GET"))
+	{
+		if (_is_file(path, file_path))
+			_get_file(path, file_path);
+		else if (this->_location_data.get_autoindex())
+			_build_autoindex(path);
+		else
+			throw (Forbidden());	
+	}
+	if (!method.compare("DELETE"))
+		_execute_delete(path);
+}
+
+void ft::RequestProcessor::_execute_delete(std::string path)
+{
+	if (is_dir(path))
+		throw (Forbidden());
+	if (!is_file(path))
+		throw (NotFound());
+	std::remove(path.c_str());
+	this->_response.set_status_code(ACCEPTED_CODE);
+	this->_response.set_reason_phrase(ACCEPTED_REASON);
+	this->_response.build_body("");
+
 }
 
 void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
@@ -282,7 +303,7 @@ bool	ft::RequestProcessor::_is_redirection(void)
 void	ft::RequestProcessor::_check_method(void)
 {
 	std::set<std::string> methods = this->_location_data.get_accepted_methods();
-	std::string request_method = this->_request.get_request_field("Method");
+	std::string request_method = this->_request.get_method();
 
 	std::set<std::string>::iterator found = methods.find(request_method);
 	if (found == methods.end())
