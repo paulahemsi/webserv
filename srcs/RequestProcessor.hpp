@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 20:12:21 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:33:19 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include "ServerData.hpp"
 #include "LocationData.hpp"
 #include "utils.hpp"
-#include "autoindex_defines.hpp"
-#include "errors_defines.hpp"
+#include "html_defines.hpp"
+#include "http_methods_defines.hpp"
 #include <queue>
 #include <vector>
 #include <set>

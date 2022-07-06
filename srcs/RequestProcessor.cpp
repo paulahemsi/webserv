@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/04 21:18:42 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:22:59 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void ft::RequestProcessor::_execute_delete(std::string path)
 	std::remove(path.c_str());
 	this->_response.set_status_code(ACCEPTED_CODE);
 	this->_response.set_reason_phrase(ACCEPTED_REASON);
-	this->_response.build_body("");
+	this->_response.build_body(DELETE_HTML);
 
 }
 

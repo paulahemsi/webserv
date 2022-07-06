@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_defines.hpp                                 :+:      :+:    :+:   */
+/*   http_methods_defines.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:46:23 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/04 21:07:17 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:25:31 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_DEFINES_HPP
-#define ERRORS_DEFINES_HPP
-
-#define NOT_FOUND_PATH "./www/error/404.html"
-
-#define NOT_ALLOWED_PATH "./www/error/405.html"
+#ifndef HTTP_METHODS_DEFINES_HPP
+#define HTTP_METHODS_DEFINES_HPP
 
 #define NOT_FOUND_REASON "Not found"
 
