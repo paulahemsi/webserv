@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/04 21:31:52 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:40:05 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include "ServerData.hpp"
 #include "LocationData.hpp"
 #include "utils.hpp"
-#include "autoindex_defines.hpp"
-#include "errors_defines.hpp"
+#include "html_defines.hpp"
+#include "http_methods_defines.hpp"
 #include <queue>
 #include <vector>
 #include <set>
@@ -51,6 +51,7 @@ namespace ft
 			void				_define_uri(void);
 			void				_define_server_name(void);
 			void				_execute_request(void);
+			void				_execute_delete(std::string path);
 			void				_select_server(void);
 			void				_define_server(ft::ServerData server);
 			int					_is_match(std::vector<std::string> names);
@@ -68,7 +69,7 @@ namespace ft
 			void				_set_autoindex_body(std::string &body, const char *path);
 			void				_add_autoindex_link(std::string &body, struct dirent *entry);
 			std::string			_get_error_page_path(std::string code);
-			void				_execute_get(void);
+			void				_execute_get(std::string path);
 			void				_execute_post(void);
 
 		public:

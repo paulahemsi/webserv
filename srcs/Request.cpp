@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/05 22:20:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:27:12 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ std::map<std::string, std::string> ft::Request::get_request(void) const
 	return (this->_request);
 }
 
+std::string	ft::Request::get_method(void)
+{
+	return (get_request_field("Method"));
+}
 
 ft::Request& ft::Request::operator= (const Request& other)
 {
@@ -89,6 +93,26 @@ ft::Request& ft::Request::operator= (const Request& other)
 ft::Request::~Request(void)
 {
 	return ;
+}
+
+void	ft::Request::check_request(void)
+{
+	if (!_has_mandatory_fields())
+		throw (BadRequest());
+}
+
+bool	ft::Request::_has_mandatory_fields(void)
+{
+	if (!_has("Method:") ||
+		!_has("URI:") ||
+		!_has("Protocol-Version:"))
+		return (false);
+	return (true);
+}
+
+bool	ft::Request::_has(std::string key)
+{
+	return (this->_request.find(key) != this->_request.end());
 }
 
 std::ostream &operator<<(std::ostream &outputFile, const ft::Request &object)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/05 22:26:50 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:32:21 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ namespace ft
 			
 			std::map<std::string, std::string> _request;
 			
-			void _parse_request_line(std::string request_line);
-			void _parse_header(std::stringstream &header);
-			void _parse_body(std::string request_string);
+			void	_parse_request_line(std::string request_line);
+			void	_parse_header(std::stringstream &header);
+			void	_parse_body(std::string request_string);
+			bool	_has(std::string key);
+			bool	_has_mandatory_fields(void);
 
 		public:
 			Request(void);
@@ -43,6 +45,17 @@ namespace ft
 			std::string							get_request_field(std::string key);
 			std::string							get_server_name(void);
 			std::map<std::string, std::string>	get_request(void) const;
+			std::string							get_method(void);
+			void								check_request(void);
+			
+			class BadRequest : public std::exception
+			{
+				public:
+					virtual const char* what() const throw()
+					{
+						return ("\e[0;31mBad Request\e[0m");
+					}
+			};
 	};
 }
 

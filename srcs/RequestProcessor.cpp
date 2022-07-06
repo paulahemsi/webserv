@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/05 22:46:11 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:40:37 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft::RequestProcessor::_execute_request(void)
 	_select_server();
 	try
 	{
+		this->_request.check_request();
 		_select_location();
 		if (_is_redirection())
 			return ;
@@ -128,18 +129,22 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 
 void	ft::RequestProcessor::_set_body(void)
 {
+	std::string path;
+	
+	path = this->_server_data.get_root() + this->_uri;
 	if (this->_method == "GET")
-		_execute_get();
+		_execute_get(path);
 	else if (this->_method == "POST")
 		_execute_post();
+	else if (this->_method == "DELETE")
+		_execute_delete(path);
 }
 
-void	ft::RequestProcessor::_execute_get(void)
+void	ft::RequestProcessor::_execute_get(std::string path)
 {
-	std::string path;
+	std::string method;
 	std::string file_path;
 
-	path = this->_server_data.get_root() + this->_uri;
 	if (_is_file(path, file_path))
 		_get_file(path, file_path);
 	else if (this->_location_data.get_autoindex())
@@ -168,6 +173,18 @@ void	ft::RequestProcessor::_execute_post(void)
 		new_file.write(body.c_str(), body.length());
 		new_file.close();
 	}
+}
+
+void ft::RequestProcessor::_execute_delete(std::string path)
+{
+	if (is_dir(path))
+		throw (Forbidden());
+	if (!is_file(path))
+		throw (NotFound());
+	std::remove(path.c_str());
+	this->_response.set_status_code(ACCEPTED_CODE);
+	this->_response.set_reason_phrase(ACCEPTED_REASON);
+	this->_response.build_body(DELETE_HTML);
 }
 
 void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
@@ -299,7 +316,7 @@ bool	ft::RequestProcessor::_is_redirection(void)
 void	ft::RequestProcessor::_check_method(void)
 {
 	std::set<std::string> methods = this->_location_data.get_accepted_methods();
-	this->_method = this->_request.get_request_field("Method");
+	this->_method = this->_request.get_method();
 
 	std::set<std::string>::iterator found = methods.find(this->_method);
 	if (found == methods.end())
