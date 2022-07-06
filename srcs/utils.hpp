@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:54 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 17:55:38 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/05 23:02:56 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
+#include <cstring>
 
 bool is_file(std::string path);
 bool is_dir(std::string path);
