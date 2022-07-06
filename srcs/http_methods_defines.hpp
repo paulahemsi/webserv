@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_defines.hpp                                 :+:      :+:    :+:   */
+/*   http_methods_defines.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:46:23 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/04 21:36:19 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:53:25 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_DEFINES_HPP
-#define ERRORS_DEFINES_HPP
-
+#ifndef HTTP_METHODS_DEFINES_HPP
+#define HTTP_METHODS_DEFINES_HPP
 
 #define NOT_FOUND_REASON "Not found"
 
@@ -22,6 +21,10 @@
 
 #define SERVER_ERROR_REASON "Internal Server Error"
 
+#define BAD_REQUEST_REASON "Bad request"
+
+#define ACCEPTED_REASON "Accepted"
+
 #define NOT_FOUND_CODE "404"
 
 #define NOT_ALLOWED_CODE "405"
@@ -30,5 +33,8 @@
 
 #define SERVER_ERROR_CODE "500"
 
+#define BAD_REQUEST_CODE "400"
+
+#define ACCEPTED_CODE "202"
 
 #endif
