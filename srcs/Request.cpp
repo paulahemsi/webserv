@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/01 17:48:54 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:20:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ std::string ft::Request::get_server_name(void)
 	return (host.substr(0, host.find(':')));
 }
 
+std::map<std::string, std::string> ft::Request::get_request(void) const
+{
+	return (this->_request);
+}
+
+
 ft::Request& ft::Request::operator= (const Request& other)
 {
 	this->_request = other._request;
@@ -85,13 +91,14 @@ ft::Request::~Request(void)
 	return ;
 }
 
-//DEBUGGING FUNCTION
-void ft::Request::debugging_request(void)
+std::ostream &operator<<(std::ostream &outputFile, const ft::Request &object)
 {
-	std::map<std::string, std::string>::iterator it = this->_request.begin();
-	while (it != this->_request.end())
+	std::map<std::string, std::string> request = object.get_request();
+	std::map<std::string, std::string>::iterator it = request.begin();
+	while (it != request.end())
 	{
-		std::cout << it->first << " " << it->second << std::endl;
+		outputFile << it->first << " " << it->second << std::endl;
 		it++;
 	}
+	return (outputFile);
 }

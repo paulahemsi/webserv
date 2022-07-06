@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 11:39:41 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:26:50 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ namespace ft
 
 			Request& operator= (const Request& other);
 
-			void		init(std::string request_string);
-			std::string get_request_field(std::string key);
-			std::string get_server_name(void);
-			//DEBUGGING FUNCTION
-			void debugging_request(void);
+			void								init(std::string request_string);
+			std::string							get_request_field(std::string key);
+			std::string							get_server_name(void);
+			std::map<std::string, std::string>	get_request(void) const;
 	};
 }
+
+std::ostream &operator<<(std::ostream &outputFile, const ft::Request &object);
 
 #endif 
