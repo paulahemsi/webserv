@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/04 22:08:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:46:11 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,6 @@ void	ft::RequestProcessor::_execute_get(void)
 
 void	ft::RequestProcessor::_execute_post(void)
 {
-	// std::cout << "------------------------------------------\n";
-	// this->_request.debugging_request();
-	// std::cout << "------------------------------------------\n";
-	
 	std::string body(this->_request.get_request_field("Body").data());
 	size_t index_begin =  body.find("filename=\"");
 	if (index_begin == std::string::npos)
