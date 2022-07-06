@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 15:51:41 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:33:19 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include "ServerData.hpp"
 #include "LocationData.hpp"
 #include "utils.hpp"
-#include "autoindex_defines.hpp"
-#include "errors_defines.hpp"
+#include "html_defines.hpp"
+#include "http_methods_defines.hpp"
 #include <queue>
 #include <vector>
 #include <set>
@@ -50,6 +50,7 @@ namespace ft
 			void				_define_uri(void);
 			void				_define_server_name(void);
 			void				_execute_request(void);
+			void				_execute_delete(std::string path);
 			void				_select_server(void);
 			void				_define_server(ft::ServerData server);
 			int					_is_match(std::vector<std::string> names);

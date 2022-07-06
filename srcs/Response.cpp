@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/03 18:03:05 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:16:35 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,10 @@ void	ft::Response::build_body(std::string body, std::string path)
 	this->_set_content_length(body.length());
 	this->_set_last_modified(path);
 	_set_body_type(path);
+}
+
+void	ft::Response::build_body(std::string body)
+{
+	this->_set_body(body);
+	this->_set_content_length(body.length());
 }
