@@ -6,6 +6,8 @@ CFLAGS		+= -g
 CFLAGS		+= -std=c++98
 #CFLAGS		+= -fstandalone-debug
 
+UNAME		:=	$(shell uname)
+
 RM			:=	rm -rf
 
 SRCS_DIR	:=	./srcs/
@@ -53,10 +55,14 @@ INCLUDES	=
 
 VPATH		:=	$(SRCS_DIR)
 
+ifeq ($(UNAME),Darwin)
+	OP_SYSTEM := -D DARWIN 
+endif
+
 all:	$(NAME)
 
 $(OBJS_DIR)%.o:	%.cpp $(HEADER)
-			$(CC) $(CFLAGS) -c $< -o $@
+			$(CC) $(CFLAGS) $(OP_SYSTEM) -c $< -o $@
 
 $(NAME):	$(OBJS)
 			$(CC) $(CFLAGS) $^ -o $@

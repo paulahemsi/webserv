@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/05 22:33:19 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:40:05 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ namespace ft
 			ft::Socket			*_socket;
 			std::string			_uri;
 			std::string			_server_name;
+			std::string			_method;
 			ft::ServerData		_server_data;
 			ft::LocationData	_location_data;
 
@@ -68,6 +69,8 @@ namespace ft
 			void				_set_autoindex_body(std::string &body, const char *path);
 			void				_add_autoindex_link(std::string &body, struct dirent *entry);
 			std::string			_get_error_page_path(std::string code);
+			void				_execute_get(std::string path);
+			void				_execute_post(void);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
@@ -77,29 +80,74 @@ namespace ft
 			ft::RequestProcessor	&operator=(ft::RequestProcessor const &right_hand_side);
 
 			void	run(std::string request_string,  int client_fd);
+
+			class ErrorsHttp : public std::exception
+			{
+				public:
+					virtual const char* code() const throw()
+					{
+						return ("");
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return ("");
+					}
+			};
+
+			class NotFound : public ft::RequestProcessor::ErrorsHttp
+			{
+				public:
+					virtual const char* code() const throw()
+					{
+						return (NOT_FOUND_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (NOT_FOUND_REASON);
+					}
+			};
 			
-			class NotFound : public std::exception
+			class MethodNotAllowed : public ft::RequestProcessor::ErrorsHttp
 			{
 				public:
-					virtual const char* what() const throw()
+					virtual const char* code() const throw()
 					{
-						return ("\e[0;31mLocation not found\e[0m");
+						return (NOT_ALLOWED_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (NOT_ALLOWED_REASON);
 					}
 			};
-			class MethodNotAllowed : public std::exception
+			
+			class Forbidden : public ft::RequestProcessor::ErrorsHttp
 			{
 				public:
-					virtual const char* what() const throw()
+					virtual const char* code() const throw()
 					{
-						return ("\e[0;31mMethod Not Allowed\e[0m");
+						return (FORBIDDEN_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (FORBIDDEN_REASON);
 					}
 			};
-			class Forbidden : public std::exception
+			
+			class InternalServerError : public ft::RequestProcessor::ErrorsHttp
 			{
 				public:
-					virtual const char* what() const throw()
+					virtual const char* code() const throw()
 					{
-						return ("\e[0;31mForbidden\e[0m");
+						return (SERVER_ERROR_CODE);
+					}
+					
+					virtual const char* reason() const throw()
+					{
+						return (SERVER_ERROR_REASON);
 					}
 			};
 	};

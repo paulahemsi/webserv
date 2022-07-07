@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/05 22:22:59 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:40:37 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,9 @@ void	ft::RequestProcessor::_execute_request(void)
 		_check_method();
 		_set_body();
 	}
-	catch(const ft::Request::BadRequest& e)
+	catch(const ft::RequestProcessor::ErrorsHttp& e)
 	{
-		_set_error(BAD_REQUEST_CODE, BAD_REQUEST_REASON);
-	}
-	catch(const ft::RequestProcessor::NotFound& e)
-	{
-		_set_error(NOT_FOUND_CODE, NOT_FOUND_REASON);
-	}
-	catch(const ft::RequestProcessor::MethodNotAllowed& e)
-	{
-		_set_error(NOT_ALLOWED_CODE, NOT_ALLOWED_REASON);
-	}
-	catch(const ft::RequestProcessor::Forbidden& e)
-	{
-		_set_error(FORBIDDEN_CODE, FORBIDDEN_REASON);
+		_set_error(e.code(), e.reason());
 	}
 }
 
@@ -142,23 +130,49 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 void	ft::RequestProcessor::_set_body(void)
 {
 	std::string path;
+	
+	path = this->_server_data.get_root() + this->_uri;
+	if (this->_method == "GET")
+		_execute_get(path);
+	else if (this->_method == "POST")
+		_execute_post();
+	else if (this->_method == "DELETE")
+		_execute_delete(path);
+}
+
+void	ft::RequestProcessor::_execute_get(std::string path)
+{
 	std::string method;
 	std::string file_path;
 
-	method = this->_request.get_method();
- 	path = this->_server_data.get_root() + this->_uri;
+	if (_is_file(path, file_path))
+		_get_file(path, file_path);
+	else if (this->_location_data.get_autoindex())
+		_build_autoindex(path);
+	else
+		throw (Forbidden());
+}
 
-	if (!method.compare("GET"))
+void	ft::RequestProcessor::_execute_post(void)
+{
+	std::string body(this->_request.get_request_field("Body").data());
+	size_t index_begin =  body.find("filename=\"");
+	if (index_begin == std::string::npos)
+		throw (InternalServerError());
+	else
 	{
-		if (_is_file(path, file_path))
-			_get_file(path, file_path);
-		else if (this->_location_data.get_autoindex())
-			_build_autoindex(path);
-		else
-			throw (Forbidden());	
+		index_begin += 10;
+		size_t index_end = body.find("\"", index_begin);
+		std::string file_name = "./www/uploads/files/";
+		file_name += body.substr(index_begin, index_end - index_begin);
+		body.erase(0, (body.find("\r\n\r\n") + 4));
+		body.erase((body.rfind("\r\n")), body.length());
+		body.erase((body.rfind("\r\n")), body.length());
+		std::ofstream new_file;
+		new_file.open(file_name.c_str(), std::ios::binary);
+		new_file.write(body.c_str(), body.length());
+		new_file.close();
 	}
-	if (!method.compare("DELETE"))
-		_execute_delete(path);
 }
 
 void ft::RequestProcessor::_execute_delete(std::string path)
@@ -171,7 +185,6 @@ void ft::RequestProcessor::_execute_delete(std::string path)
 	this->_response.set_status_code(ACCEPTED_CODE);
 	this->_response.set_reason_phrase(ACCEPTED_REASON);
 	this->_response.build_body(DELETE_HTML);
-
 }
 
 void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
@@ -303,9 +316,9 @@ bool	ft::RequestProcessor::_is_redirection(void)
 void	ft::RequestProcessor::_check_method(void)
 {
 	std::set<std::string> methods = this->_location_data.get_accepted_methods();
-	std::string request_method = this->_request.get_method();
+	this->_method = this->_request.get_method();
 
-	std::set<std::string>::iterator found = methods.find(request_method);
+	std::set<std::string>::iterator found = methods.find(this->_method);
 	if (found == methods.end())
 			throw (MethodNotAllowed());
 }

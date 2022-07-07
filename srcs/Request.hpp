@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 19:57:57 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:32:21 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ namespace ft
 
 			Request& operator= (const Request& other);
 
-			void		init(std::string request_string);
-			std::string get_request_field(std::string key);
-			std::string get_server_name(void);
-			std::string get_method(void);
-			void		check_request(void);
-
-			//DEBUGGING FUNCTION
-			void debugging_request(void);
+			void								init(std::string request_string);
+			std::string							get_request_field(std::string key);
+			std::string							get_server_name(void);
+			std::map<std::string, std::string>	get_request(void) const;
+			std::string							get_method(void);
+			void								check_request(void);
 			
 			class BadRequest : public std::exception
 			{
@@ -60,5 +58,7 @@ namespace ft
 			};
 	};
 }
+
+std::ostream &operator<<(std::ostream &outputFile, const ft::Request &object);
 
 #endif 

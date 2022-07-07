@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/03 19:59:59 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:27:12 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ std::string ft::Request::get_server_name(void)
 	return (host.substr(0, host.find(':')));
 }
 
+std::map<std::string, std::string> ft::Request::get_request(void) const
+{
+	return (this->_request);
+}
+
 std::string	ft::Request::get_method(void)
 {
 	return (get_request_field("Method"));
@@ -110,14 +115,14 @@ bool	ft::Request::_has(std::string key)
 	return (this->_request.find(key) != this->_request.end());
 }
 
-
-//DEBUGGING FUNCTION
-void ft::Request::debugging_request(void)
+std::ostream &operator<<(std::ostream &outputFile, const ft::Request &object)
 {
-	std::map<std::string, std::string>::iterator it = this->_request.begin();
-	while (it != this->_request.end())
+	std::map<std::string, std::string> request = object.get_request();
+	std::map<std::string, std::string>::iterator it = request.begin();
+	while (it != request.end())
 	{
-		std::cout << it->first << " " << it->second << std::endl;
+		outputFile << it->first << " " << it->second << std::endl;
 		it++;
 	}
+	return (outputFile);
 }

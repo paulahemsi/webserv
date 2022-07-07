@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:46:23 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/05 22:25:31 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:17:38 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 #define FORBIDDEN_REASON "Forbidden"
 
+#define SERVER_ERROR_REASON "Internal Server Error"
+
 #define BAD_REQUEST_REASON "Bad request"
 
 #define ACCEPTED_REASON "Accepted"
@@ -28,6 +30,8 @@
 #define NOT_ALLOWED_CODE "405"
 
 #define FORBIDDEN_CODE "403"
+
+#define SERVER_ERROR_CODE "500"
 
 #define BAD_REQUEST_CODE "400"
 
