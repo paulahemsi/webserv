@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/07 21:18:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:48:54 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,33 @@ void ft::Request::_parse_header(std::stringstream &header)
 	}
 }
 
+#include "RequestProcessor.hpp"
 void ft::Request::_parse_body(std::string request_string, int client_fd)
 {
-	
-	std::size_t pos = request_string.find("\r\n\r\n");
-	std::string value = request_string.substr(pos + 4, std::string::npos);
-	this->_request.insert(ft::request_pair("Body:", value));
+	//int bytes_received;
+	char buffer[1];
+
+	this->_body = request_string;
+	while (recv(client_fd, buffer, 1, MSG_DONTWAIT) > 0)
+		this->_body += buffer;
+
+	size_t index_begin =  this->_body.find("filename=\"");
+	if (index_begin == std::string::npos)
+		std::cout << "500" << std::endl;//throw (ft::RequestProcessor::InternalServerError());
+		
+	//index_begin += 10;
+	//size_t index_end = this->_body.find("\"", index_begin);
+	std::string file_name = "./www/uploads/files/default";
+	this->_request["filename:"] = file_name;
+	//file_name += this->_body.substr(index_begin, index_end - index_begin);
+	//this->_body.erase(0, (this->_body.find("\r\n\r\n") + 4));
+	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
+	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
+	std::ofstream new_file;
+
+	//std::size_t pos = request_string.find("\r\n\r\n");
+	//std::string value = request_string.substr(pos + 4, std::string::npos);
+	this->_request.insert(ft::request_pair("Body:", this->_body));
 }
 
 std::string ft::Request::get_request_field(std::string key)

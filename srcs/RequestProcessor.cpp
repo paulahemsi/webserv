@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/07 19:42:22 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:30:12 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,23 +156,23 @@ void	ft::RequestProcessor::_execute_get(std::string path)
 void	ft::RequestProcessor::_execute_post(void)
 {
 	std::string body(this->_request.get_request_field("Body").data());
-	size_t index_begin =  body.find("filename=\"");
-	if (index_begin == std::string::npos)
-		throw (InternalServerError());
-	else
-	{
-		index_begin += 10;
-		size_t index_end = body.find("\"", index_begin);
-		std::string file_name = "./www/uploads/files/";
-		file_name += body.substr(index_begin, index_end - index_begin);
-		body.erase(0, (body.find("\r\n\r\n") + 4));
-		body.erase((body.rfind("\r\n")), body.length());
-		body.erase((body.rfind("\r\n")), body.length());
+	// size_t index_begin =  body.find("filename=\"");
+	// if (index_begin == std::string::npos)
+	// 	throw (InternalServerError());
+	// else
+	// {
+		// index_begin += 10;
+		// size_t index_end = body.find("\"", index_begin);
+		// std::string file_name = "./www/uploads/files/";
+		// file_name += body.substr(index_begin, index_end - index_begin);
+		// body.erase(0, (body.find("\r\n\r\n") + 4));
+		// body.erase((body.rfind("\r\n")), body.length());
+		// body.erase((body.rfind("\r\n")), body.length());
 		std::ofstream new_file;
-		new_file.open(file_name.c_str(), std::ios::binary);
+		new_file.open(this->_request.get_request_field("filename").c_str(), std::ios::binary);
 		new_file.write(body.c_str(), body.length());
 		new_file.close();
-	}
+	// }
 }
 
 void ft::RequestProcessor::_execute_delete(std::string path)
