@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/06 18:32:21 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/07 21:04:29 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ namespace ft
 	{
 		private:
 			
-			std::map<std::string, std::string> _request;
+			std::map<std::string, std::string>	_request;
+			std::string							_body_line;
 			
 			void	_parse_request_line(std::string request_line);
 			void	_parse_header(std::stringstream &header);
-			void	_parse_body(std::string request_string);
+			void	_parse_body(std::string request_string, int client_fd);
 			bool	_has(std::string key);
 			bool	_has_mandatory_fields(void);
 
@@ -41,7 +42,7 @@ namespace ft
 
 			Request& operator= (const Request& other);
 
-			void								init(std::string request_string);
+			void								init(std::string request_string, int client_fd);
 			std::string							get_request_field(std::string key);
 			std::string							get_server_name(void);
 			std::map<std::string, std::string>	get_request(void) const;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/06 18:40:37 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/07 19:42:22 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ ft::RequestProcessor::~RequestProcessor(void)
 
 void ft::RequestProcessor::run(std::string request_string, int client_fd)
 {
-	this->_request.init(request_string);
+	this->_request.init(request_string, client_fd);
 	_define_server_name();
 	_define_uri();
 	//define response fields that do not depend on the request

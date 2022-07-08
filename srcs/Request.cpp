@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/06 18:27:12 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/07 21:18:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ ft::Request::Request(void)
 	return ;
 }
 
-void ft::Request::init(std::string request_string)
+void ft::Request::init(std::string request_string, int client_fd)
 {
 	std::stringstream request_(request_string);
 	std::string line;
 	std::getline(request_, line, '\r');
 	this->_parse_request_line(line);
 	this->_parse_header(request_);
-	this->_parse_body(request_string);
+	this->_parse_body(request_string, client_fd);
 }
 
 void ft::Request::_parse_request_line(std::string request_line)
@@ -56,8 +56,9 @@ void ft::Request::_parse_header(std::stringstream &header)
 	}
 }
 
-void ft::Request::_parse_body(std::string request_string)
+void ft::Request::_parse_body(std::string request_string, int client_fd)
 {
+	
 	std::size_t pos = request_string.find("\r\n\r\n");
 	std::string value = request_string.substr(pos + 4, std::string::npos);
 	this->_request.insert(ft::request_pair("Body:", value));
