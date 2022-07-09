@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/09 16:00:08 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:17:18 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int parse_configuration_file(ft::Parser &parser,std::string filename)
 static void handle_signal(int signal)
 {
 	std::cout << "SIGNAL: " << signal << std::endl;
-	
+	web_server.close_servers();
 	exit(signal);
 }
 
