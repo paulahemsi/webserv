@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/07 21:18:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:34:43 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ void ft::Request::init(std::string request_string, int client_fd)
 {
 	std::stringstream request_(request_string);
 	std::string line;
+
+	this->_client_fd = client_fd;
+
 	std::getline(request_, line, '\r');
 	this->_parse_request_line(line);
 	this->_parse_header(request_);
-	this->_parse_body(request_string, client_fd);
+	this->_parse_body(request_string);
 }
 
 void ft::Request::_parse_request_line(std::string request_line)
@@ -56,12 +59,43 @@ void ft::Request::_parse_header(std::stringstream &header)
 	}
 }
 
-void ft::Request::_parse_body(std::string request_string, int client_fd)
+#include "RequestProcessor.hpp"
+void ft::Request::_parse_body(std::string request_string)
 {
-	
-	std::size_t pos = request_string.find("\r\n\r\n");
-	std::string value = request_string.substr(pos + 4, std::string::npos);
-	this->_request.insert(ft::request_pair("Body:", value));
+	this->_body = request_string;
+	if (this->_request["Transfer-Encoding"] == "chunked")
+		_receive_chunked_body();
+	this->_request.insert(ft::request_pair("Body:", this->_body));
+}
+
+void ft::Request::_receive_chunked_body(void)
+{
+	//int bytes_received;
+	char buffer[1];
+
+	while (recv(this->_client_fd, buffer, 1, MSG_DONTWAIT) > 0)
+		this->_body += buffer;
+
+	//size_t index_begin =  this->_body.find("filename=\"");
+	//if (index_begin == std::string::npos)
+	//{
+	//	std::cout << this->_body << std::endl;
+	//	std::cout << "500" << std::endl;//throw (ft::RequestProcessor::InternalServerError());
+	//	return ;
+	//}
+		
+	//index_begin += 10;
+	//size_t index_end = this->_body.find("\"", index_begin);
+	std::string file_name = "./www/uploads/files/default";
+	this->_request["filename:"] = file_name;
+	//file_name += this->_body.substr(index_begin, index_end - index_begin);
+	//this->_body.erase(0, (this->_body.find("\r\n\r\n") + 4));
+	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
+	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
+	std::ofstream new_file;
+
+	//std::size_t pos = request_string.find("\r\n\r\n");
+	//std::string value = request_string.substr(pos + 4, std::string::npos);
 }
 
 std::string ft::Request::get_request_field(std::string key)
