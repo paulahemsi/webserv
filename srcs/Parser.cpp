@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 00:47:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:41:40 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ ft::Parser &ft::Parser::operator=(ft::Parser const &right_hand_side)
 
 ft::Parser::~Parser(void)
 {
-	_file_stream.close();
+	return ;
 }
 
 void ft::Parser::exec(std::string filename)
@@ -39,6 +39,7 @@ void ft::Parser::exec(std::string filename)
 	if(!this->_file_stream)
 		throw (OpenFileError());
 	_parse_file();
+	this->_file_stream.close();
 }
 
 void ft::Parser::_parse_file(void)
