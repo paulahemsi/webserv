@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/23 21:49:30 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:32:32 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <arpa/inet.h> //htons()
 #include <netinet/in.h> //sockaddr_in
 #include "ServerData.hpp"
+#include "utils.hpp"
 
 #define PORT		4444
 #define ERROR		-1
@@ -45,8 +46,9 @@ namespace ft
 			
 			void	start_listening(int backlog);
 			void	create(void);
-			
-			int							get_fd(void);
+			void	close_fd(void);
+			int		get_fd(void);
+
 			std::vector<ft::ServerData>	get_confs(void);
 			
 			class CreateSocketError : public std::exception

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/09 16:20:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:34:20 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,13 @@ bool	ft::WebServer::_check_event_mask(short revents)
 
 void ft::WebServer::close_servers(void)
 {
-	std::vector<ft::Socket *>::iterator socket;
-
-	socket = this->_sockets.begin();
-	for (; socket != this->_sockets.end(); socket++)
+	for (size_t i = 0; i < this->_sockets.size(); i++)
 	{
-		close((*socket)->get_fd());
-		delete *socket;
+		if (this->_sockets[i])
+		{
+			this->_sockets[i]->close_fd();
+			delete this->_sockets[i];
+		}
 	}
 }
 
