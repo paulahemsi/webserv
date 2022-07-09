@@ -18,8 +18,8 @@ def chunk_data(data, chunk_size):
 def set_headers(connection: http.client.HTTPConnection):
 	url = "/uploads/files/"
 	
-	connection.putrequest('POST', url)
-	connection.putheader('Transfer-Encoding', 'chunked')
+	connection.putrequest("POST", url)
+	connection.putheader("Transfer-Encoding", "chunked")
 	connection.endheaders()
 
 
@@ -30,7 +30,7 @@ def send_chunked_request():
 
 	connection = http.client.HTTPConnection(host)
 	set_headers(connection)
-	connection.send(chunk_data(body, len(body_chunk)).encode('utf-8'))
+	connection.send(chunk_data(body, len(body_chunk)).encode("utf-8"))
 
 	response = connection.getresponse()
 	print(response.status, response.reason)
