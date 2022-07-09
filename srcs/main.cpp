@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:37:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/25 11:04:22 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:58:31 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 #define ERROR		-1
 #define BACKLOG		100
+
+ft::WebServer	web_server;
 
 static int define_configuration_file(int argc, char **argv, std::string& filename)
 {
@@ -47,10 +49,10 @@ static int parse_configuration_file(ft::Parser &parser,std::string filename)
 	return (0);
 }
 
-int run_web_server(ft::Parser &parser)
+static int run_web_server(ft::Parser &parser)
 {
-	ft::WebServer	web_server(parser.get_servers(), BACKLOG);
-	
+	web_server.init(parser.get_servers(), BACKLOG);
+
 	try
 	{
 		web_server.create_sockets();

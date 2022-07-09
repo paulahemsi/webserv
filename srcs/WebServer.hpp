@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/01 18:48:44 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:56:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ namespace ft
 
 		public:
 			WebServer(void);
-			WebServer(std::vector<ft::ServerData> server_data, size_t backlog);
 			~WebServer(void);
 	
+			void	init(std::vector<ft::ServerData> server_data, size_t backlog);
 			void	create_sockets(void);
 			void	run(void);
 	};

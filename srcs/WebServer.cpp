@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/01 18:14:15 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:55:50 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ ft::WebServer::WebServer(void)
 	return ;
 }
 
-ft::WebServer::WebServer(std::vector<ft::ServerData> server_data, size_t backlog):
-_backlog(backlog)
+void ft::WebServer::init(std::vector<ft::ServerData> server_data, size_t backlog)
 {
 	server_data_map ports;
 
 	ports = _group_servers_by_port(server_data);
+	this->_backlog = backlog;
 	this->_size = ports.size();
 	_init_servers(ports);
 }
