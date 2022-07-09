@@ -28,6 +28,7 @@ SRCS		:=	main.cpp \
 				Response.cpp \
 				RequestProcessor.cpp \
 				ErrorPages.cpp \
+				receive_line.cpp \
 
 OBJS_DIR	:=	./objs/
 OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
@@ -50,6 +51,7 @@ HEADER		=	utils.hpp \
 				Response.hpp \
 				RequestProcessor.hpp \
 				ErrorPages.hpp \
+				receive_line.hpp \
 
 INCLUDES	=
 

@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 13:28:51 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:51:59 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ ft::Request::Request(void)
 	return ;
 }
 
-void ft::Request::init(std::string request_string, int client_fd)
+#include "receive_line.hpp"
+
+void ft::Request::init(int client_fd)
 {
-	std::stringstream request_(request_string);
 	std::string line;
 
 	this->_client_fd = client_fd;
 
-	std::getline(request_, line, '\r');
+	receive_line(client_fd, line, "\r");
 	this->_parse_request_line(line);
-	this->_parse_header(request_);
-	this->_parse_body(request_string);
+	this->_parse_header();
+	this->_parse_body();
 }
 
 void ft::Request::_parse_request_line(std::string request_line)
@@ -48,9 +49,9 @@ void ft::Request::_parse_request_line(std::string request_line)
 	}
 }
 
-void ft::Request::_parse_header(std::stringstream &header)
+void ft::Request::_parse_header(void)
 {
-	for (std::string line; line != "\n"; std::getline(header, line, '\r'))
+	for (std::string line; line != "\n"; receive_line(_client_fd, line, "\r"))
 	{
 		std::size_t pos = line.find(' ');
 		std::string key = line.substr(0, pos);
@@ -60,21 +61,20 @@ void ft::Request::_parse_header(std::stringstream &header)
 }
 
 #include "RequestProcessor.hpp"
-void ft::Request::_parse_body(std::string request_string)
+void ft::Request::_parse_body(void)
 {
-	this->_body = request_string;
 	if (this->_request["\nTransfer-Encoding:"] == "chunked")
 		_receive_chunked_body();
+	else
+		receive_line(this->_client_fd, this->_body, CRLF);
 	this->_request.insert(ft::request_pair("Body:", this->_body));
 }
 
+#include "receive_line.hpp"
+
 void ft::Request::_receive_chunked_body(void)
 {
-	//int bytes_received;
-	char buffer[1];
-
-	while (recv(this->_client_fd, buffer, 1, MSG_DONTWAIT) > 0)
-		this->_body += buffer;
+	receive_line(this->_client_fd, this->_body, CRLF);
 
 	//size_t index_begin =  this->_body.find("filename=\"");
 	//if (index_begin == std::string::npos)

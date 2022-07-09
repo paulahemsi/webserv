@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/06 18:40:05 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:41:29 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ namespace ft
 
 			ft::RequestProcessor	&operator=(ft::RequestProcessor const &right_hand_side);
 
-			void	run(std::string request_string,  int client_fd);
+			void	run(int client_fd);
 
 			class ErrorsHttp : public std::exception
 			{

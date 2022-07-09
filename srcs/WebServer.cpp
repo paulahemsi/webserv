@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/01 18:14:15 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:40:50 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,9 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 {
 	ft::Client				client;
 	ft::RequestProcessor	request_processor(socket);
-	size_t					size = 10000;
-	char					buffer[size];
 
 	client.connect(socket->get_fd());
-	while(client.send_request(buffer, size))
-		request_processor.run(buffer, client.get_fd());
+	request_processor.run(client.get_fd());
 }
 
 void	ft::WebServer::_check_event(ft::Poll &poll, size_t index)
