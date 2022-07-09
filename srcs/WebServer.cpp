@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/09 18:34:20 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 19:01:49 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void	ft::WebServer::run(void)
 
 void ft::WebServer::_event_loop(void)
 {
-	Poll	poll(this->_sockets);
+	this->_poll.init(this->_sockets);
 
 	std::cout << WEBSERV << std::endl;
 	while (true)
 	{
-		poll.exec();
+		this->_poll.exec();
 		for (size_t i = 0; i < this->_size; i++)
-			this->_check_event(poll, i);
+			this->_check_event(this->_poll, i);
 	}
 }
 
@@ -120,7 +120,7 @@ bool	ft::WebServer::_check_event_mask(short revents)
 	return (false);
 }
 
-void ft::WebServer::close_servers(void)
+ft::WebServer::~WebServer(void)
 {
 	for (size_t i = 0; i < this->_sockets.size(); i++)
 	{
@@ -130,10 +130,4 @@ void ft::WebServer::close_servers(void)
 			delete this->_sockets[i];
 		}
 	}
-}
-
-ft::WebServer::~WebServer(void)
-{
-	this->close_servers();
-	return ;
 }

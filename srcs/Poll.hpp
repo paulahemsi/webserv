@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Poll.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 19:49:19 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/23 20:00:53 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 19:00:27 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ namespace ft
 	{
 		private:
 			size_t						_size;
-			std::vector<ft::Socket *>	&_sockets;
+			std::vector<ft::Socket *>	_sockets;
 			struct pollfd				*_interest_list;
 
-			Poll(void);
 
 		public:
-			Poll(std::vector<ft::Socket *> &sockets);
+			Poll(void);
 			~Poll(void);
 		
+			void		init(std::vector<ft::Socket *> &sockets);
 			void		exec(void);
-			ft::Socket	* get_socket(size_t index);
+			ft::Socket	*get_socket(size_t index);
 			short		get_event_return(size_t index);
 
 			class PollError : public std::exception
