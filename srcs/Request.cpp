@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/08 19:48:54 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 00:11:59 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,13 @@ void ft::Request::_parse_body(std::string request_string, int client_fd)
 	while (recv(client_fd, buffer, 1, MSG_DONTWAIT) > 0)
 		this->_body += buffer;
 
-	size_t index_begin =  this->_body.find("filename=\"");
-	if (index_begin == std::string::npos)
-		std::cout << "500" << std::endl;//throw (ft::RequestProcessor::InternalServerError());
+	//size_t index_begin =  this->_body.find("filename=\"");
+	//if (index_begin == std::string::npos)
+	//{
+	//	std::cout << this->_body << std::endl;
+	//	std::cout << "500" << std::endl;//throw (ft::RequestProcessor::InternalServerError());
+	//	return ;
+	//}
 		
 	//index_begin += 10;
 	//size_t index_end = this->_body.find("\"", index_begin);
