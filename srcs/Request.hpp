@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/08 19:02:49 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:33:54 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ namespace ft
 			
 			std::map<std::string, std::string>	_request;
 			std::string							_body;
-			
+			int									_client_fd;
+
 			void	_parse_request_line(std::string request_line);
 			void	_parse_header(std::stringstream &header);
-			void	_parse_body(std::string request_string, int client_fd);
+			void	_parse_body(std::string request_string);
+			void	_receive_chunked_body(void);
 			bool	_has(std::string key);
 			bool	_has_mandatory_fields(void);
 

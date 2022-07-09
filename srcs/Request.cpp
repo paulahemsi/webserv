@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 00:11:59 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:34:43 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ void ft::Request::init(std::string request_string, int client_fd)
 {
 	std::stringstream request_(request_string);
 	std::string line;
+
+	this->_client_fd = client_fd;
+
 	std::getline(request_, line, '\r');
 	this->_parse_request_line(line);
 	this->_parse_header(request_);
-	this->_parse_body(request_string, client_fd);
+	this->_parse_body(request_string);
 }
 
 void ft::Request::_parse_request_line(std::string request_line)
@@ -57,13 +60,20 @@ void ft::Request::_parse_header(std::stringstream &header)
 }
 
 #include "RequestProcessor.hpp"
-void ft::Request::_parse_body(std::string request_string, int client_fd)
+void ft::Request::_parse_body(std::string request_string)
+{
+	this->_body = request_string;
+	if (this->_request["Transfer-Encoding"] == "chunked")
+		_receive_chunked_body();
+	this->_request.insert(ft::request_pair("Body:", this->_body));
+}
+
+void ft::Request::_receive_chunked_body(void)
 {
 	//int bytes_received;
 	char buffer[1];
 
-	this->_body = request_string;
-	while (recv(client_fd, buffer, 1, MSG_DONTWAIT) > 0)
+	while (recv(this->_client_fd, buffer, 1, MSG_DONTWAIT) > 0)
 		this->_body += buffer;
 
 	//size_t index_begin =  this->_body.find("filename=\"");
@@ -86,7 +96,6 @@ void ft::Request::_parse_body(std::string request_string, int client_fd)
 
 	//std::size_t pos = request_string.find("\r\n\r\n");
 	//std::string value = request_string.substr(pos + 4, std::string::npos);
-	this->_request.insert(ft::request_pair("Body:", this->_body));
 }
 
 std::string ft::Request::get_request_field(std::string key)
