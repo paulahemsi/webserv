@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 12:34:43 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:28:51 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void ft::Request::_parse_header(std::stringstream &header)
 void ft::Request::_parse_body(std::string request_string)
 {
 	this->_body = request_string;
-	if (this->_request["Transfer-Encoding"] == "chunked")
+	if (this->_request["\nTransfer-Encoding:"] == "chunked")
 		_receive_chunked_body();
 	this->_request.insert(ft::request_pair("Body:", this->_body));
 }
