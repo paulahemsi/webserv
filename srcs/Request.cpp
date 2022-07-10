@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 14:03:43 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:21:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void ft::Request::_parse_filename(std::string header)
 	this->_request["filename:"] = filename;
 }
 
-#include "receive_line.hpp"
 size_t ft::Request::_get_chunk_size(void)
 {
 	std::string line;
