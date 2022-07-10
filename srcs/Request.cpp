@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 10:42:56 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 13:39:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Request.hpp"
 
-#define SP		" "
-#define CRLF	"\r\n"
+#define SP				" "
+#define CRLF			"\r\n"
+#define CRLF_DOUBLE		"\r\n\r\n"
 
 ft::Request::Request(const ft::Request& other)
 {
@@ -73,9 +74,6 @@ void ft::Request::_parse_body(void)
 	else if (this->_has("Content-Length:"))
 		_read_message_body();
 	this->_request.insert(ft::request_pair("Body:", this->_body));
-	
-	std::string file_name = "./www/uploads/files/default";
-	this->_request["filename:"] = file_name;
 }
 
 bool ft::Request::_has_no_body(void)
@@ -102,7 +100,8 @@ void ft::Request::_read_message_body(void)
 		temp_line += buffer;
 		memset(buffer, 0, 20);
 	}
-	
+	_clean_header(temp_line);
+	_clean_footer(temp_line);
 	this->_body = temp_line;
 }
 
@@ -112,6 +111,24 @@ int ft::Request::_get_body_message_length(void)
 
 	length = this->_request["Content-Length:"];
 	return(atoi(length.c_str()));
+}
+
+void ft::Request::_clean_header(std::string &temp_line)
+{
+	std::string header;
+	header = temp_line.substr(0, temp_line.find(CRLF_DOUBLE));
+	_parse_filename(header);
+	temp_line.erase(0, header.length() + strlen(CRLF_DOUBLE));
+}
+
+void ft::Request::_clean_footer(std::string &temp_line)
+{
+	std::cout << "clean_footer" << temp_line << std::endl;
+}
+
+void ft::Request::_parse_filename(std::string header)
+{
+	std::cout << "parse_filename" << header << std::endl;
 }
 
 #include "receive_line.hpp"
