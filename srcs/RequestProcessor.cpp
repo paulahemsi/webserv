@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 13:49:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:42:50 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,16 +156,29 @@ void	ft::RequestProcessor::_execute_get(std::string path)
 void	ft::RequestProcessor::_execute_post(void)
 {
 	std::ofstream new_file;
-	std::string file_path;
 	std::string body;
+	std::string filepath;
 
-	file_path = this->_server_data.get_root() + this->_uri;
-	file_path += this->_request.get_request_field("filename");
+	filepath = _build_filepath();
 	body = (this->_request.get_request_field("Body"));
 
-	new_file.open(file_path.c_str(), std::ios::binary);
+	new_file.open(filepath.c_str(), std::ios::binary);
 	new_file.write(body.c_str(), body.length());
 	new_file.close();
+}
+
+std::string	ft::RequestProcessor::_build_filepath(void)
+{
+	std::string filepath;
+	std::string filename;
+
+	filepath = this->_server_data.get_root() + this->_uri;
+	filename = this->_request.get_request_field("filename");
+
+	if (filename == "")
+		filename = "default";//throw (BadRequest());
+	filepath += filename;
+	return (filepath);
 }
 
 void ft::RequestProcessor::_execute_delete(std::string path)
