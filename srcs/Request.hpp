@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 21:21:10 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 21:51:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ namespace ft
 			void	_receive_chunked_body(void);
 			bool	_has(std::string key);
 			bool	_has_mandatory_fields(void);
+			bool	_has_no_body(void);
 
 		public:
 			Request(void);
