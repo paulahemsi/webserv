@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 13:41:09 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/10 13:42:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,9 @@ void ft::Request::_clean_header(std::string &temp_line)
 
 void ft::Request::_clean_footer(std::string &temp_line)
 {
-	std::cout << "clean_footer" << temp_line << std::endl;
+	std::string footer;
+	footer = temp_line.substr(temp_line.find(CRLF), temp_line.npos);
+	temp_line.erase(temp_line.length() - footer.length(), temp_line.npos);
 }
 
 void ft::Request::_parse_filename(std::string header)
