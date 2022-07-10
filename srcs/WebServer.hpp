@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:01:52 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/01 18:48:44 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:06:38 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ namespace ft
 		private:
 			size_t						_size;
 			size_t						_backlog;
+			ft::Poll					_poll;
 			std::vector<ft::Socket *>	_sockets;
+			server_data_map				_ports;
+			
 
 			void	_start_listening(void);
 			void	_event_loop(void);
@@ -46,14 +49,14 @@ namespace ft
 			void	_connect_with_client(ft::Socket *socket);
 
 
-			server_data_map		_group_servers_by_port(std::vector<ft::ServerData> server_data);
+			void		_group_servers_by_port(const std::vector<ft::ServerData>& server_data);
 			void				_init_servers(server_data_map &ports);
 
 		public:
 			WebServer(void);
-			WebServer(std::vector<ft::ServerData> server_data, size_t backlog);
 			~WebServer(void);
 	
+			void	init(const std::vector<ft::ServerData> &server_data, size_t backlog);
 			void	create_sockets(void);
 			void	run(void);
 	};

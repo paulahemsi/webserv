@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   Poll.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 19:49:23 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/23 20:00:38 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 19:00:22 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Poll.hpp"
 
-ft::Poll::Poll(std::vector<ft::Socket *> &sockets):
-_size(sockets.size()),
-_sockets(sockets),
-_interest_list(new struct pollfd[_size])
+ft::Poll::Poll(void)
 {
+	return ;
+}
+
+void ft::Poll::init(std::vector<ft::Socket *> &sockets)
+{
+	this->_size = sockets.size();
+	this->_sockets = sockets;
+	this->_interest_list = new struct pollfd[_size];
+
 	for (size_t i = 0; i < this->_size; i++)
 	{
 		this->_interest_list[i].fd = sockets[i]->get_fd();
@@ -26,7 +32,7 @@ _interest_list(new struct pollfd[_size])
 
 ft::Poll::~Poll(void)
 {
-	delete this->_interest_list;
+	delete[] this->_interest_list;
 }
 
 void	ft::Poll::exec(void)

@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 15:41:29 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:26:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ft
 			void				_execute_request(void);
 			void				_execute_delete(std::string path);
 			void				_select_server(void);
-			void				_define_server(ft::ServerData server);
+			void				_define_server(const ft::ServerData& server);
 			int					_is_match(std::vector<std::string> names);
 			void				_select_location(void);
 			bool				_is_redirection(void);

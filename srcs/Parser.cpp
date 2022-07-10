@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 00:47:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:33:19 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ ft::Parser &ft::Parser::operator=(ft::Parser const &right_hand_side)
 
 ft::Parser::~Parser(void)
 {
-	_file_stream.close();
+	return ;
 }
 
 void ft::Parser::exec(std::string filename)
@@ -39,6 +39,7 @@ void ft::Parser::exec(std::string filename)
 	if(!this->_file_stream)
 		throw (OpenFileError());
 	_parse_file();
+	this->_file_stream.close();
 }
 
 void ft::Parser::_parse_file(void)
@@ -64,7 +65,7 @@ void ft::Parser::_parse_server_block(void)
 	this->_servers.push_back(new_server.get_server());
 }
 
-std::vector<ft::ServerData> ft::Parser::get_servers(void) const
+const std::vector<ft::ServerData> &ft::Parser::get_servers(void) const
 {
 	return (this->_servers);
 }
