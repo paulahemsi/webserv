@@ -24,7 +24,7 @@ def set_headers(connection: http.client.HTTPConnection):
 
 
 def send_chunked_request():
-	body_chunk = "Chunked, please!"
+	body_chunk = "Chunked, please!\n"
 	body = body_chunk * 42
 	host = "localhost:4444"
 

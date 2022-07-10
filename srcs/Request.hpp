@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 10:43:23 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 13:24:14 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <sstream>
 #include <map>
 #include "receive_line.hpp"
+#include "utils.hpp"
 
 namespace ft
 {
@@ -39,6 +40,8 @@ namespace ft
 			void	_read_message_body(void);
 			int		_get_body_message_length(void);
 			void	_receive_chunked_body(void);
+			size_t	_get_chunk_size(void);
+			size_t	_convert_chunk_size(std::string chunk_size);
 			bool	_has(std::string key);
 			bool	_has_mandatory_fields(void);
 			bool	_has_no_body(void);
