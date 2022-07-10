@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 10:26:43 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 13:49:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,24 +155,17 @@ void	ft::RequestProcessor::_execute_get(std::string path)
 
 void	ft::RequestProcessor::_execute_post(void)
 {
-	std::string body(this->_request.get_request_field("Body").data());
-	// size_t index_begin =  body.find("filename=\"");
-	// if (index_begin == std::string::npos)
-	// 	throw (InternalServerError());
-	// else
-	// {
-		// index_begin += 10;
-		// size_t index_end = body.find("\"", index_begin);
-		// std::string file_name = "./www/uploads/files/";
-		// file_name += body.substr(index_begin, index_end - index_begin);
-		// body.erase(0, (body.find("\r\n\r\n") + 4));
-		// body.erase((body.rfind("\r\n")), body.length());
-		// body.erase((body.rfind("\r\n")), body.length());
-		std::ofstream new_file;
-		new_file.open(this->_request.get_request_field("filename").c_str(), std::ios::binary);
-		new_file.write(body.c_str(), body.length());
-		new_file.close();
-	// }
+	std::ofstream new_file;
+	std::string file_path;
+	std::string body;
+
+	file_path = this->_server_data.get_root() + this->_uri;
+	file_path += this->_request.get_request_field("filename");
+	body = (this->_request.get_request_field("Body"));
+
+	new_file.open(file_path.c_str(), std::ios::binary);
+	new_file.write(body.c_str(), body.length());
+	new_file.close();
 }
 
 void ft::RequestProcessor::_execute_delete(std::string path)
