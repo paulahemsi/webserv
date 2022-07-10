@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 22:43:33 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:34:49 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void ft::Request::_parse_body(void)
 	
 	std::string file_name = "./www/uploads/files/default";
 	this->_request["filename:"] = file_name;
-	std::ofstream new_file(file_name);
-	new_file << this->_body;
 }
 
 bool ft::Request::_has_no_body(void)
