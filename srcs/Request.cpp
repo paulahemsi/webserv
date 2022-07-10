@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 10:34:49 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:42:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void ft::Request::_parse_header(void)
 	}
 }
 
-#include "RequestProcessor.hpp"
 void ft::Request::_parse_body(void)
 {
 	if (this->_has_no_body())
@@ -120,7 +119,6 @@ int ft::Request::_get_body_message_length(void)
 void ft::Request::_receive_chunked_body(void)
 {
 	receive_line(this->_client_fd, this->_body, CRLF);
-
 	//size_t index_begin =  this->_body.find("filename=\"");
 	//if (index_begin == std::string::npos)
 	//{
@@ -131,14 +129,10 @@ void ft::Request::_receive_chunked_body(void)
 		
 	//index_begin += 10;
 	//size_t index_end = this->_body.find("\"", index_begin);
-	std::string file_name = "./www/uploads/files/default";
-	this->_request["filename:"] = file_name;
 	//file_name += this->_body.substr(index_begin, index_end - index_begin);
 	//this->_body.erase(0, (this->_body.find("\r\n\r\n") + 4));
 	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
 	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
-	std::ofstream new_file;
-
 	//std::size_t pos = request_string.find("\r\n\r\n");
 	//std::string value = request_string.substr(pos + 4, std::string::npos);
 }
