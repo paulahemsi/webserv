@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 15:48:38 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 21:21:10 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft
 			std::string							_body;
 			int									_client_fd;
 
-			void	_parse_request_line(std::string request_line);
+			void	_parse_request_line(void);
 			void	_parse_header(void);
 			void	_parse_body(void);
 			void	_receive_chunked_body(void);

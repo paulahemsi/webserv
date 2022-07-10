@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 17:15:59 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 21:21:21 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,24 @@ ft::Request::Request(void)
 
 void ft::Request::init(int client_fd)
 {
-	std::string line;
-
 	this->_client_fd = client_fd;
-
-	receive_line(client_fd, line, CRLF);
-	this->_parse_request_line(line);
+	this->_parse_request_line();
 	this->_parse_header();
 	this->_parse_body();
 }
 
-void ft::Request::_parse_request_line(std::string request_line)
+void ft::Request::_parse_request_line(void)
 {
+	std::string line;
 	std::string field[3] = { "Method:", "URI:", "Protocol-Version:" };
 
+	receive_line(this->_client_fd, line, CRLF);
 	for (std::size_t i = 0; i < 3; i++)
 	{
-		std::size_t pos = request_line.find(SP);
-		std::string value = request_line.substr(0, pos);
+		std::size_t pos = line.find(SP);
+		std::string value = line.substr(0, pos);
 		this->_request.insert(ft::request_pair(field[i], value));
-		request_line.erase(0, pos + 1);
+		line.erase(0, pos + 1);
 	}
 }
 
