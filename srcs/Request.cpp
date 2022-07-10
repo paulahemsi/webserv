@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 10:42:56 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 13:28:22 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ ft::Request::Request(void)
 {
 	return ;
 }
-
-#include "receive_line.hpp"
 
 void ft::Request::init(int client_fd)
 {
@@ -114,27 +112,43 @@ int ft::Request::_get_body_message_length(void)
 	return(atoi(length.c_str()));
 }
 
-#include "receive_line.hpp"
+size_t ft::Request::_get_chunk_size(void)
+{
+	std::string line;
+	std::size_t pos;
+
+	receive_line(this->_client_fd, line, CRLF);
+	if (line == "")
+		return (0);
+	pos = line.find(SP);
+	return (_convert_chunk_size(line.substr(0, pos)));
+}
+
+size_t ft::Request::_convert_chunk_size(std::string chunk_size)
+{
+	std::size_t			size;
+	std::stringstream	s_stream(chunk_size);
+
+	s_stream >> std::hex >> size;
+	return (size);
+}
 
 void ft::Request::_receive_chunked_body(void)
 {
-	receive_line(this->_client_fd, this->_body, CRLF);
-	//size_t index_begin =  this->_body.find("filename=\"");
-	//if (index_begin == std::string::npos)
-	//{
-	//	std::cout << this->_body << std::endl;
-	//	std::cout << "500" << std::endl;//throw (ft::RequestProcessor::InternalServerError());
-	//	return ;
-	//}
-		
-	//index_begin += 10;
-	//size_t index_end = this->_body.find("\"", index_begin);
-	//file_name += this->_body.substr(index_begin, index_end - index_begin);
-	//this->_body.erase(0, (this->_body.find("\r\n\r\n") + 4));
-	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
-	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
-	//std::size_t pos = request_string.find("\r\n\r\n");
-	//std::string value = request_string.substr(pos + 4, std::string::npos);
+	int			length = 0;
+	std::string temp_line;
+	std::size_t chunk_size;
+
+	chunk_size = _get_chunk_size();	
+	while (chunk_size > 0)
+	{
+		receive_line(this->_client_fd, temp_line, CRLF);
+		this->_body += temp_line;
+		length += chunk_size;
+		receive_line(this->_client_fd, temp_line, CRLF);
+		chunk_size = _get_chunk_size();
+    }
+	this->_request["Content-Length:"] = int_to_string(length);
 }
 
 std::string ft::Request::get_request_field(std::string key)
