@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 13:39:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/10 13:41:09 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #define SP				" "
 #define CRLF			"\r\n"
 #define CRLF_DOUBLE		"\r\n\r\n"
+#define FILENAME_ID		"filename=\""
+#define DOUBLE_QUOTE	"\""
 
 ft::Request::Request(const ft::Request& other)
 {
@@ -128,7 +130,14 @@ void ft::Request::_clean_footer(std::string &temp_line)
 
 void ft::Request::_parse_filename(std::string header)
 {
-	std::cout << "parse_filename" << header << std::endl;
+	std::string filename;
+	size_t index_begin;
+	size_t index_end;
+
+	index_begin = header.find(FILENAME_ID) + strlen(FILENAME_ID);
+	index_end = header.find(DOUBLE_QUOTE, index_begin);
+	filename = header.substr(index_begin, (index_end - index_begin));
+	this->_request["filename:"] = filename;
 }
 
 #include "receive_line.hpp"
