@@ -6,14 +6,15 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 13:24:14 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 13:33:38 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REQUEST_HPP
 #define REQUEST_HPP
 
-// #include <unistd.h>
+#include <cstring>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <iostream>
 #include <string>
