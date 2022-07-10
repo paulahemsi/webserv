@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 21:53:25 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 22:43:33 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,13 @@ void ft::Request::_parse_body(void)
 	if (this->_request["Transfer-Encoding:"] == "chunked")
 		_receive_chunked_body();
 	else if (this->_has("Content-Length:"))
-		receive_line(this->_client_fd, this->_body, CRLF);
+		_read_message_body();
 	this->_request.insert(ft::request_pair("Body:", this->_body));
+	
+	std::string file_name = "./www/uploads/files/default";
+	this->_request["filename:"] = file_name;
+	std::ofstream new_file(file_name);
+	new_file << this->_body;
 }
 
 bool ft::Request::_has_no_body(void)
@@ -83,6 +88,33 @@ bool ft::Request::_has_no_body(void)
 	if (this->_has("Transfer-Encoding:"))
 		return (false);
 	return (true);
+}
+
+void ft::Request::_read_message_body(void)
+{
+	int			length;
+	int			ret;
+	char		buffer[20] = {0};
+	std::string temp_line;
+
+	length = _get_body_message_length();
+	
+	while (length && (ret = recv(this->_client_fd, buffer, 20, 0)) > 0)
+	{
+		length -= ret;
+		temp_line += buffer;
+		memset(buffer, 0, 20);
+	}
+	
+	this->_body = temp_line;
+}
+
+int ft::Request::_get_body_message_length(void)
+{
+	std::string	length;
+
+	length = this->_request["Content-Length:"];
+	return(atoi(length.c_str()));
 }
 
 #include "receive_line.hpp"
