@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/06 19:23:43 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:32:06 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.hpp"
+
+bool fd_is_valid(int fd)
+{
+	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+}
 
 bool is_file(std::string path)
 {

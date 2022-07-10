@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/06 18:40:05 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 19:44:43 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ft
 			void				_execute_request(void);
 			void				_execute_delete(std::string path);
 			void				_select_server(void);
-			void				_define_server(ft::ServerData server);
+			void				_define_server(const ft::ServerData& server);
 			int					_is_match(std::vector<std::string> names);
 			void				_select_location(void);
 			bool				_is_redirection(void);

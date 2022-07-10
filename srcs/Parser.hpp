@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:26 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/25 11:01:04 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 19:41:22 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ namespace ft
 			
 			ft::Parser	&operator=(ft::Parser const &right_hand_side);
 
-			void						exec(std::string filename);
-			std::vector<ft::ServerData>	get_servers(void) const ;
+			void								exec(std::string filename);
+			const std::vector<ft::ServerData>	&get_servers(void) const ;
 
 			class OpenFileError : public std::exception
 			{

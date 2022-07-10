@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/08 19:30:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:33:25 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,7 @@ int	ft::RequestProcessor::_is_match(std::vector<std::string> names)
 	return (ERROR);
 }
 
-void	ft::RequestProcessor::_define_server(ft::ServerData server)
+void	ft::RequestProcessor::_define_server(const ft::ServerData& server)
 {
 	this->_server_data = server;
 }

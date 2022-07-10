@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/01 18:14:15 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:34:19 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ ft::WebServer::WebServer(void)
 	return ;
 }
 
-ft::WebServer::WebServer(std::vector<ft::ServerData> server_data, size_t backlog):
-_backlog(backlog)
+void ft::WebServer::init(const std::vector<ft::ServerData>& server_data, size_t backlog)
 {
-	server_data_map ports;
-
-	ports = _group_servers_by_port(server_data);
-	this->_size = ports.size();
-	_init_servers(ports);
+	_group_servers_by_port(server_data);
+	this->_backlog = backlog;
+	this->_size = this->_ports.size();
+	_init_servers(this->_ports);
 }
 
 void ft::WebServer::_init_servers(ft::WebServer::server_data_map &ports)
@@ -40,16 +38,13 @@ void ft::WebServer::_init_servers(ft::WebServer::server_data_map &ports)
 	return ;
 }
 
-ft::WebServer::server_data_map ft::WebServer::_group_servers_by_port(std::vector<ft::ServerData> server_data)
+void ft::WebServer::_group_servers_by_port(const std::vector<ft::ServerData> &server_data)
 {
-	server_data_map ports;
-
 	for (size_t i = 0; i < server_data.size(); i++)
 	{
 		int port = server_data[i].get_listen().get_port();
-		ports[port].push_back(server_data[i]);
+		this->_ports[port].push_back(server_data[i]);
 	}
-	return (ports);
 }
 
 void	ft::WebServer::create_sockets(void)
@@ -69,14 +64,14 @@ void	ft::WebServer::run(void)
 
 void ft::WebServer::_event_loop(void)
 {
-	Poll	poll(this->_sockets);
+	this->_poll.init(this->_sockets);
 
 	std::cout << WEBSERV << std::endl;
 	while (true)
 	{
-		poll.exec();
+		this->_poll.exec();
 		for (size_t i = 0; i < this->_size; i++)
-			this->_check_event(poll, i);
+			this->_check_event(this->_poll, i);
 	}
 }
 
@@ -122,10 +117,12 @@ bool	ft::WebServer::_check_event_mask(short revents)
 
 ft::WebServer::~WebServer(void)
 {
-	std::vector<ft::Socket *>::iterator socket;
-
-	socket = this->_sockets.begin();
-	for (; socket != this->_sockets.end(); socket++)
-		delete *socket;
-	return ;
+	for (size_t i = 0; i < this->_sockets.size(); i++)
+	{
+		if (this->_sockets[i])
+		{
+			this->_sockets[i]->close_fd();
+			delete this->_sockets[i];
+		}
+	}
 }
