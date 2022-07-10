@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 13:33:38 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:03:11 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ namespace ft
 			bool	_has(std::string key);
 			bool	_has_mandatory_fields(void);
 			bool	_has_no_body(void);
+			void	_parse_filename(std::string header);
+			void	_clean_header(std::string &temp_line);
+			void	_clean_footer(std::string &temp_line);
 
 		public:
 			Request(void);

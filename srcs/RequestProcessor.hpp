@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 10:26:56 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:43:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ namespace ft
 			std::string			_get_error_page_path(std::string code);
 			void				_execute_get(std::string path);
 			void				_execute_post(void);
+			std::string			_build_filepath(void);
 
 		public:
 			RequestProcessor(ft::Socket *socket);

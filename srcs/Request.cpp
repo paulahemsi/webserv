@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 13:28:22 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:21:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Request.hpp"
 
-#define SP		" "
-#define CRLF	"\r\n"
+#define SP				" "
+#define CRLF			"\r\n"
+#define CRLF_DOUBLE		"\r\n\r\n"
+#define FILENAME_ID		"filename=\""
+#define DOUBLE_QUOTE	"\""
 
 ft::Request::Request(const ft::Request& other)
 {
@@ -71,9 +74,6 @@ void ft::Request::_parse_body(void)
 	else if (this->_has("Content-Length:"))
 		_read_message_body();
 	this->_request.insert(ft::request_pair("Body:", this->_body));
-	
-	std::string file_name = "./www/uploads/files/default";
-	this->_request["filename:"] = file_name;
 }
 
 bool ft::Request::_has_no_body(void)
@@ -100,7 +100,8 @@ void ft::Request::_read_message_body(void)
 		temp_line += buffer;
 		memset(buffer, 0, 20);
 	}
-	
+	_clean_header(temp_line);
+	_clean_footer(temp_line);
 	this->_body = temp_line;
 }
 
@@ -110,6 +111,33 @@ int ft::Request::_get_body_message_length(void)
 
 	length = this->_request["Content-Length:"];
 	return(atoi(length.c_str()));
+}
+
+void ft::Request::_clean_header(std::string &temp_line)
+{
+	std::string header;
+	header = temp_line.substr(0, temp_line.find(CRLF_DOUBLE));
+	_parse_filename(header);
+	temp_line.erase(0, header.length() + strlen(CRLF_DOUBLE));
+}
+
+void ft::Request::_clean_footer(std::string &temp_line)
+{
+	std::string footer;
+	footer = temp_line.substr(temp_line.find(CRLF), temp_line.npos);
+	temp_line.erase(temp_line.length() - footer.length(), temp_line.npos);
+}
+
+void ft::Request::_parse_filename(std::string header)
+{
+	std::string filename;
+	size_t index_begin;
+	size_t index_end;
+
+	index_begin = header.find(FILENAME_ID) + strlen(FILENAME_ID);
+	index_end = header.find(DOUBLE_QUOTE, index_begin);
+	filename = header.substr(index_begin, (index_end - index_begin));
+	this->_request["filename:"] = filename;
 }
 
 size_t ft::Request::_get_chunk_size(void)
