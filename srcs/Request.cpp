@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 21:21:21 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/09 21:31:01 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void ft::Request::_parse_body(void)
 {
 	if (this->_request["Transfer-Encoding:"] == "chunked")
 		_receive_chunked_body();
-	else
+	else if (this->_has("Content-Length"))
 		receive_line(this->_client_fd, this->_body, CRLF);
+	else
+		return;
 	this->_request.insert(ft::request_pair("Body:", this->_body));
 }
 
