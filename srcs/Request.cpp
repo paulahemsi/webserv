@@ -6,11 +6,14 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 13:28:51 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:42:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Request.hpp"
+
+#define SP		" "
+#define CRLF	"\r\n"
 
 ft::Request::Request(const ft::Request& other)
 {
@@ -22,60 +25,100 @@ ft::Request::Request(void)
 	return ;
 }
 
-void ft::Request::init(std::string request_string, int client_fd)
+#include "receive_line.hpp"
+
+void ft::Request::init(int client_fd)
 {
-	std::stringstream request_(request_string);
-	std::string line;
-
 	this->_client_fd = client_fd;
-
-	std::getline(request_, line, '\r');
-	this->_parse_request_line(line);
-	this->_parse_header(request_);
-	this->_parse_body(request_string);
+	this->_parse_request_line();
+	this->_parse_header();
+	this->_parse_body();
 }
 
-void ft::Request::_parse_request_line(std::string request_line)
+void ft::Request::_parse_request_line(void)
 {
+	std::string line;
 	std::string field[3] = { "Method:", "URI:", "Protocol-Version:" };
 
+	receive_line(this->_client_fd, line, CRLF);
 	for (std::size_t i = 0; i < 3; i++)
 	{
-		std::size_t pos = request_line.find(' ');
-		std::string value = request_line.substr(0, pos);
+		std::size_t pos = line.find(SP);
+		std::string value = line.substr(0, pos);
 		this->_request.insert(ft::request_pair(field[i], value));
-		request_line.erase(0, pos + 1);
+		line.erase(0, pos + 1);
 	}
 }
 
-void ft::Request::_parse_header(std::stringstream &header)
+void ft::Request::_parse_header(void)
 {
-	for (std::string line; line != "\n"; std::getline(header, line, '\r'))
+	std::string line;
+	
+	receive_line(_client_fd, line, CRLF);
+	for (; line != CRLF && line != ""; receive_line(_client_fd, line, CRLF))
 	{
-		std::size_t pos = line.find(' ');
+		std::size_t pos = line.find(SP);
 		std::string key = line.substr(0, pos);
 		std::string value = line.substr(pos + 1, std::string::npos);
 		this->_request.insert(ft::request_pair(key, value));
 	}
 }
 
-#include "RequestProcessor.hpp"
-void ft::Request::_parse_body(std::string request_string)
+void ft::Request::_parse_body(void)
 {
-	this->_body = request_string;
-	if (this->_request["\nTransfer-Encoding:"] == "chunked")
+	if (this->_has_no_body())
+		return;
+	if (this->_request["Transfer-Encoding:"] == "chunked")
 		_receive_chunked_body();
+	else if (this->_has("Content-Length:"))
+		_read_message_body();
 	this->_request.insert(ft::request_pair("Body:", this->_body));
+	
+	std::string file_name = "./www/uploads/files/default";
+	this->_request["filename:"] = file_name;
 }
+
+bool ft::Request::_has_no_body(void)
+{
+	if (this->_has("Content-Length:"))
+		return (false);
+	if (this->_has("Transfer-Encoding:"))
+		return (false);
+	return (true);
+}
+
+void ft::Request::_read_message_body(void)
+{
+	int			length;
+	int			ret;
+	char		buffer[20] = {0};
+	std::string temp_line;
+
+	length = _get_body_message_length();
+	
+	while (length && (ret = recv(this->_client_fd, buffer, 20, 0)) > 0)
+	{
+		length -= ret;
+		temp_line += buffer;
+		memset(buffer, 0, 20);
+	}
+	
+	this->_body = temp_line;
+}
+
+int ft::Request::_get_body_message_length(void)
+{
+	std::string	length;
+
+	length = this->_request["Content-Length:"];
+	return(atoi(length.c_str()));
+}
+
+#include "receive_line.hpp"
 
 void ft::Request::_receive_chunked_body(void)
 {
-	//int bytes_received;
-	char buffer[1];
-
-	while (recv(this->_client_fd, buffer, 1, MSG_DONTWAIT) > 0)
-		this->_body += buffer;
-
+	receive_line(this->_client_fd, this->_body, CRLF);
 	//size_t index_begin =  this->_body.find("filename=\"");
 	//if (index_begin == std::string::npos)
 	//{
@@ -86,14 +129,10 @@ void ft::Request::_receive_chunked_body(void)
 		
 	//index_begin += 10;
 	//size_t index_end = this->_body.find("\"", index_begin);
-	std::string file_name = "./www/uploads/files/default";
-	this->_request["filename:"] = file_name;
 	//file_name += this->_body.substr(index_begin, index_end - index_begin);
 	//this->_body.erase(0, (this->_body.find("\r\n\r\n") + 4));
 	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
 	//this->_body.erase((this->_body.rfind("\r\n")), this->_body.length());
-	std::ofstream new_file;
-
 	//std::size_t pos = request_string.find("\r\n\r\n");
 	//std::string value = request_string.substr(pos + 4, std::string::npos);
 }
@@ -105,7 +144,7 @@ std::string ft::Request::get_request_field(std::string key)
 
 std::string ft::Request::get_server_name(void)
 {
-	std::string host = get_request_field("\nHost");
+	std::string host = get_request_field("Host");
 	return (host.substr(0, host.find(':')));
 }
 

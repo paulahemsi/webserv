@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 12:33:54 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:43:23 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <string>
 #include <sstream>
 #include <map>
+#include "receive_line.hpp"
 
 namespace ft
 {
@@ -32,12 +33,15 @@ namespace ft
 			std::string							_body;
 			int									_client_fd;
 
-			void	_parse_request_line(std::string request_line);
-			void	_parse_header(std::stringstream &header);
-			void	_parse_body(std::string request_string);
+			void	_parse_request_line(void);
+			void	_parse_header(void);
+			void	_parse_body(void);
+			void	_read_message_body(void);
+			int		_get_body_message_length(void);
 			void	_receive_chunked_body(void);
 			bool	_has(std::string key);
 			bool	_has_mandatory_fields(void);
+			bool	_has_no_body(void);
 
 		public:
 			Request(void);
@@ -46,7 +50,7 @@ namespace ft
 
 			Request& operator= (const Request& other);
 
-			void								init(std::string request_string, int client_fd);
+			void								init(int client_fd);
 			std::string							get_request_field(std::string key);
 			std::string							get_server_name(void);
 			std::map<std::string, std::string>	get_request(void) const;

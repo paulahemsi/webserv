@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 19:44:43 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:26:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ namespace ft
 
 			ft::RequestProcessor	&operator=(ft::RequestProcessor const &right_hand_side);
 
-			void	run(std::string request_string,  int client_fd);
+			void	run(int client_fd);
 
 			class ErrorsHttp : public std::exception
 			{
