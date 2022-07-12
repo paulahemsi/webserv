@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 14:21:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:14:47 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void ft::Request::_read_message_body(void)
 	char		buffer[20] = {0};
 	std::string temp_line;
 
-	length = _get_body_message_length();
+	length = get_content_length();
 	
 	while (length && (ret = recv(this->_client_fd, buffer, 20, 0)) > 0)
 	{
@@ -105,7 +105,7 @@ void ft::Request::_read_message_body(void)
 	this->_body = temp_line;
 }
 
-int ft::Request::_get_body_message_length(void)
+int ft::Request::get_content_length(void)
 {
 	std::string	length;
 
