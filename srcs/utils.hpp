@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:54 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 18:32:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/12 19:40:41 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ bool is_dir(std::string path);
 std::string int_to_string(int integer);
 std::string current_date_time(void);
 std::string last_modification_time(std::string path);
+bool	is_executable(std::string path);
 
 #endif

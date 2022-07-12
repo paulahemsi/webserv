@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 18:32:06 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/12 20:06:41 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,26 @@ std::string last_modification_time(std::string path)
 	#else
 		return (http_date(&s.st_mtim.tv_sec));
 	#endif
+}
+
+bool	is_executable(std::string path)
+{
+	struct stat	buffer;
+
+	if (stat(path.c_str(), &buffer) != 0)
+	{
+		std::cout << "stat" << std::endl;
+		return (false);
+	}
+	if ((buffer.st_mode & S_IFMT) == S_IFDIR)
+	{
+		std::cout << "S_IFMT" << std::endl;
+		return (false);
+	}
+	if ((buffer.st_mode & S_IXUSR))
+	{
+		std::cout << "S_IXUSR" << std::endl;
+		return (true);
+	}
+	return (false);
 }
