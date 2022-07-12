@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 14:03:11 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:15:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ namespace ft
 			void	_parse_header(void);
 			void	_parse_body(void);
 			void	_read_message_body(void);
-			int		_get_body_message_length(void);
 			void	_receive_chunked_body(void);
 			size_t	_get_chunk_size(void);
 			size_t	_convert_chunk_size(std::string chunk_size);
@@ -62,6 +61,7 @@ namespace ft
 			std::string							get_server_name(void);
 			std::map<std::string, std::string>	get_request(void) const;
 			std::string							get_method(void);
+			int									get_content_length(void);
 			void								check_request(void);
 			
 			class BadRequest : public std::exception

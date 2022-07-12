@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerData.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:58:01 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:24:12 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ _server_name(std::vector<std::string>()),
 _root(""),
 _error_pages(ft::ErrorPages()),
 _error_pages_default(ft::ErrorPages()),
-_body_size(10000),
+_body_size(1000000),
 _location(std::vector<ft::LocationData>())
 {
 	this->_error_pages_default.set_defaults();
