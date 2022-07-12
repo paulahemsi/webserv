@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 22:34:16 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/12 20:27:16 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,65 @@ void	ft::RequestProcessor::_set_body(void)
 	std::string path;
 	
 	path = this->_server_data.get_root() + this->_uri;
-	if (this->_method == "GET")
+	if (_is_cgi(path))
+		_execute_cgi(path);
+	else if (this->_method == "GET")
 		_execute_get(path);
 	else if (this->_method == "POST")
 		_execute_post();
 	else if (this->_method == "DELETE")
 		_execute_delete(path);
+}
+
+bool ft::RequestProcessor::_is_cgi(std::string& path)
+{
+	std::string method;
+	std::string file_path;
+
+	//verifica se server ou location tem cgi configurado
+		//se não, return (false);
+	if (!_is_file(path, file_path))
+		return (false);
+	_get_file(path, file_path);
+	//verificar se file_path termina com extensão que exista no cgi
+		//se não, return (false);
+	path = file_path;
+	return (true);
+}
+
+void ft::RequestProcessor::_execute_cgi(std::string file_path)
+{
+	int	pid;
+	int	status;
+	char** cmd = NULL;
+	std::string executable;
+	executable = "/usr/bin/python3";
+	
+	if (!is_executable(executable))
+	{
+		std::cout << "!is_executable" << std::endl;
+		throw (InternalServerError()); //!conferir outros status
+	}
+	//variáveis de ambiente
+	std::cout << "antes do pid" << std::endl;
+	pid = fork();
+	std::cout << "PID: " << pid << std::endl;
+	if (pid == 0)
+	{
+		cmd[0] = const_cast<char*>(executable.c_str());
+		cmd[1] = const_cast<char*>(file_path.c_str());
+		std::cout << "antes do execve" << std::endl;
+		execve(executable.c_str(), cmd, NULL);
+		std::cout << "depois do execve" << std::endl;
+		
+	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		std::cout << "WIFEXITED" << std::endl;
+		throw (InternalServerError());
+	}
+	
 }
 
 void	ft::RequestProcessor::_execute_get(std::string path)
