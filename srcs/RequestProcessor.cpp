@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 20:55:13 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/11 21:07:59 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void ft::RequestProcessor::_define_server_name(void)
 void ft::RequestProcessor::_define_uri(void)
 {
 	this->_uri = this->_request.get_request_field("URI");
-	// if (*this->_uri.rbegin() != '/')
-	// 	this->_uri.push_back('/');
 }
 
 void	ft::RequestProcessor::_execute_request(void)
@@ -228,11 +226,18 @@ bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
 	}
 	if (is_dir(path))
 	{
+		
 		if (_find_index(path, file_path))
 			return (true);
 		return (false);
 	}
 	throw (NotFound());
+}
+
+void ft::RequestProcessor::_check_slash(std::string &path)
+{
+	if (*path.rbegin() != '/')
+			path.append("/");
 }
 
 bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
@@ -312,15 +317,26 @@ ft::RequestProcessor::location_data_queue ft::RequestProcessor::_check_locations
 {
 	location_data_vector all_locations = this->_server_data.get_location();
 	std::priority_queue<ft::LocationData> match_locations;
-	std::string prefix;
+
 	for (size_t i = 0; i < all_locations.size(); i++)
-	{
-		prefix = all_locations[i].get_prefix();
-		size_t found = this->_uri.find(prefix);
-		if (found == 0)
+		if (_is_uri_in_location(all_locations[i]))
 			match_locations.push(all_locations[i]);
-	}
 	return (match_locations);
+}
+
+bool ft::RequestProcessor::_is_uri_in_location(ft::LocationData location)
+{
+	std::string prefix;
+
+	_define_prefix(prefix, location);
+	return (this->_uri.find(prefix) == 0);
+}
+
+void ft::RequestProcessor::_define_prefix(std::string& prefix, ft::LocationData location)
+{
+	prefix = location.get_prefix();
+	if ((prefix != "/") && (*prefix.rbegin() == '/'))
+		prefix.resize(prefix.length() - 1);
 }
 
 bool	ft::RequestProcessor::_is_redirection(void)

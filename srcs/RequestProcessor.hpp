@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 20:27:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/11 21:08:08 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,14 @@ namespace ft
 			void				_select_location(void);
 			bool				_is_redirection(void);
 			location_data_queue	_check_locations(void);
+			void				_define_prefix(std::string& prefix, ft::LocationData location);
+			bool				_is_uri_in_location(ft::LocationData location);
 			void				_check_method(void);
 			void				_set_error(std::string code, std::string reason);
 			void				_set_body(void);
 			void				_get_file(std::string path, std::string file_path);
 			bool				_is_file(std::string path, std::string& file_path);
+			void				_check_slash(std::string &path);
 			bool				_find_index(std::string path, std::string& file_path);
 			void				_build_autoindex(std::string path);
 			void				_set_autoindex_h1(std::string &body);
