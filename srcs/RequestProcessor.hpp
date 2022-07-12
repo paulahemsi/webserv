@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 20:26:52 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:27:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ namespace ft
 			std::string			_get_error_page_path(std::string code);
 			void				_execute_get(std::string path);
 			void				_execute_post(void);
+			void				_check_payload(void);
 			std::string			_build_filepath(void);
 
 		public:

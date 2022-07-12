@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 14:42:50 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:55:13 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,27 @@ void	ft::RequestProcessor::_execute_post(void)
 	std::string body;
 	std::string filepath;
 
+	_check_payload();
 	filepath = _build_filepath();
 	body = (this->_request.get_request_field("Body"));
 
 	new_file.open(filepath.c_str(), std::ios::binary);
 	new_file.write(body.c_str(), body.length());
 	new_file.close();
+}
+
+void	ft::RequestProcessor::_check_payload(void)
+{
+	int payload_max_size;
+	int body_length;
+
+	body_length = this->_request.get_content_length();
+	payload_max_size = this->_server_data.get_body_size();
+	if (this->_location_data.get_body_size())
+		payload_max_size = this->_location_data.get_body_size();
+
+	if (body_length > payload_max_size)
+		throw (PayloadTooLarge());
 }
 
 std::string	ft::RequestProcessor::_build_filepath(void)
