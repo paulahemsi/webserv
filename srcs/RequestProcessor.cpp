@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 21:07:59 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/11 22:34:16 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
 	}
 	if (is_dir(path))
 	{
-		
+		_check_slash(path);
 		if (_find_index(path, file_path))
 			return (true);
 		return (false);
