@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:47:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 20:33:19 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/12 21:06:20 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void ft::Parser::_parse_file(void)
 	while (this->_file_stream.good())
 	{
 		std::getline(this->_file_stream, this->_line);
-		if (ft::is_not_empty(this->_line))
+		if (ft::line_is_valid(this->_line))
 		{
 			if (this->_line == SERVER_BEGIN)
 				_parse_server_block();
