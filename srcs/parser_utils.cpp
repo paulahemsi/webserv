@@ -6,16 +6,35 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:22:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 11:41:05 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/12 21:19:26 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_utils.hpp"
 
-bool	ft::is_not_empty(std::string &line)
+static bool	is_empty(std::string &line)
 {
 	ft::trim(line, " \t");
-	return (line != "");
+	ft::trim(line, " ");
+	return (line == "");
+}
+
+static bool is_comment(std::string &line)
+{
+	ft::trim(line, " \t");
+	ft::trim(line, " ");
+	if (line[0] == '#')
+		return (true);
+	return (false);
+}
+
+bool ft::line_is_valid(std::string &line)
+{
+	if (is_comment(line))
+		return (false);
+	if (is_empty(line))
+		return (false);
+	return (true);
 }
 
 bool	ft::is_number(const std::string &line)

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/10 17:51:35 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/12 21:06:51 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void ft::LocationParser::exec(std::ifstream &file_stream, std::string line)
 	while (file_stream.good())
 	{
 		std::getline(file_stream, this->_line);
-		if (ft::is_not_empty(this->_line))
+		if (ft::line_is_valid(this->_line))
 		{
 			if (this->_line == LOCATION_END)
 				return (_add_default_method());
