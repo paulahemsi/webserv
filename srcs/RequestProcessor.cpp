@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/12 20:27:16 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/12 22:04:51 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,14 +173,32 @@ void ft::RequestProcessor::_execute_cgi(std::string file_path)
 	std::cout << "antes do pid" << std::endl;
 	pid = fork();
 	std::cout << "PID: " << pid << std::endl;
+	//temp
 	if (pid == 0)
 	{
+		std::string temp = "./temp";
+		//abrir temp
+		int temp_fd = open(temp.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		//dup temp-out
+		dup2(temp_fd, STDOUT_FILENO);
+		
 		cmd[0] = const_cast<char*>(executable.c_str());
 		cmd[1] = const_cast<char*>(file_path.c_str());
 		std::cout << "antes do execve" << std::endl;
-		execve(executable.c_str(), cmd, NULL);
-		std::cout << "depois do execve" << std::endl;
+		write(temp_fd, "#", 1);
+		std::string s1 = "PATH_INFO=QUALQUER COISA";
+		std::string s2 = "QUERY_STRING=QUALQUER COISA";
+		std::string s3 = "HTTP_HOST=QUALQUER COISA";
+		char* env[4];
+		env[0] = const_cast<char*>(s1.c_str());
+		env[1] = const_cast<char*>(s2.c_str());
+		env[2] = const_cast<char*>(s3.c_str());
+		env[3] = NULL;
 		
+		execve(executable.c_str(), cmd, env);
+		//vai escrever no out (q agora é arquivo)
+		std::cout << "depois do execve" << std::endl;
+		close(temp_fd);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
