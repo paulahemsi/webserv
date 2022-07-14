@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:43:39 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/26 01:00:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/13 23:19:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 #define INDEX "index"
 #define REDIRECTION "redirection"
 #define AUTOINDEX "autoindex"
+#define ERROR_PAGE "error_page"
+#define CGI "cgi"
 
 namespace ft
 {
@@ -44,6 +46,8 @@ namespace ft
 			void	_set_redirection_conf(void);
 			void	_set_autoindex_conf(void);
 			void	_set_accepted_methods_conf(void);
+			void	_set_error_page_conf(void);
+			void	_set_cgi_conf(void);
 			void	_add_default_method(void);
 
 		public:

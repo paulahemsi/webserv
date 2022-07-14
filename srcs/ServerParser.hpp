@@ -6,15 +6,15 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:49:31 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:22:01 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/13 21:37:52 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_PARSER_HPP
 #define SERVER_PARSER_HPP
 
-#include "ServerData.hpp"
 #include "parser_utils.hpp"
+#include "ServerData.hpp"
 #include "LocationParser.hpp"
 #include <sstream>
 #include <fstream>
@@ -28,6 +28,7 @@
 #define SERVER_NAME "server_name"
 #define ROOT "root"
 #define ERROR_PAGE "error_page"
+#define CGI "cgi"
 #define BODY_SIZE "client_body_size"
 #define INDEX "index"
 
@@ -46,6 +47,7 @@ namespace ft
 			void	_set_port_conf(ft::Listen &listen, std::string port);
 			void	_set_server_name_conf(void);
 			void	_set_error_page_conf(void);
+			void	_set_cgi_conf(void);
 			void	_set_root_conf(void);
 			void	_set_body_size_conf(void);
 

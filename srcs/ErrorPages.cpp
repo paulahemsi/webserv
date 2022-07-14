@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ErrorPages.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:10:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/02 19:02:05 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/13 22:38:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,7 @@ std::ostream &operator<<(std::ostream &outputFile, const ft::ErrorPages &object)
 
 	pages = object.get_pages();
 	for (it = pages.begin(); it != pages.end(); it++)
-	{
 		outputFile << it->first << " - " << it->second << std::endl;
-		std::cout << it->first << " - " << it->second << std::endl;
-	}
 
 	return (outputFile);
 }

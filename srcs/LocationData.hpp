@@ -6,13 +6,15 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/24 22:16:08 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/13 23:14:37 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOCATIONDATA_HPP
 #define LOCATIONDATA_HPP
 
+#include "Cgi.hpp"
+#include "ErrorPages.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -28,6 +30,8 @@ namespace ft
 			std::string					_redirection;
 			std::string					_root;
 			std::string					_prefix;
+			ft::Cgi						_cgi;
+			ft::ErrorPages				_error_pages;
 			bool						_autoindex;
 			int							_body_size;
 			
@@ -45,7 +49,9 @@ namespace ft
 			std::string					get_prefix(void) const ;
 			bool						get_autoindex(void) const ;
 			int							get_body_size(void) const ;
-
+			ft::ErrorPages				get_error_pages(void) const;
+			std::string					get_error_page(std::string code) const;
+			ft::Cgi						get_cgi(void) const;
 			std::string					accepted_methods_to_string(void) const ;
 			std::string					index_to_string(void) const ;
 
@@ -56,6 +62,8 @@ namespace ft
 			void	set_prefix(std::string prefix);
 			void	set_autoindex(bool autoindex_value);
 			void	set_body_size(int size_limit);
+			void	add_error_page(std::string code, std::string page_path);
+			void	add_cgi_conf(std::string extension, std::string program_path);
 			
 			bool	operator>(ft::LocationData const &right_hand_side) const;
 			bool	operator>=(ft::LocationData const &right_hand_side) const;
