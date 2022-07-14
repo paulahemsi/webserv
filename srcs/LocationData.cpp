@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 20:44:28 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/13 23:16:41 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ _index(std::vector<std::string>()),
 _redirection(""),
 _root(""),
 _prefix(""),
+_cgi(ft::Cgi()),
+_error_pages(ft::ErrorPages()),
 _autoindex(false),
 _body_size(0)
 {
@@ -38,6 +40,8 @@ ft::LocationData &ft::LocationData::operator=(ft::LocationData const &right_hand
 	this->_prefix = right_hand_side._prefix;
 	this->_autoindex = right_hand_side._autoindex;
 	this->_body_size = right_hand_side._body_size;
+	this->_cgi = right_hand_side._cgi;
+	this->_error_pages = right_hand_side._error_pages;
 	return (*this);
 }
 
@@ -78,6 +82,31 @@ void ft::LocationData::set_autoindex(bool autoindex_value)
 void ft::LocationData::set_body_size(int size_limit)
 {
 	this->_body_size = size_limit;
+}
+
+void ft::LocationData::add_error_page(std::string code, std::string page_path)
+{
+	this->_error_pages.add_page(code, page_path);
+}
+
+void ft::LocationData::add_cgi_conf(std::string extension, std::string program_path)
+{
+	this->_cgi.add_program(extension, program_path);
+}
+
+ft::ErrorPages	ft::LocationData::get_error_pages(void) const
+{
+	return (this->_error_pages);
+}
+
+std::string	ft::LocationData::get_error_page(std::string code) const
+{
+	return (this->_error_pages.get_page(code));
+}
+
+ft::Cgi	ft::LocationData::get_cgi(void) const
+{
+	return (this->_cgi);
 }
 
 std::set<std::string> ft::LocationData::get_accepted_methods(void) const
@@ -179,7 +208,9 @@ std::ostream &operator<<(std::ostream &outputFile, const ft::LocationData &objec
 				<< "BodySize : " << object.get_body_size() << std::endl
 				<< "Accepted Methods: " << std::endl
 					<< object.accepted_methods_to_string() << std::endl
-				<< "Index: " << object.index_to_string() << std::endl;
+				<< "Index: " << object.index_to_string() << std::endl
+				<< "Error Pages: " << object.get_error_pages() << std::endl
+				<< "Cgi: " << object.get_cgi() << std::endl;
 	
 	return outputFile;
 }

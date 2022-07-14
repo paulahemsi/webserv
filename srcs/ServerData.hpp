@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerData.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:25:56 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/02 18:39:53 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/13 22:02:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "LocationData.hpp"
 #include "Listen.hpp"
 #include "ErrorPages.hpp"
+#include "Cgi.hpp"
 #include <vector>
 
 namespace ft
@@ -28,6 +29,7 @@ namespace ft
 			std::string						_root;
 			ft::ErrorPages					_error_pages;
 			ft::ErrorPages					_error_pages_default;
+			ft::Cgi							_cgi;
 			int								_body_size;
 			std::vector<ft::LocationData>	_location;
 
@@ -45,6 +47,7 @@ namespace ft
 			std::string						get_default_error_page(std::string code) const;
 			ft::ErrorPages					get_error_pages(void) const;
 			ft::ErrorPages					get_error_pages_default(void) const;
+			ft::Cgi							get_cgi(void) const;
 			int								get_body_size(void) const;
 			std::vector<ft::LocationData>	get_location(void) const;
 
@@ -56,6 +59,7 @@ namespace ft
 			void		set_body_size(int size_limit);
 			void		add_location(ft::LocationData new_location_block);
 			void		add_error_page(std::string code, std::string page_path);
+			void		add_cgi_conf(std::string extension, std::string program_path);
 	};
 }
 

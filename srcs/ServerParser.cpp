@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerParser.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/30 20:38:51 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/13 22:53:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void ft::ServerParser::exec(std::ifstream &file_stream, std::string line)
 	while (file_stream.good())
 	{
 		std::getline(file_stream, this->_line);
-		if (ft::is_not_empty(this->_line))
+		if (ft::line_is_valid(this->_line))
 		{
 			if (this->_line == SERVER_END)
 				return ;
@@ -75,6 +75,8 @@ void ft::ServerParser::_set_server_conf()
 		_set_root_conf();
 	else if (ft::begins_with(this->_line, ERROR_PAGE))
 		_set_error_page_conf();
+	else if (ft::begins_with(this->_line, CGI))
+		_set_cgi_conf();
 	else if (ft::begins_with(this->_line, BODY_SIZE))
 		_set_body_size_conf();
 	else
@@ -154,6 +156,33 @@ void ft::ServerParser::_set_error_page_conf()
 		std::getline(ss_codes, code, ' ');
 		this->_server.add_error_page(code, page_path);
 	}
+}
+
+void ft::ServerParser::_set_cgi_conf()
+{
+	ft::reduce_to_value(this->_line, CGI);
+	if (!ft::more_than_one_argument(this->_line))
+		throw (ServerConfigurationError());
+
+	std::stringstream cgi_line(this->_line);
+	std::string extension;
+	std::string path;
+
+	for (size_t i = 1; cgi_line.good(); i++)
+	{
+		switch (i)
+		{
+		case 1:
+			std::getline(cgi_line, extension, ' ');
+			break;
+		case 2:
+			std::getline(cgi_line, path, ' ');
+			break;
+		case 3:
+			throw (ServerConfigurationError());
+		}
+	}
+	this->_server.add_cgi_conf(extension, path);
 }
 
 void ft::ServerParser::_set_body_size_conf()

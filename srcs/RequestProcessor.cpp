@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 22:21:03 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:55:19 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,8 +320,15 @@ bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
 std::string	ft::RequestProcessor::_get_error_page_path(std::string code)
 {
 	std::string	path;
+	std::string root;
 
-	path = this->_server_data.get_root() + this->_server_data.get_error_page(code);
+	root = this->_location_data.get_root();
+	if (root == "")
+		root = this->_server_data.get_root();
+	path = root + this->_location_data.get_error_page(code);
+	if (is_file(path))
+		return (path);
+	path = root + this->_server_data.get_error_page(code);
 	if (is_file(path))
 		return (path);
 	return (this->_server_data.get_default_error_page(code));
