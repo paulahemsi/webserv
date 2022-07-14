@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 23:36:53 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:55:19 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,71 @@ void	ft::RequestProcessor::_set_body(void)
 	std::string path;
 	
 	path = this->_server_data.get_root() + this->_uri;
-	if (this->_method == "GET")
+	if (_is_cgi(path))
+		_execute_cgi(path);
+	else if (this->_method == "GET")
 		_execute_get(path);
 	else if (this->_method == "POST")
 		_execute_post();
 	else if (this->_method == "DELETE")
 		_execute_delete(path);
+}
+
+bool ft::RequestProcessor::_is_cgi(std::string& path)
+{
+	std::string method;
+	std::string file_path;
+
+	//verifica se server ou location tem cgi configurado
+		//se não, return (false);
+	if (!_is_file(path, file_path))
+		return (false);
+	_get_file(path, file_path);
+	//verificar se file_path termina com extensão que exista no cgi
+		//se não, return (false);
+	path = file_path;
+	return (true);
+}
+
+void ft::RequestProcessor::_execute_cgi(std::string file_path)
+{
+	int	pid;
+	int	status;
+	char* cmd[3];
+	std::string executable;
+	executable = "/usr/bin/python3";
+	cmd[0] = const_cast<char*>(executable.c_str());
+	cmd[1] = const_cast<char*>(file_path.c_str());
+	cmd[2] = NULL;
+	
+	if (!is_executable(executable))
+	{
+		std::cout << "!is_executable" << std::endl;
+		throw (InternalServerError()); //!conferir outros status
+	}
+	
+	std::string s1 = "PATH_INFO=QUALQUER COISA";
+	std::string s2 = "QUERY_STRING=QUALQUER COISA";
+	std::string s3 = "HTTP_HOST=QUALQUER COISA";
+	char* env[4];
+	env[0] = const_cast<char*>(s1.c_str());
+	env[1] = const_cast<char*>(s2.c_str());
+	env[2] = const_cast<char*>(s3.c_str());
+	env[3] = NULL;
+	
+	std::string temp = "./temp";
+	int temp_fd = open(temp.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(temp_fd, STDOUT_FILENO);
+		execve(executable.c_str(), cmd, env);
+		close(temp_fd);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+		throw (InternalServerError());
 }
 
 void	ft::RequestProcessor::_execute_get(std::string path)

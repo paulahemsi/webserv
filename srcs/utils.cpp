@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/09 18:32:06 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/13 22:18:40 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ std::string last_modification_time(std::string path)
 	#else
 		return (http_date(&s.st_mtim.tv_sec));
 	#endif
+}
+
+bool	is_executable(std::string path)
+{
+	struct stat	buffer;
+
+	if (stat(path.c_str(), &buffer) != 0)
+		return (false);
+	if ((buffer.st_mode & S_IFMT) == S_IFDIR)
+		return (false);
+	if ((buffer.st_mode & S_IXUSR))
+		return (true);
+	return (false);
 }
