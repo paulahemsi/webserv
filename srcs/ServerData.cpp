@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 20:24:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/13 22:38:12 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ _server_name(std::vector<std::string>()),
 _root(""),
 _error_pages(ft::ErrorPages()),
 _error_pages_default(ft::ErrorPages()),
+_cgi(ft::Cgi()),
 _body_size(1000000),
 _location(std::vector<ft::LocationData>())
 {
@@ -38,6 +39,7 @@ ft::ServerData &ft::ServerData::operator=(ft::ServerData const &right_hand_side)
 	this->_error_pages = right_hand_side._error_pages;
 	this->_error_pages_default = right_hand_side._error_pages_default;
 	this->_body_size = right_hand_side._body_size;
+	this->_cgi = right_hand_side._cgi;
 	this->_location = right_hand_side._location;
 	return (*this);
 }
@@ -77,6 +79,11 @@ std::string	ft::ServerData::get_error_page(std::string code) const
 	return (this->_error_pages.get_page(code));
 }
 
+ft::Cgi	ft::ServerData::get_cgi(void) const
+{
+	return (this->_cgi);
+}
+
 std::string	ft::ServerData::get_default_error_page(std::string code) const
 {
 	return (this->_error_pages_default.get_page(code));
@@ -113,6 +120,11 @@ void ft::ServerData::add_error_page(std::string code, std::string page_path)
 	this->_error_pages.add_page(code, page_path);
 }
 
+void ft::ServerData::add_cgi_conf(std::string extension, std::string program_path)
+{
+	this->_cgi.add_program(extension, program_path);
+}
+
 void ft::ServerData::set_body_size(int size_limit)
 {
 	this->_body_size = size_limit;
@@ -144,6 +156,7 @@ std::ostream &operator<<(std::ostream &outputFile, const ft::ServerData &object)
 				<< "BodySize : " << object.get_body_size() << std::endl
 				<< "Error Pages: " << object.get_error_pages() << std::endl
 				<< "Error Pages Defaut: " << object.get_error_pages_default() << std::endl
+				<< "Cgi: " << object.get_cgi() << std::endl
 				<< "Location: " << std::endl;
 
 	for (size_t i = 0; i < object.get_location().size(); i++)
