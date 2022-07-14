@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 19:55:19 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:35:12 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,14 +144,17 @@ bool ft::RequestProcessor::_is_cgi(std::string& path)
 {
 	std::string method;
 	std::string file_path;
-
+	std::string extension;
+	ft::Cgi		cgi = this->_server_data.get_cgi();
+	
 	//verifica se server ou location tem cgi configurado
 		//se não, return (false);
 	if (!_is_file(path, file_path))
 		return (false);
 	_get_file(path, file_path);
-	//verificar se file_path termina com extensão que exista no cgi
-		//se não, return (false);
+	extension = extract_extension(file_path);
+	if (!cgi.has_extension(extension))
+		return (false);
 	path = file_path;
 	return (true);
 }

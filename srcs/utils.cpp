@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 22:18:40 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:25:17 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,16 @@ bool	is_executable(std::string path)
 	if ((buffer.st_mode & S_IXUSR))
 		return (true);
 	return (false);
+}
+
+std::string	extract_extension(std::string path)
+{
+	size_t pos;
+	size_t size;
+
+	pos = path.rfind(".");
+	if (pos == std::string::npos)
+		return ("");
+	size = path.size();
+	return (path.substr(pos, size));
 }
