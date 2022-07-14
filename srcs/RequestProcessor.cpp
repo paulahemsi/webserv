@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 20:35:12 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:55:31 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,20 @@ void	ft::RequestProcessor::_set_body(void)
 		_execute_delete(path);
 }
 
+bool ft::RequestProcessor::_cgi_map_exists(ft::Cgi cgi)
+{
+	return (cgi.get_program_map().size() != 0);
+}
+
+bool ft::RequestProcessor::_has_cgi_configured(void)
+{
+	if (_cgi_map_exists(this->_server_data.get_cgi()))
+		return (true);
+	if (_cgi_map_exists(this->_location_data.get_cgi()))
+		return (true);
+	return (false);
+}
+
 bool ft::RequestProcessor::_is_cgi(std::string& path)
 {
 	std::string method;
@@ -147,8 +161,9 @@ bool ft::RequestProcessor::_is_cgi(std::string& path)
 	std::string extension;
 	ft::Cgi		cgi = this->_server_data.get_cgi();
 	
-	//verifica se server ou location tem cgi configurado
-		//se não, return (false);
+
+	if (!_has_cgi_configured())
+		return (false);
 	if (!_is_file(path, file_path))
 		return (false);
 	_get_file(path, file_path);
