@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/12 21:06:51 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/13 23:23:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ void ft::LocationParser::_set_location_conf(void)
 		_set_autoindex_conf();
 	else if (ft::begins_with(this->_line, BODY_SIZE))
 		_set_body_size_conf();
+	else if (ft::begins_with(this->_line, ERROR_PAGE))
+		_set_error_page_conf();
+	else if (ft::begins_with(this->_line, CGI))
+		_set_cgi_conf();
 	else
 		throw (LocationConfigurationError());
 }
@@ -93,6 +97,53 @@ void ft::LocationParser::_set_prefix(void)
 	splited.erase(splited.find_last_not_of(" \t") + 1);
 	if (splited != "{")
 		throw (LocationConfigurationError());
+}
+
+void ft::LocationParser::_set_error_page_conf()
+{
+	ft::reduce_to_value(this->_line, ERROR_PAGE);
+	if (!ft::more_than_one_argument(this->_line))
+		throw (LocationConfigurationError());
+
+	size_t				pos = this->_line.find_last_of(' ');
+	std::string 		page_path = this->_line.substr(pos + 1);
+	std::string			codes= this->_line.substr(0, pos);
+	ft::trim(codes, " \t");
+
+	std::stringstream 	ss_codes(codes);
+	std::string 		code;
+	while (ss_codes.good())
+	{
+		std::getline(ss_codes, code, ' ');
+		this->_location.add_error_page(code, page_path);
+	}
+}
+
+void ft::LocationParser::_set_cgi_conf()
+{
+	ft::reduce_to_value(this->_line, CGI);
+	if (!ft::more_than_one_argument(this->_line))
+		throw (LocationConfigurationError());
+
+	std::stringstream cgi_line(this->_line);
+	std::string extension;
+	std::string path;
+
+	for (size_t i = 1; cgi_line.good(); i++)
+	{
+		switch (i)
+		{
+		case 1:
+			std::getline(cgi_line, extension, ' ');
+			break;
+		case 2:
+			std::getline(cgi_line, path, ' ');
+			break;
+		case 3:
+			throw (LocationConfigurationError());
+		}
+	}
+	this->_location.add_cgi_conf(extension, path);
 }
 
 void ft::LocationParser::_set_body_size_conf(void)
