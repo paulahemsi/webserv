@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/12 19:49:13 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:45:19 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ namespace ft
 			void				_execute_post(void);
 			void				_check_payload(void);
 			std::string			_build_filepath(void);
+			bool				_cgi_map_exists(ft::Cgi cgi);
+			bool				_has_cgi_configured(void);
 			bool				_is_cgi(std::string& path);
 			void				_execute_cgi(std::string path);
 
