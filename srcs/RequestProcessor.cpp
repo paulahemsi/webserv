@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 21:04:10 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:13:33 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ bool ft::RequestProcessor::_is_cgi(std::string& path)
 		return (false);
 	if (!_is_file(path, file_path))
 		return (false);
+
 	_get_file(path, file_path);
 	extension = extract_extension(file_path);
 	cgi = _get_cgi_configs();
@@ -181,32 +182,49 @@ bool ft::RequestProcessor::_is_cgi(std::string& path)
 	return (true);
 }
 
+char** ft::RequestProcessor::_build_cmd(std::string file_path)
+{
+	std::string executable;
+	char** cmd = (char**)malloc(3 * sizeof(char *));
+
+	executable = _get_cgi_configs().get_program(extract_extension(file_path));
+	cmd[0] = strdup(executable.c_str());
+	cmd[1] = strdup(file_path.c_str());
+	cmd[2] = NULL;
+	return (cmd);
+}
+
+char ** ft::RequestProcessor::_build_env(void)
+{
+	std::map<std::string, std::string> header;
+	header = this->_request.get_request();
+	char** env = (char**)malloc(header.size() * sizeof(char *));
+
+	std::map<std::string, std::string>::iterator it = header.begin();
+
+	for(size_t i = 0; i < header.size(); it++, i++)
+	{
+		std::string key = it->first;
+		ft::trim(key, ":"); //!fazer um fix no request
+		std::string value = it->second;
+		std::string env_var = to_upper(key) + "=" + to_upper(value);
+		env[i] = strdup((env_var.c_str()));
+	}
+	env[header.size()] = NULL;
+	return (env);
+}
+
+
 void ft::RequestProcessor::_execute_cgi(std::string file_path)
 {
 	int	pid;
 	int	status;
-	char* cmd[3];
-	std::string executable;
-	executable = "/usr/bin/python3";
-	cmd[0] = const_cast<char*>(executable.c_str());
-	cmd[1] = const_cast<char*>(file_path.c_str());
-	cmd[2] = NULL;
 	
-	if (!is_executable(executable))
-	{
-		std::cout << "!is_executable" << std::endl;
+	char** cmd = _build_cmd(file_path);
+	if (!is_executable(cmd[0]))
 		throw (InternalServerError()); //!conferir outros status
-	}
-	
-	std::string s1 = "PATH_INFO=QUALQUER COISA";
-	std::string s2 = "QUERY_STRING=QUALQUER COISA";
-	std::string s3 = "HTTP_HOST=QUALQUER COISA";
-	char* env[4];
-	env[0] = const_cast<char*>(s1.c_str());
-	env[1] = const_cast<char*>(s2.c_str());
-	env[2] = const_cast<char*>(s3.c_str());
-	env[3] = NULL;
-	
+	char** env = _build_env();
+
 	std::string temp = "./temp";
 	int temp_fd = open(temp.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600);
 		
@@ -214,7 +232,7 @@ void ft::RequestProcessor::_execute_cgi(std::string file_path)
 	if (pid == 0)
 	{
 		dup2(temp_fd, STDOUT_FILENO);
-		execve(executable.c_str(), cmd, env);
+		execve(cmd[0], cmd, env);
 		close(temp_fd);
 	}
 	waitpid(pid, &status, 0);

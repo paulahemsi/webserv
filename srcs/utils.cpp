@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 20:25:17 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:11:17 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,11 @@ std::string	extract_extension(std::string path)
 		return ("");
 	size = path.size();
 	return (path.substr(pos, size));
+}
+
+std::string to_upper(std::string s)
+{
+	for (size_t i = 0; i < s.length(); i++)
+		s.at(i) = std::toupper(s[i]);
+	return (s);
 }

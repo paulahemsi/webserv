@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:54 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 20:24:56 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:10:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ std::string current_date_time(void);
 std::string last_modification_time(std::string path);
 std::string	extract_extension(std::string path);
 bool	is_executable(std::string path);
+std::string to_upper(std::string s);
 
 #endif
