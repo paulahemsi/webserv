@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 23:04:54 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/15 18:05:52 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 #include "utils.hpp"
 #include "html_defines.hpp"
 #include "http_methods_defines.hpp"
-# include <sys/wait.h>
+#include "CgiMediator.hpp"
+#include <sys/wait.h>
 #include <queue>
 #include <vector>
 #include <set>
@@ -79,13 +80,9 @@ namespace ft
 			void				_execute_post(void);
 			void				_check_payload(void);
 			std::string			_build_filepath(void);
-			bool				_cgi_map_exists(ft::Cgi cgi);
-			bool				_has_cgi_configured(void);
 			bool				_is_cgi(std::string& path);
-			void				_execute_cgi(std::string path);
-			char **				_build_cmd(std::string file_path);
-			char **				_build_env(void);
-			ft::Cgi				_get_cgi_configs(void);
+			bool				_has_cgi_configured(void);
+			ft::Cgi	_get_cgi_configs(void);
 
 		public:
 			RequestProcessor(ft::Socket *socket);

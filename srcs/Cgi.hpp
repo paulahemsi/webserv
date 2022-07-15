@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cgi.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:42:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 20:15:28 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/15 18:01:36 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ namespace ft
 			std::string							get_program(std::string extension) const;
 			void								add_program(std::string extension, std::string path);
 			bool								has_extension(std::string extension);
+			size_t								size(void);
 	};
 	
 }

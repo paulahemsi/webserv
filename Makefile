@@ -29,6 +29,7 @@ SRCS		:=	main.cpp \
 				RequestProcessor.cpp \
 				ErrorPages.cpp \
 				Cgi.cpp \
+				CgiMediator.cpp \
 				receive_line.cpp \
 
 OBJS_DIR	:=	./objs/
@@ -53,6 +54,7 @@ HEADER		=	utils.hpp \
 				RequestProcessor.hpp \
 				ErrorPages.hpp \
 				Cgi.hpp \
+				CgiMediator.hpp \
 				receive_line.hpp \
 
 INCLUDES	=
