@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cgi.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:42:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 21:36:36 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:15:28 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ namespace ft
 			std::map<std::string, std::string>	get_program_map(void) const;
 			std::string							get_program(std::string extension) const;
 			void								add_program(std::string extension, std::string path);
+			bool								has_extension(std::string extension);
 	};
 	
 }

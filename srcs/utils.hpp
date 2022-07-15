@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:54 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/12 19:40:41 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:24:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ bool is_dir(std::string path);
 std::string int_to_string(int integer);
 std::string current_date_time(void);
 std::string last_modification_time(std::string path);
+std::string	extract_extension(std::string path);
 bool	is_executable(std::string path);
 
 #endif
