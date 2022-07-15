@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 20:55:31 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/14 21:04:10 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,13 +154,19 @@ bool ft::RequestProcessor::_has_cgi_configured(void)
 	return (false);
 }
 
+ft::Cgi ft::RequestProcessor::_get_cgi_configs(void)
+{
+	if (_cgi_map_exists(this->_location_data.get_cgi()))
+		return (this->_location_data.get_cgi());
+	return (this->_server_data.get_cgi());
+}
+
 bool ft::RequestProcessor::_is_cgi(std::string& path)
 {
 	std::string method;
 	std::string file_path;
 	std::string extension;
-	ft::Cgi		cgi = this->_server_data.get_cgi();
-	
+	ft::Cgi		cgi;
 
 	if (!_has_cgi_configured())
 		return (false);
@@ -168,6 +174,7 @@ bool ft::RequestProcessor::_is_cgi(std::string& path)
 		return (false);
 	_get_file(path, file_path);
 	extension = extract_extension(file_path);
+	cgi = _get_cgi_configs();
 	if (!cgi.has_extension(extension))
 		return (false);
 	path = file_path;

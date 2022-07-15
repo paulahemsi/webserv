@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 20:45:19 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/14 21:04:36 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ namespace ft
 			bool				_has_cgi_configured(void);
 			bool				_is_cgi(std::string& path);
 			void				_execute_cgi(std::string path);
+			ft::Cgi				_get_cgi_configs(void);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
