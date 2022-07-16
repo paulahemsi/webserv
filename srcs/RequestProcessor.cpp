@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/15 18:14:43 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:49:29 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ void ft::RequestProcessor::run(int client_fd)
 	this->_response.send(client_fd);
 }
 
+ft::Request ft::RequestProcessor::get_request(void)
+{
+	return (this->_request);
+}
+
+ft::ServerData ft::RequestProcessor::get_server_data(void)
+{
+	return (this->_server_data);
+}
+
+ft::LocationData ft::RequestProcessor::get_location_data(void)
+{
+	return (this->_location_data);
+}
+
 void ft::RequestProcessor::_define_server_name(void)
 {
 	this->_server_name = this->_request.get_server_name();
@@ -78,6 +93,10 @@ void	ft::RequestProcessor::_execute_request(void)
 		_set_body();
 	}
 	catch(const ft::RequestProcessor::ErrorsHttp& e)
+	{
+		_set_error(e.code(), e.reason());
+	}
+	catch(const ft::CgiMediator::ErrorsHttp& e)
 	{
 		_set_error(e.code(), e.reason());
 	}
@@ -128,20 +147,22 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 void	ft::RequestProcessor::_set_body(void)
 {
 	std::string		path;
-	ft::CgiMediator	cgi_mediator;
-	
 	path = this->_server_data.get_root() + this->_uri;
 	if (_is_cgi(path))
-	{
-		cgi_mediator.build(*this, path);
-		cgi_mediator.exec();
-	}
+		_execute_cgi(path);
 	else if (this->_method == "GET")
 		_execute_get(path);
 	else if (this->_method == "POST")
 		_execute_post();
 	else if (this->_method == "DELETE")
 		_execute_delete(path);
+}
+
+void ft::RequestProcessor::_execute_cgi(std::string file_path)
+{
+	ft::CgiMediator	cgi_mediator;
+	cgi_mediator.build(this->_server_data, this->_location_data, this->_request, file_path);
+	cgi_mediator.exec();
 }
 
 bool ft::RequestProcessor::_has_cgi_configured(void)

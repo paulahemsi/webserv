@@ -6,48 +6,53 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/15 18:15:07 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:36:31 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CgiMediator.hpp"
 
-ft::CgiMediator::CgiMediator(/* args */)
+ft::CgiMediator::CgiMediator()
 {
 }
 
-ft::CgiMediator::~CgiMediator()
+void ft::CgiMediator::build(ft::ServerData server_data, ft::LocationData location_data, ft::Request request, std::string file_path)
 {
+	this->_request = request;
+	this->_server_data = server_data;
+	this->_location_data = location_data;
+	this->_file_path = file_path;
+	this->_cmd = _build_cmd(file_path);
+	this->_env = _build_env();
+
+	if (!is_executable(this->_cmd[0]))
+		throw (InternalServerError());
 }
 
-void ft::CgiMediator::build(ft::RequestProcessor infos, std::string file_path)
-{
-	
-	
-	char** cmd = _build_cmd(file_path);
-	if (!is_executable(cmd[0]))
-		throw (InternalServerError()); //!conferir outros status
-	char** env = _build_env();
-}
-
-void ft::CgiMediator::_execute_cgi(std::string file_path)
+void ft::CgiMediator::exec(void)
 {
 	int	pid;
 	int	status;
-	
+	std::cout << "exec" << std::endl;
 	std::string temp = "./temp";
 	int temp_fd = open(temp.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600);
 		
 	pid = fork();
+	std::cout << "pré pid 0 " << std::endl;
+	
 	if (pid == 0)
 	{
 		dup2(temp_fd, STDOUT_FILENO);
-		execve(cmd[0], cmd, env);
+		execve(this->_cmd[0], this->_cmd, this->_env);
 		close(temp_fd);
 	}
 	waitpid(pid, &status, 0);
+	std::cout << "pós pid 0 " << std::endl;
+	
 	if (WIFSIGNALED(status))
 		throw (InternalServerError());
+	std::cout << "not error " << std::endl;
+	
 }
 
 char** ft::CgiMediator::_build_cmd(std::string file_path)
@@ -85,6 +90,26 @@ char ** ft::CgiMediator::_build_env(void)
 		std::string env_var = to_upper(key) + "=" + to_upper(value);
 		env[i] = strdup((env_var.c_str()));
 	}
-	env[header.size()] = NULL;
+	env[header.size() - 1] = NULL;
 	return (env);
+}
+
+void ft::CgiMediator::_free_cmd(void)
+{
+	for (size_t i = 0; this->_cmd[i]; i++)
+		free(this->_cmd[i]);
+	free(this->_cmd);
+}
+
+void ft::CgiMediator::_free_env(void)
+{
+	for (size_t i = 0; this->_env[i]; i++)
+		free(this->_env[i]);
+	free(this->_env);
+}
+
+ft::CgiMediator::~CgiMediator()
+{
+	_free_cmd();
+	_free_env();
 }

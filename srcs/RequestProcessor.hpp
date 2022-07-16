@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/15 18:05:52 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:40:31 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "parser_utils.hpp"
 
+#include "CgiMediator.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
 #include "Socket.hpp"
@@ -23,7 +24,6 @@
 #include "utils.hpp"
 #include "html_defines.hpp"
 #include "http_methods_defines.hpp"
-#include "CgiMediator.hpp"
 #include <sys/wait.h>
 #include <queue>
 #include <vector>
@@ -82,7 +82,8 @@ namespace ft
 			std::string			_build_filepath(void);
 			bool				_is_cgi(std::string& path);
 			bool				_has_cgi_configured(void);
-			ft::Cgi	_get_cgi_configs(void);
+			ft::Cgi				_get_cgi_configs(void);
+			void				_execute_cgi(std::string file_path);
 
 		public:
 			RequestProcessor(ft::Socket *socket);
@@ -91,7 +92,10 @@ namespace ft
 
 			ft::RequestProcessor	&operator=(ft::RequestProcessor const &right_hand_side);
 
-			void	run(int client_fd);
+			void				run(int client_fd);
+			ft::Request			get_request(void);
+			ft::ServerData		get_server_data(void);
+			ft::LocationData	get_location_data(void);
 
 			class ErrorsHttp : public std::exception
 			{
