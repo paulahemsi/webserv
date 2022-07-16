@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:23:18 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:13:06 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 void	ft::RequestProcessor::_set_body(void)
 {
 	std::string		path;
-	path = this->_server_data.get_root() + this->_uri;
+	path = _define_path();
 	if (_is_cgi(path))
 		_execute_cgi(path);
 	else if (this->_method == "GET")
@@ -153,6 +153,22 @@ void	ft::RequestProcessor::_set_body(void)
 		_execute_post();
 	else if (this->_method == "DELETE")
 		_execute_delete(path);
+}
+
+std::string ft::RequestProcessor::_define_path(void)
+{
+	std::string path;
+	if (this->_location_data.get_root() != "")
+	{
+		path = this->_location_data.get_root();
+		std::string prefix = this->_location_data.get_prefix();
+		std::string resource = this->_uri.substr(this->_uri.find(prefix) + prefix.length(), this->_uri.npos);
+		_check_slash(path);
+		path.append(resource);
+	}
+	else
+		path = this->_server_data.get_root() + this->_uri;
+	return (path);
 }
 
 void ft::RequestProcessor::_execute_cgi(std::string file_path)
@@ -290,7 +306,8 @@ bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
 		_check_slash(path);
 		if (_find_index(path, file_path))
 			return (true);
-		return (false);
+		if (this->_location_data.get_autoindex())
+			return (false);
 	}
 	throw (ft::NotFound());
 }

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:28:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:30:50 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ namespace ft
 			void				_check_method(void);
 			void				_set_error(std::string code, std::string reason);
 			void				_set_body(void);
+			std::string			_define_path(void);
 			void				_get_file(std::string path, std::string file_path);
 			bool				_is_file(std::string path, std::string& file_path);
 			void				_check_slash(std::string &path);
