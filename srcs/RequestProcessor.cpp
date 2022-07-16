@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 23:13:33 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:49:29 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ void ft::RequestProcessor::run(int client_fd)
 	this->_response.send(client_fd);
 }
 
+ft::Request ft::RequestProcessor::get_request(void)
+{
+	return (this->_request);
+}
+
+ft::ServerData ft::RequestProcessor::get_server_data(void)
+{
+	return (this->_server_data);
+}
+
+ft::LocationData ft::RequestProcessor::get_location_data(void)
+{
+	return (this->_location_data);
+}
+
 void ft::RequestProcessor::_define_server_name(void)
 {
 	this->_server_name = this->_request.get_server_name();
@@ -78,6 +93,10 @@ void	ft::RequestProcessor::_execute_request(void)
 		_set_body();
 	}
 	catch(const ft::RequestProcessor::ErrorsHttp& e)
+	{
+		_set_error(e.code(), e.reason());
+	}
+	catch(const ft::CgiMediator::ErrorsHttp& e)
 	{
 		_set_error(e.code(), e.reason());
 	}
@@ -127,8 +146,7 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 
 void	ft::RequestProcessor::_set_body(void)
 {
-	std::string path;
-	
+	std::string		path;
 	path = this->_server_data.get_root() + this->_uri;
 	if (_is_cgi(path))
 		_execute_cgi(path);
@@ -140,25 +158,20 @@ void	ft::RequestProcessor::_set_body(void)
 		_execute_delete(path);
 }
 
-bool ft::RequestProcessor::_cgi_map_exists(ft::Cgi cgi)
+void ft::RequestProcessor::_execute_cgi(std::string file_path)
 {
-	return (cgi.get_program_map().size() != 0);
+	ft::CgiMediator	cgi_mediator;
+	cgi_mediator.build(this->_server_data, this->_location_data, this->_request, file_path);
+	cgi_mediator.exec();
 }
 
 bool ft::RequestProcessor::_has_cgi_configured(void)
 {
-	if (_cgi_map_exists(this->_server_data.get_cgi()))
+	if (this->_server_data.get_cgi().size())
 		return (true);
-	if (_cgi_map_exists(this->_location_data.get_cgi()))
+	if (this->_location_data.get_cgi().size())
 		return (true);
 	return (false);
-}
-
-ft::Cgi ft::RequestProcessor::_get_cgi_configs(void)
-{
-	if (_cgi_map_exists(this->_location_data.get_cgi()))
-		return (this->_location_data.get_cgi());
-	return (this->_server_data.get_cgi());
 }
 
 bool ft::RequestProcessor::_is_cgi(std::string& path)
@@ -182,62 +195,11 @@ bool ft::RequestProcessor::_is_cgi(std::string& path)
 	return (true);
 }
 
-char** ft::RequestProcessor::_build_cmd(std::string file_path)
+ft::Cgi ft::RequestProcessor::_get_cgi_configs(void)
 {
-	std::string executable;
-	char** cmd = (char**)malloc(3 * sizeof(char *));
-
-	executable = _get_cgi_configs().get_program(extract_extension(file_path));
-	cmd[0] = strdup(executable.c_str());
-	cmd[1] = strdup(file_path.c_str());
-	cmd[2] = NULL;
-	return (cmd);
-}
-
-char ** ft::RequestProcessor::_build_env(void)
-{
-	std::map<std::string, std::string> header;
-	header = this->_request.get_request();
-	char** env = (char**)malloc(header.size() * sizeof(char *));
-
-	std::map<std::string, std::string>::iterator it = header.begin();
-
-	for(size_t i = 0; i < header.size(); it++, i++)
-	{
-		std::string key = it->first;
-		ft::trim(key, ":"); //!fazer um fix no request
-		std::string value = it->second;
-		std::string env_var = to_upper(key) + "=" + to_upper(value);
-		env[i] = strdup((env_var.c_str()));
-	}
-	env[header.size()] = NULL;
-	return (env);
-}
-
-
-void ft::RequestProcessor::_execute_cgi(std::string file_path)
-{
-	int	pid;
-	int	status;
-	
-	char** cmd = _build_cmd(file_path);
-	if (!is_executable(cmd[0]))
-		throw (InternalServerError()); //!conferir outros status
-	char** env = _build_env();
-
-	std::string temp = "./temp";
-	int temp_fd = open(temp.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600);
-		
-	pid = fork();
-	if (pid == 0)
-	{
-		dup2(temp_fd, STDOUT_FILENO);
-		execve(cmd[0], cmd, env);
-		close(temp_fd);
-	}
-	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-		throw (InternalServerError());
+	if (this->_location_data.get_cgi().size())
+		return (this->_location_data.get_cgi());
+	return (this->_server_data.get_cgi());
 }
 
 void	ft::RequestProcessor::_execute_get(std::string path)

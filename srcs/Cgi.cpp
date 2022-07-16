@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cgi.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:52:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 20:17:30 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/15 18:02:31 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ bool	ft::Cgi::has_extension(std::string extension)
 		return (true);
 	return (false);
 }
+
+size_t	ft::Cgi::size(void)
+{
+	return (this->_program.size());
+}
+
 
 std::ostream &operator<<(std::ostream &outputFile, const ft::Cgi &object)
 {
