@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:27:03 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 12:34:43 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:45:28 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include "utils.hpp"
 #include "parser_utils.hpp"
 #include "http_methods_defines.hpp"
+#include "ErrorsHttp.hpp"
 
 namespace ft
 {
@@ -63,21 +64,8 @@ namespace ft
 
 			void	build(ft::ServerData server_data, ft::LocationData location_data, ft::Request request, std::string path);
 			void	exec(ft::Response& response);
-			
-			class ErrorsHttp : public std::exception
-			{
-				public:
-					virtual const char* code() const throw()
-					{
-						return ("");
-					}
-					
-					virtual const char* reason() const throw()
-					{
-						return ("");
-					}
-			};
-			class InternalServerError : public ft::CgiMediator::ErrorsHttp
+
+			class InternalServerError : public ft::ErrorsHttp
 			{
 				public:
 					virtual const char* code() const throw()
