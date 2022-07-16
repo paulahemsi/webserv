@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 12:35:26 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:25:12 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void ft::CgiMediator::build(ft::ServerData server_data, ft::LocationData locatio
 	this->_env = _build_env();
 
 	if (!is_executable(this->_cmd[0]))
-		throw (InternalServerError());
+		throw (ft::InternalServerError());
 }
 
 ft::Cgi ft::CgiMediator::_select_cgi(ft::ServerData server_data, ft::LocationData location_data)
@@ -48,7 +48,7 @@ void ft::CgiMediator::exec(ft::Response& response)
 		_run_script(temp_fd);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
-		throw (InternalServerError());
+		throw (ft::InternalServerError());
 	_get_script_output(temp_file, response);
 	fclose(temp_file);
 }

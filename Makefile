@@ -37,7 +37,7 @@ OBJS		:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 
 HEADER		=	utils.hpp \
 				html_defines.hpp \
-				http_methods_defines.hpp \
+				http_status_code_defines.hpp \
 				Parser.hpp \
 				parser_utils.hpp \
 				LocationParser.hpp \

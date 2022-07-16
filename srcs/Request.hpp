@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 20:15:00 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:26:05 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <map>
 #include "receive_line.hpp"
 #include "utils.hpp"
+#include "ErrorsHttp.hpp"
 
 namespace ft
 {
@@ -63,15 +64,6 @@ namespace ft
 			std::string							get_method(void);
 			int									get_content_length(void);
 			void								check_request(void);
-			
-			class BadRequest : public std::exception
-			{
-				public:
-					virtual const char* what() const throw()
-					{
-						return ("\e[0;31mBad Request\e[0m");
-					}
-			};
 	};
 }
 

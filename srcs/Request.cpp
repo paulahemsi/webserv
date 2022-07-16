@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/15 21:16:41 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:26:14 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ ft::Request::~Request(void)
 void	ft::Request::check_request(void)
 {
 	if (!_has_mandatory_fields())
-		throw (BadRequest());
+		throw (ft::BadRequest());
 }
 
 bool	ft::Request::_has_mandatory_fields(void)
