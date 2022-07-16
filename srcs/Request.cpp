@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 20:14:47 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:16:41 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void ft::Request::_parse_body(void)
 {
 	if (this->_has_no_body())
 		return;
-	if (this->_request["Transfer-Encoding:"] == "chunked")
+	if (this->get_request_field("Transfer-Encoding:") == "chunked")
 		_receive_chunked_body();
 	else if (this->_has("Content-Length:"))
 		_read_message_body();
@@ -100,8 +100,11 @@ void ft::Request::_read_message_body(void)
 		temp_line += buffer;
 		memset(buffer, 0, 20);
 	}
-	_clean_header(temp_line);
-	_clean_footer(temp_line);
+	if (this->get_request_field("Content-Type").find("multipart/form-data") != std::string::npos)
+	{
+		_clean_header(temp_line);
+		_clean_footer(temp_line);
+	}
 	this->_body = temp_line;
 }
 
@@ -181,7 +184,9 @@ void ft::Request::_receive_chunked_body(void)
 
 std::string ft::Request::get_request_field(std::string key)
 {
-	return (this->_request[(key + ":")]);
+	if (this->_has(key + ":"))
+		return (this->_request[(key + ":")]);
+	return ("");
 }
 
 std::string ft::Request::get_server_name(void)
