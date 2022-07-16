@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/15 22:28:48 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/16 10:13:50 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ ft::RequestProcessor::~RequestProcessor(void)
 
 void ft::RequestProcessor::run(int client_fd)
 {
+	this->_client = client_fd;
 	this->_request.init(client_fd);
 	_define_server_name();
 	_define_uri();
@@ -162,7 +163,7 @@ void ft::RequestProcessor::_execute_cgi(std::string file_path)
 {
 	ft::CgiMediator	cgi_mediator;
 	cgi_mediator.build(this->_server_data, this->_location_data, this->_request, file_path);
-	cgi_mediator.exec();
+	cgi_mediator.exec(this->_response);
 }
 
 bool ft::RequestProcessor::_has_cgi_configured(void)
