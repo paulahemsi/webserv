@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 10:13:50 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:46:58 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,7 @@ void	ft::RequestProcessor::_execute_request(void)
 		_check_method();
 		_set_body();
 	}
-	catch(const ft::RequestProcessor::ErrorsHttp& e)
-	{
-		_set_error(e.code(), e.reason());
-	}
-	catch(const ft::CgiMediator::ErrorsHttp& e)
+	catch(const ft::ErrorsHttp& e)
 	{
 		_set_error(e.code(), e.reason());
 	}

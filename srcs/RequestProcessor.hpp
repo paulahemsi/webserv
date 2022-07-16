@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 09:59:33 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:46:14 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include "utils.hpp"
 #include "html_defines.hpp"
 #include "http_methods_defines.hpp"
+#include "ErrorsHttp.hpp"
 #include <sys/wait.h>
 #include <queue>
 #include <vector>
@@ -98,21 +99,7 @@ namespace ft
 			ft::ServerData		get_server_data(void);
 			ft::LocationData	get_location_data(void);
 
-			class ErrorsHttp : public std::exception
-			{
-				public:
-					virtual const char* code() const throw()
-					{
-						return ("");
-					}
-					
-					virtual const char* reason() const throw()
-					{
-						return ("");
-					}
-			};
-
-			class NotFound : public ft::RequestProcessor::ErrorsHttp
+			class NotFound : public ft::ErrorsHttp
 			{
 				public:
 					virtual const char* code() const throw()
@@ -126,7 +113,7 @@ namespace ft
 					}
 			};
 			
-			class MethodNotAllowed : public ft::RequestProcessor::ErrorsHttp
+			class MethodNotAllowed : public ft::ErrorsHttp
 			{
 				public:
 					virtual const char* code() const throw()
@@ -140,7 +127,7 @@ namespace ft
 					}
 			};
 			
-			class Forbidden : public ft::RequestProcessor::ErrorsHttp
+			class Forbidden : public ft::ErrorsHttp
 			{
 				public:
 					virtual const char* code() const throw()
@@ -154,7 +141,7 @@ namespace ft
 					}
 			};
 			
-			class InternalServerError : public ft::RequestProcessor::ErrorsHttp
+			class InternalServerError : public ft::ErrorsHttp
 			{
 				public:
 					virtual const char* code() const throw()
@@ -168,7 +155,7 @@ namespace ft
 					}
 			};
 			
-			class PayloadTooLarge : public ft::RequestProcessor::ErrorsHttp
+			class PayloadTooLarge : public ft::ErrorsHttp
 			{
 				public:
 					virtual const char* code() const throw()
