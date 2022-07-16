@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 14:13:57 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/16 14:21:43 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,16 @@ void ft::Request::_read_message_body(void)
 		temp_line.append(buffer, num_of_bytes);
 		memset(buffer, 0, BUFFER_SIZE);
 	}
-	if (this->get_request_field("Content-Type").find("multipart/form-data") != std::string::npos)
-	{
-		_clean_header(temp_line);
-		_clean_footer(temp_line);
-	}
-	this->_body = temp_line;
+	this->_body = _extract_entity_body(temp_line);
+}
+
+std::string ft::Request::_extract_entity_body(std::string message_body)
+{
+	if (this->get_request_field("Content-Type").find("multipart/form-data") == std::string::npos)
+		return (message_body);
+	_clean_header(message_body);
+	_clean_footer(message_body);
+	return (message_body);
 }
 
 int ft::Request::get_content_length(void)

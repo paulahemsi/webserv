@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:26:05 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 14:19:55 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,20 @@ namespace ft
 			std::string							_body;
 			int									_client_fd;
 
-			void	_parse_request_line(void);
-			void	_parse_header(void);
-			void	_parse_body(void);
-			void	_read_message_body(void);
-			void	_receive_chunked_body(void);
-			size_t	_get_chunk_size(void);
-			size_t	_convert_chunk_size(std::string chunk_size);
-			bool	_has(std::string key);
-			bool	_has_mandatory_fields(void);
-			bool	_has_no_body(void);
-			void	_parse_filename(std::string header);
-			void	_clean_header(std::string &temp_line);
-			void	_clean_footer(std::string &temp_line);
+			void		_parse_request_line(void);
+			void		_parse_header(void);
+			void		_parse_body(void);
+			void		_read_message_body(void);
+			void		_receive_chunked_body(void);
+			size_t		_get_chunk_size(void);
+			size_t		_convert_chunk_size(std::string chunk_size);
+			bool		_has(std::string key);
+			bool		_has_mandatory_fields(void);
+			bool		_has_no_body(void);
+			void		_parse_filename(std::string header);
+			void		_clean_header(std::string &temp_line);
+			void		_clean_footer(std::string &temp_line);
+			std::string	_extract_entity_body(std::string message_body);
 
 		public:
 			Request(void);
