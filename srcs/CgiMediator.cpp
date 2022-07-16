@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:25:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:14:44 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void ft::CgiMediator::_get_script_output(std::FILE *temp_file, ft::Response& res
 	int size = _get_file_size(temp_file);
 	char* buffer = new char[size];
 	fread(buffer, 1, size, temp_file);
-	response.build_body(buffer);
+	response.build_body(std::string(buffer));
 	delete [] buffer;
 }
 
@@ -93,19 +93,20 @@ char** ft::CgiMediator::_build_cmd(std::string file_path)
 
 char ** ft::CgiMediator::_build_env(void)
 {
-	char** env = new char*[this->_header.size()];
+	char** env = new char*[this->_header.size() + 2];
 	ft::header_map::iterator it = this->_header.begin();
 
 	for(size_t i = 0; i < this->_header.size(); it++, i++)
 		_save_env_variable(it->first, it->second, &env[i]);
-	env[this->_header.size() - 1] = NULL;
+	_save_env_variable("QUERY_STRING", this->_header["Body:"], &env[this->_header.size()]);
+	env[this->_header.size() + 1] = NULL;
 	return (env);
 }
 
 void ft::CgiMediator::_save_env_variable(std::string key, std::string value, char** env_var)
 {
 	ft::trim(key, ":"); //!fazer um fix no request
-	std::string var_string = to_upper(key) + "=" + to_upper(value);
+	std::string var_string = to_upper(key) + "=" + value ;
 	*(env_var) = strdup((var_string.c_str()));
 }
 
