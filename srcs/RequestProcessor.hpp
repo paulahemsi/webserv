@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/15 20:40:31 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 09:59:33 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ namespace ft
 			std::string			_method;
 			ft::ServerData		_server_data;
 			ft::LocationData	_location_data;
+			int					_client;
 
 			RequestProcessor(void);
 
