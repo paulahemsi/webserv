@@ -6,12 +6,12 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:46:23 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/11 19:59:53 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:27:34 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HTTP_METHODS_DEFINES_HPP
-#define HTTP_METHODS_DEFINES_HPP
+#ifndef HTTP_STATUS_CODE_DEFINES_HPP
+#define HTTP_STATUS_CODE_DEFINES_HPP
 
 #define NOT_FOUND_REASON "Not found"
 

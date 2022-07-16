@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 12:46:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:28:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "LocationData.hpp"
 #include "utils.hpp"
 #include "html_defines.hpp"
-#include "http_methods_defines.hpp"
+#include "http_status_code_defines.hpp"
 #include "ErrorsHttp.hpp"
 #include <sys/wait.h>
 #include <queue>
@@ -98,76 +98,6 @@ namespace ft
 			ft::Request			get_request(void);
 			ft::ServerData		get_server_data(void);
 			ft::LocationData	get_location_data(void);
-
-			class NotFound : public ft::ErrorsHttp
-			{
-				public:
-					virtual const char* code() const throw()
-					{
-						return (NOT_FOUND_CODE);
-					}
-					
-					virtual const char* reason() const throw()
-					{
-						return (NOT_FOUND_REASON);
-					}
-			};
-			
-			class MethodNotAllowed : public ft::ErrorsHttp
-			{
-				public:
-					virtual const char* code() const throw()
-					{
-						return (NOT_ALLOWED_CODE);
-					}
-					
-					virtual const char* reason() const throw()
-					{
-						return (NOT_ALLOWED_REASON);
-					}
-			};
-			
-			class Forbidden : public ft::ErrorsHttp
-			{
-				public:
-					virtual const char* code() const throw()
-					{
-						return (FORBIDDEN_CODE);
-					}
-					
-					virtual const char* reason() const throw()
-					{
-						return (FORBIDDEN_REASON);
-					}
-			};
-			
-			class InternalServerError : public ft::ErrorsHttp
-			{
-				public:
-					virtual const char* code() const throw()
-					{
-						return (SERVER_ERROR_CODE);
-					}
-					
-					virtual const char* reason() const throw()
-					{
-						return (SERVER_ERROR_REASON);
-					}
-			};
-			
-			class PayloadTooLarge : public ft::ErrorsHttp
-			{
-				public:
-					virtual const char* code() const throw()
-					{
-						return (PAYLOAD_TOO_LARGE_CODE);
-					}
-					
-					virtual const char* reason() const throw()
-					{
-						return (PAYLOAD_TOO_LARGE_REASON);
-					}
-			};
 	};
 }
 

@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 12:46:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:23:18 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void	ft::RequestProcessor::_execute_get(std::string path)
 	else if (this->_location_data.get_autoindex())
 		_build_autoindex(path);
 	else
-		throw (Forbidden());
+		throw (ft::Forbidden());
 }
 
 void	ft::RequestProcessor::_execute_post(void)
@@ -238,7 +238,7 @@ void	ft::RequestProcessor::_check_payload(void)
 		payload_max_size = this->_location_data.get_body_size();
 
 	if (body_length > payload_max_size)
-		throw (PayloadTooLarge());
+		throw (ft::PayloadTooLarge());
 }
 
 std::string	ft::RequestProcessor::_build_filepath(void)
@@ -250,7 +250,7 @@ std::string	ft::RequestProcessor::_build_filepath(void)
 	filename = this->_request.get_request_field("filename");
 
 	if (filename == "")
-		filename = "default";//throw (BadRequest());
+		filename = "default";//throw (ft::BadRequest());
 	filepath += filename;
 	return (filepath);
 }
@@ -258,9 +258,9 @@ std::string	ft::RequestProcessor::_build_filepath(void)
 void ft::RequestProcessor::_execute_delete(std::string path)
 {
 	if (is_dir(path))
-		throw (Forbidden());
+		throw (ft::Forbidden());
 	if (!is_file(path))
-		throw (NotFound());
+		throw (ft::NotFound());
 	std::remove(path.c_str());
 	this->_response.set_status_code(ACCEPTED_CODE);
 	this->_response.set_reason_phrase(ACCEPTED_REASON);
@@ -273,7 +273,7 @@ void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
 	std::ifstream file(file_path.c_str());
 
 	if (!file)
-		throw (NotFound());
+		throw (ft::NotFound());
 	buffer << file.rdbuf();
 	this->_response.build_body(buffer.str(), path);
 }
@@ -292,7 +292,7 @@ bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
 			return (true);
 		return (false);
 	}
-	throw (NotFound());
+	throw (ft::NotFound());
 }
 
 void ft::RequestProcessor::_check_slash(std::string &path)
@@ -377,7 +377,7 @@ void	ft::RequestProcessor::_select_location(void)
 {
 	std::priority_queue<ft::LocationData> locations = _check_locations();
 	if (locations.empty())
-		throw (NotFound());
+		throw (ft::NotFound());
 	this->_location_data = locations.top();
 }
 
@@ -425,5 +425,5 @@ void	ft::RequestProcessor::_check_method(void)
 
 	std::set<std::string>::iterator found = methods.find(this->_method);
 	if (found == methods.end())
-			throw (MethodNotAllowed());
+			throw (ft::MethodNotAllowed());
 }
