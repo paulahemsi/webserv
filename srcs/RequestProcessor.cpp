@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 19:13:06 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 20:48:52 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void ft::RequestProcessor::run(int client_fd)
 	this->_request.init(client_fd);
 	_define_server_name();
 	_define_uri();
-	//define response fields that do not depend on the request
 	_execute_request();
 	this->_response.send(client_fd);
 }
@@ -189,22 +188,24 @@ bool ft::RequestProcessor::_has_cgi_configured(void)
 
 bool ft::RequestProcessor::_is_cgi(std::string& path)
 {
-	std::string method;
-	std::string file_path;
 	std::string extension;
 	ft::Cgi		cgi;
 
 	if (!_has_cgi_configured())
 		return (false);
-	if (!_is_file(path, file_path))
-		return (false);
+	if (is_dir(path))
+	{
+		_check_slash(path);
+		if (!_find_index(path))
+			return (false);
+	}
+	else if (!is_file(path))
+		throw (ft::NotFound());
 
-	_get_file(path, file_path);
-	extension = extract_extension(file_path);
+	extension = extract_extension(path);
 	cgi = _get_cgi_configs();
 	if (!cgi.has_extension(extension))
 		return (false);
-	path = file_path;
 	return (true);
 }
 
@@ -217,15 +218,20 @@ ft::Cgi ft::RequestProcessor::_get_cgi_configs(void)
 
 void	ft::RequestProcessor::_execute_get(std::string path)
 {
-	std::string method;
-	std::string file_path;
-
-	if (_is_file(path, file_path))
-		_get_file(path, file_path);
-	else if (this->_location_data.get_autoindex())
-		_build_autoindex(path);
+	if (is_dir(path))
+	{
+		_check_slash(path);
+		if (_find_index(path))
+			return (_get_file(path));
+		else if (this->_location_data.get_autoindex())
+			return (_build_autoindex(path));
+		else
+			throw (ft::NotFound());
+	}
+	else if (is_file(path))
+		return (_get_file(path));
 	else
-		throw (ft::Forbidden());
+		throw (ft::NotFound());
 }
 
 void	ft::RequestProcessor::_execute_post(void)
@@ -283,33 +289,15 @@ void ft::RequestProcessor::_execute_delete(std::string path)
 	this->_response.build_body(DELETE_HTML);
 }
 
-void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
+void ft::RequestProcessor::_get_file(std::string path)
 {
 	std::stringstream buffer;
-	std::ifstream file(file_path.c_str());
+	std::ifstream file(path.c_str());
 
 	if (!file)
 		throw (ft::NotFound());
 	buffer << file.rdbuf();
 	this->_response.build_body(buffer.str(), path);
-}
-
-bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
-{
-	if (is_file(path))
-	{
-		file_path = path;
-		return (true);
-	}
-	if (is_dir(path))
-	{
-		_check_slash(path);
-		if (_find_index(path, file_path))
-			return (true);
-		if (this->_location_data.get_autoindex())
-			return (false);
-	}
-	throw (ft::NotFound());
 }
 
 void ft::RequestProcessor::_check_slash(std::string &path)
@@ -318,7 +306,7 @@ void ft::RequestProcessor::_check_slash(std::string &path)
 			path.append("/");
 }
 
-bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
+bool ft::RequestProcessor::_find_index(std::string& path)
 {
 	std::vector<std::string> indexes(this->_location_data.get_index());
 
@@ -328,7 +316,7 @@ bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
 		{
 			if (is_file(path + indexes[i]))
 			{
-				file_path = path + indexes[i];
+				path.append(indexes[i]);
 				return (true);
 			}
 		}
