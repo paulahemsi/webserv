@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:26:14 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 14:21:43 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #define CRLF_DOUBLE		"\r\n\r\n"
 #define FILENAME_ID		"filename=\""
 #define DOUBLE_QUOTE	"\""
+#define BUFFER_SIZE		20
 
 ft::Request::Request(const ft::Request& other)
 {
@@ -88,24 +89,28 @@ bool ft::Request::_has_no_body(void)
 void ft::Request::_read_message_body(void)
 {
 	int			length;
-	int			ret;
-	char		buffer[20] = {0};
+	int			num_of_bytes;
+	char		buffer[BUFFER_SIZE] = {0};
 	std::string temp_line;
 
 	length = get_content_length();
 	
-	while (length && (ret = recv(this->_client_fd, buffer, 20, 0)) > 0)
+	while (length && (num_of_bytes = recv(this->_client_fd, buffer, BUFFER_SIZE, 0)) > 0)
 	{
-		length -= ret;
-		temp_line += buffer;
-		memset(buffer, 0, 20);
+		length -= num_of_bytes;
+		temp_line.append(buffer, num_of_bytes);
+		memset(buffer, 0, BUFFER_SIZE);
 	}
-	if (this->get_request_field("Content-Type").find("multipart/form-data") != std::string::npos)
-	{
-		_clean_header(temp_line);
-		_clean_footer(temp_line);
-	}
-	this->_body = temp_line;
+	this->_body = _extract_entity_body(temp_line);
+}
+
+std::string ft::Request::_extract_entity_body(std::string message_body)
+{
+	if (this->get_request_field("Content-Type").find("multipart/form-data") == std::string::npos)
+		return (message_body);
+	_clean_header(message_body);
+	_clean_footer(message_body);
+	return (message_body);
 }
 
 int ft::Request::get_content_length(void)
@@ -127,7 +132,7 @@ void ft::Request::_clean_header(std::string &temp_line)
 void ft::Request::_clean_footer(std::string &temp_line)
 {
 	std::string footer;
-	footer = temp_line.substr(temp_line.find(CRLF), temp_line.npos);
+	footer = temp_line.substr(temp_line.rfind(CRLF), temp_line.npos);
 	temp_line.erase(temp_line.length() - footer.length(), temp_line.npos);
 }
 
