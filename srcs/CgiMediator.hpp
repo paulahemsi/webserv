@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:27:03 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:28:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 14:54:15 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ namespace ft
 			char **	_build_cmd(std::string file_path);
 			ft::Cgi	_select_cgi(ft::ServerData server_data, ft::LocationData location_data);
 			char **	_build_env(void);
-			void	_free_cmd(void);
-			void	_free_env(void);
 			void	_save_env_variable(std::string key, std::string value, char** env_var);
-			void	_free(char **char_matrix);
 			void	_run_script(int temp_fd);
 			void	_get_script_output(std::FILE *temp_file, ft::Response& response);
 			int		_get_file_size(std::FILE *temp_file);
