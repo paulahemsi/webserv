@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/15 21:36:31 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/15 22:42:05 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ void ft::CgiMediator::exec(void)
 {
 	int	pid;
 	int	status;
-	std::cout << "exec" << std::endl;
+
 	std::string temp = "./temp";
 	int temp_fd = open(temp.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600);
 		
 	pid = fork();
-	std::cout << "pré pid 0 " << std::endl;
-	
 	if (pid == 0)
 	{
 		dup2(temp_fd, STDOUT_FILENO);
@@ -47,12 +45,9 @@ void ft::CgiMediator::exec(void)
 		close(temp_fd);
 	}
 	waitpid(pid, &status, 0);
-	std::cout << "pós pid 0 " << std::endl;
 	
 	if (WIFSIGNALED(status))
 		throw (InternalServerError());
-	std::cout << "not error " << std::endl;
-	
 }
 
 char** ft::CgiMediator::_build_cmd(std::string file_path)
