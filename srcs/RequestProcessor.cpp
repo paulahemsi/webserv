@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:23:18 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:54:43 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ ft::RequestProcessor::RequestProcessor(void)
 ft::RequestProcessor::RequestProcessor(ft::Socket *socket):
 _socket(socket)
 {
+	this->_known_methods.insert("HEAD");
+	this->_known_methods.insert("GET");
+	this->_known_methods.insert("POST");
+	this->_known_methods.insert("DELETE");
+	this->_known_methods.insert("PUT");
+	this->_known_methods.insert("PATCH");
 	return ;
 }
 
@@ -37,6 +43,7 @@ ft::RequestProcessor &ft::RequestProcessor::operator=(ft::RequestProcessor const
 	this->_server_name = right_hand_side._server_name;
 	this->_server_data = right_hand_side._server_data;
 	this->_location_data = right_hand_side._location_data;
+	this->_known_methods = right_hand_side._known_methods;
 	return (*this);
 }
 
@@ -51,7 +58,6 @@ void ft::RequestProcessor::run(int client_fd)
 	this->_request.init(client_fd);
 	_define_server_name();
 	_define_uri();
-	//define response fields that do not depend on the request
 	_execute_request();
 	this->_response.send(client_fd);
 }
@@ -144,7 +150,7 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 void	ft::RequestProcessor::_set_body(void)
 {
 	std::string		path;
-	path = this->_server_data.get_root() + this->_uri;
+	path = _define_path();
 	if (_is_cgi(path))
 		_execute_cgi(path);
 	else if (this->_method == "GET")
@@ -153,6 +159,22 @@ void	ft::RequestProcessor::_set_body(void)
 		_execute_post();
 	else if (this->_method == "DELETE")
 		_execute_delete(path);
+}
+
+std::string ft::RequestProcessor::_define_path(void)
+{
+	std::string path;
+	if (this->_location_data.get_root() != "")
+	{
+		path = this->_location_data.get_root();
+		std::string prefix = this->_location_data.get_prefix();
+		std::string resource = this->_uri.substr(this->_uri.find(prefix) + prefix.length(), this->_uri.npos);
+		_check_slash(path);
+		path.append(resource);
+	}
+	else
+		path = this->_server_data.get_root() + this->_uri;
+	return (path);
 }
 
 void ft::RequestProcessor::_execute_cgi(std::string file_path)
@@ -173,22 +195,24 @@ bool ft::RequestProcessor::_has_cgi_configured(void)
 
 bool ft::RequestProcessor::_is_cgi(std::string& path)
 {
-	std::string method;
-	std::string file_path;
 	std::string extension;
 	ft::Cgi		cgi;
 
 	if (!_has_cgi_configured())
 		return (false);
-	if (!_is_file(path, file_path))
-		return (false);
+	if (is_dir(path))
+	{
+		_check_slash(path);
+		if (!_find_index(path))
+			return (false);
+	}
+	else if (!is_file(path))
+		throw (ft::NotFound());
 
-	_get_file(path, file_path);
-	extension = extract_extension(file_path);
+	extension = extract_extension(path);
 	cgi = _get_cgi_configs();
 	if (!cgi.has_extension(extension))
 		return (false);
-	path = file_path;
 	return (true);
 }
 
@@ -201,15 +225,20 @@ ft::Cgi ft::RequestProcessor::_get_cgi_configs(void)
 
 void	ft::RequestProcessor::_execute_get(std::string path)
 {
-	std::string method;
-	std::string file_path;
-
-	if (_is_file(path, file_path))
-		_get_file(path, file_path);
-	else if (this->_location_data.get_autoindex())
-		_build_autoindex(path);
+	if (is_dir(path))
+	{
+		_check_slash(path);
+		if (_find_index(path))
+			return (_get_file(path));
+		else if (this->_location_data.get_autoindex())
+			return (_build_autoindex(path));
+		else
+			throw (ft::NotFound());
+	}
+	else if (is_file(path))
+		return (_get_file(path));
 	else
-		throw (ft::Forbidden());
+		throw (ft::NotFound());
 }
 
 void	ft::RequestProcessor::_execute_post(void)
@@ -267,32 +296,15 @@ void ft::RequestProcessor::_execute_delete(std::string path)
 	this->_response.build_body(DELETE_HTML);
 }
 
-void ft::RequestProcessor::_get_file(std::string path, std::string file_path)
+void ft::RequestProcessor::_get_file(std::string path)
 {
 	std::stringstream buffer;
-	std::ifstream file(file_path.c_str());
+	std::ifstream file(path.c_str());
 
 	if (!file)
 		throw (ft::NotFound());
 	buffer << file.rdbuf();
 	this->_response.build_body(buffer.str(), path);
-}
-
-bool ft::RequestProcessor::_is_file(std::string path, std::string& file_path)
-{
-	if (is_file(path))
-	{
-		file_path = path;
-		return (true);
-	}
-	if (is_dir(path))
-	{
-		_check_slash(path);
-		if (_find_index(path, file_path))
-			return (true);
-		return (false);
-	}
-	throw (ft::NotFound());
 }
 
 void ft::RequestProcessor::_check_slash(std::string &path)
@@ -301,7 +313,7 @@ void ft::RequestProcessor::_check_slash(std::string &path)
 			path.append("/");
 }
 
-bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
+bool ft::RequestProcessor::_find_index(std::string& path)
 {
 	std::vector<std::string> indexes(this->_location_data.get_index());
 
@@ -311,7 +323,7 @@ bool ft::RequestProcessor::_find_index(std::string path, std::string& file_path)
 		{
 			if (is_file(path + indexes[i]))
 			{
-				file_path = path + indexes[i];
+				path.append(indexes[i]);
 				return (true);
 			}
 		}
@@ -424,6 +436,11 @@ void	ft::RequestProcessor::_check_method(void)
 	this->_method = this->_request.get_method();
 
 	std::set<std::string>::iterator found = methods.find(this->_method);
+
 	if (found == methods.end())
-			throw (ft::MethodNotAllowed());
+	{
+		if (this->_known_methods.find(this->_method) == this->_known_methods.end())
+			throw (ft::BadRequest());
+		throw (ft::MethodNotAllowed());
+	}
 }

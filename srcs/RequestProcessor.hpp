@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:33:44 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:28:30 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:54:47 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,16 @@ namespace ft
 		typedef std::priority_queue<ft::LocationData> location_data_queue;
 
 		private:
-			ft::Request			_request;
-			ft::Response		_response;
-			ft::Socket			*_socket;
-			std::string			_uri;
-			std::string			_server_name;
-			std::string			_method;
-			ft::ServerData		_server_data;
-			ft::LocationData	_location_data;
-			int					_client;
+			ft::Request				_request;
+			ft::Response			_response;
+			ft::Socket				*_socket;
+			std::string				_uri;
+			std::string				_server_name;
+			std::string				_method;
+			ft::ServerData			_server_data;
+			ft::LocationData		_location_data;
+			std::set<std::string>	_known_methods;
+			int						_client;
 
 			RequestProcessor(void);
 
@@ -69,10 +70,11 @@ namespace ft
 			void				_check_method(void);
 			void				_set_error(std::string code, std::string reason);
 			void				_set_body(void);
-			void				_get_file(std::string path, std::string file_path);
+			std::string			_define_path(void);
+			void				_get_file(std::string path);
 			bool				_is_file(std::string path, std::string& file_path);
 			void				_check_slash(std::string &path);
-			bool				_find_index(std::string path, std::string& file_path);
+			bool				_find_index(std::string& path);
 			void				_build_autoindex(std::string path);
 			void				_set_autoindex_h1(std::string &body);
 			void				_set_autoindex_body(std::string &body, const char *path);

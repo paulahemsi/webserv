@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/14 23:11:17 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/16 21:44:02 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ std::string last_modification_time(std::string path)
 	#endif
 }
 
-bool	is_executable(std::string path)
+bool	is_executable(char* path)
 {
 	struct stat	buffer;
 
-	if (stat(path.c_str(), &buffer) != 0)
+	if (stat(path, &buffer) != 0)
 		return (false);
 	if ((buffer.st_mode & S_IFMT) == S_IFDIR)
 		return (false);
