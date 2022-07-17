@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CgiMediator.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 15:14:44 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/17 15:58:51 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,12 @@ void ft::CgiMediator::_save_env_variable(std::string key, std::string value, cha
 
 ft::CgiMediator::~CgiMediator()
 {
+	int i = 0;
+	while (this->_cmd[i])
+		free(this->_cmd[i++]);
 	delete [] this->_cmd;
+	i = 0;
+	while (this->_env[i])
+		free(this->_env[i++]);
 	delete [] this->_env;
 }
