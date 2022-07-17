@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 23:23:07 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:57:21 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ ft::LocationParser::~LocationParser(void)
 void ft::LocationParser::_add_default_method(void)
 {
 	if (this->_location.get_accepted_methods().empty())
+	{
 		this->_location.add_accepted_method("GET");
+		this->_location.add_accepted_method("HEAD");
+	}
 	return ;
 }
 
