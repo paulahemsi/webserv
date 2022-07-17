@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/17 16:36:09 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:44:02 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,20 @@ char** ft::CgiMediator::_build_cmd(std::string file_path)
 	executable = this->_cgi.get_program(extract_extension(file_path));
 	cmd[0] = strdup(executable.c_str());
 	cmd[1] = strdup(file_path.c_str());
-	cmd[2] = NULL;
 	return (cmd);
 }
 
 char ** ft::CgiMediator::_build_env(void)
 {
-	int		env_size = this->_header.size() + 3;
+	size_t	i;
+	int		env_size = this->_header.size() + 2;
 	char**	env = new char*[env_size];
 
 	memset(env, 0, env_size * sizeof(char*));
 	ft::header_map::iterator it = this->_header.begin();
-
-	for(size_t i = 0; i < this->_header.size(); it++, i++)
+	for(i = 0; i < this->_header.size(); it++, i++)
 		_save_env_variable(it->first, it->second, &env[i]);
-	_save_env_variable("QUERY_STRING", this->_header["Body:"], &env[this->_header.size()]);
-	env[this->_header.size() + 1] = NULL;
+	_save_env_variable("QUERY_STRING", this->_header["Body:"], &env[i]);
 	return (env);
 }
 
