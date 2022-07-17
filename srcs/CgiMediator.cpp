@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/17 16:25:45 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/17 16:36:09 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void ft::CgiMediator::_run_script(int temp_fd)
 void ft::CgiMediator::_get_script_output(std::FILE *temp_file, ft::Response& response)
 {
 	int size = _get_file_size(temp_file);
-	char* buffer = new char[size];
+	char* buffer = new char[size + 1];
+
+	memset(buffer, 0, size + 1);
 	fread(buffer, 1, size, temp_file);
 	response.build_body(std::string(buffer));
 	delete [] buffer;
