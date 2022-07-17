@@ -6,14 +6,17 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/17 15:58:51 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/17 16:25:45 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CgiMediator.hpp"
 
-ft::CgiMediator::CgiMediator()
+ft::CgiMediator::CgiMediator():
+_env(NULL),
+_cmd(NULL)
 {
+	return ;
 }
 
 void ft::CgiMediator::build(ft::ServerData server_data, ft::LocationData location_data, ft::Request request, std::string file_path)
@@ -84,6 +87,7 @@ char** ft::CgiMediator::_build_cmd(std::string file_path)
 	std::string executable;
 	char** cmd = new char*[3];
 
+	memset(cmd, 0, 3 * sizeof(char*));
 	executable = this->_cgi.get_program(extract_extension(file_path));
 	cmd[0] = strdup(executable.c_str());
 	cmd[1] = strdup(file_path.c_str());
@@ -93,7 +97,10 @@ char** ft::CgiMediator::_build_cmd(std::string file_path)
 
 char ** ft::CgiMediator::_build_env(void)
 {
-	char** env = new char*[this->_header.size() + 2];
+	int		env_size = this->_header.size() + 3;
+	char**	env = new char*[env_size];
+
+	memset(env, 0, env_size * sizeof(char*));
 	ft::header_map::iterator it = this->_header.begin();
 
 	for(size_t i = 0; i < this->_header.size(); it++, i++)
