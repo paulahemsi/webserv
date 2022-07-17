@@ -33,11 +33,6 @@ void ft::Client::connect(int server_fd)
 	return ;
 }
 
-int	ft::Client::send_request(char *buffer, size_t size)
-{
-	return (read(this->_fd, buffer, size));
-}
-
 int ft::Client::get_fd(void)
 {
 	return (this->_fd);

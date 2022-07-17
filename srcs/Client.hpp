@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 20:41:42 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/06/12 21:22:48 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:52:15 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ namespace ft
 			~Client(void);
 
 			void	connect(int server_fd);
-			int		send_request(char *buffer, size_t size);
 			int		get_fd(void);
 	};
 }
