@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:59 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 15:14:44 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:23:07 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char** ft::CgiMediator::_build_cmd(std::string file_path)
 
 char ** ft::CgiMediator::_build_env(void)
 {
-	char** env = new char*[this->_header.size() + 2];
+	char** env = new char*[this->_header.size() + 3];
 	ft::header_map::iterator it = this->_header.begin();
 
 	for(size_t i = 0; i < this->_header.size(); it++, i++)
