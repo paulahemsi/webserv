@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 20:48:52 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:54:43 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ ft::RequestProcessor::RequestProcessor(void)
 ft::RequestProcessor::RequestProcessor(ft::Socket *socket):
 _socket(socket)
 {
+	this->_known_methods.insert("HEAD");
+	this->_known_methods.insert("GET");
+	this->_known_methods.insert("POST");
+	this->_known_methods.insert("DELETE");
+	this->_known_methods.insert("PUT");
+	this->_known_methods.insert("PATCH");
 	return ;
 }
 
@@ -37,6 +43,7 @@ ft::RequestProcessor &ft::RequestProcessor::operator=(ft::RequestProcessor const
 	this->_server_name = right_hand_side._server_name;
 	this->_server_data = right_hand_side._server_data;
 	this->_location_data = right_hand_side._location_data;
+	this->_known_methods = right_hand_side._known_methods;
 	return (*this);
 }
 
@@ -429,6 +436,11 @@ void	ft::RequestProcessor::_check_method(void)
 	this->_method = this->_request.get_method();
 
 	std::set<std::string>::iterator found = methods.find(this->_method);
+
 	if (found == methods.end())
-			throw (ft::MethodNotAllowed());
+	{
+		if (this->_known_methods.find(this->_method) == this->_known_methods.end())
+			throw (ft::BadRequest());
+		throw (ft::MethodNotAllowed());
+	}
 }
