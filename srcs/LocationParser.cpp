@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/17 12:17:53 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 19:15:46 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ ft::LocationParser::~LocationParser(void)
 	return ;
 }
 
-void ft::LocationParser::_add_default_method(void)
-{
-	if (this->_location.get_accepted_methods().empty())
-		this->_location.add_accepted_method("GET");
-	return ;
-}
-
-
 void ft::LocationParser::exec(std::ifstream &file_stream, std::string line)
 {
 	this->_line = line;
@@ -52,7 +44,7 @@ void ft::LocationParser::exec(std::ifstream &file_stream, std::string line)
 		if (ft::line_is_valid(this->_line))
 		{
 			if (this->_line == LOCATION_END)
-				return (_add_default_method());
+				return ;
 			_set_location_conf();
 		}
 	}

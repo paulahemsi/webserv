@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 23:16:41 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 19:14:30 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ _error_pages(ft::ErrorPages()),
 _autoindex(false),
 _body_size(0)
 {
+	this->_accepted_methods.insert("GET");
 	return ;
 }
 
