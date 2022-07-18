@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:43:39 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 23:19:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 19:15:57 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ namespace ft
 			void	_set_accepted_methods_conf(void);
 			void	_set_error_page_conf(void);
 			void	_set_cgi_conf(void);
-			void	_add_default_method(void);
 
 		public:
 			LocationParser(void);
