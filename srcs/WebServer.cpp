@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 14:04:45 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/10 10:27:06 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 22:53:35 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,12 @@ void	ft::WebServer::_connect_with_client(ft::Socket *socket)
 	ft::Client				client;
 	ft::RequestProcessor	request_processor(socket);
 
-	client.connect(socket->get_fd());
-	request_processor.run(client.get_fd());
+	try {
+		client.connect(socket->get_fd());
+		request_processor.run(client.get_fd());
+	} catch (std::exception e) {
+		return ;
+	}
 }
 
 void	ft::WebServer::_check_event(ft::Poll &poll, size_t index)
