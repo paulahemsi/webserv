@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ErrorPages.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:10:20 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/13 22:38:46 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:23:06 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,16 @@ std::map<std::string, std::string> ft::ErrorPages::get_pages(void) const
 
 std::string    ft::ErrorPages::get_page(std::string code) const
 {
-	if (this->_pages.count(code) == 1)
+	if (has_page(code))
 		return (this->_pages.at(code));
 	return ("");
+}
+
+bool	ft::ErrorPages::has_page(std::string code) const
+{
+	if (this->_pages.count(code) == 1)
+		return (true);
+	return (false);
 }
 
 void	ft::ErrorPages::set_defaults(void)
