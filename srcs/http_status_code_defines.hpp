@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   http_methods_defines.hpp                           :+:      :+:    :+:   */
+/*   http_status_code_defines.hpp                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:46:23 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 13:27:34 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:20:06 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 
 #define ACCEPTED_REASON "Accepted"
 
+#define CREATED_REASON "Created"
+
+#define MOVED_PERMANENTLY_REASON "Moved Permanently"
+
 #define PAYLOAD_TOO_LARGE_REASON "Payload Too Large"
 
 #define NOT_FOUND_CODE "404"
@@ -38,6 +42,10 @@
 #define BAD_REQUEST_CODE "400"
 
 #define ACCEPTED_CODE "202"
+
+#define CREATED_CODE "201"
+
+#define MOVED_PERMANENTLY_CODE "301"
 
 #define PAYLOAD_TOO_LARGE_CODE "413"
 

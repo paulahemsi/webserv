@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 14:21:43 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 20:33:27 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,11 @@ void ft::Request::_read_message_body(void)
 
 std::string ft::Request::_extract_entity_body(std::string message_body)
 {
-	if (this->get_request_field("Content-Type").find("multipart/form-data") == std::string::npos)
-		return (message_body);
-	_clean_header(message_body);
-	_clean_footer(message_body);
+	if (this->is_multipart_form_data())
+	{
+		_clean_header(message_body);
+		_clean_footer(message_body);
+	}
 	return (message_body);
 }
 
@@ -225,6 +226,13 @@ void	ft::Request::check_request(void)
 {
 	if (!_has_mandatory_fields())
 		throw (ft::BadRequest());
+}
+
+bool ft::Request::is_multipart_form_data(void)
+{
+	std::string content_type;
+	content_type = this->get_request_field("Content-Type");
+	return (content_type.find("multipart/form-data") != std::string::npos);
 }
 
 bool	ft::Request::_has_mandatory_fields(void)

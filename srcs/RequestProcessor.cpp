@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/17 10:54:43 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:22:20 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,17 +243,29 @@ void	ft::RequestProcessor::_execute_get(std::string path)
 
 void	ft::RequestProcessor::_execute_post(void)
 {
+	_check_payload();
+	if (this->_request.is_multipart_form_data())
+		return (_upload_file());
+	//lidar com não-arquivos
+}
+
+void ft::RequestProcessor::_upload_file(void)
+{
 	std::ofstream new_file;
 	std::string body;
 	std::string filepath;
+	std::string file_location;
 
-	_check_payload();
 	filepath = _build_filepath();
+	file_location = _build_file_location();
 	body = (this->_request.get_request_field("Body"));
-
-	new_file.open(filepath.c_str(), std::ios::binary);
-	new_file.write(body.c_str(), body.length());
+	new_file.open(filepath.c_str(), std::ios::binary);//lidar com erros
+	new_file.write(body.c_str(), body.length());//lidar com erros
 	new_file.close();
+
+	this->_response.set_status_code(CREATED_CODE);
+	this->_response.set_reason_phrase(CREATED_REASON);
+	this->_response.set_header_field("Location", file_location);
 }
 
 void	ft::RequestProcessor::_check_payload(void)
@@ -275,13 +287,24 @@ std::string	ft::RequestProcessor::_build_filepath(void)
 	std::string filepath;
 	std::string filename;
 
-	filepath = this->_server_data.get_root() + this->_uri;
+	filepath = _define_path();
 	filename = this->_request.get_request_field("filename");
-
 	if (filename == "")
-		filename = "default";//throw (ft::BadRequest());
+		throw (ft::BadRequest());
 	filepath += filename;
 	return (filepath);
+}
+
+std::string	ft::RequestProcessor::_build_file_location(void)
+{
+	std::string file_location;
+	std::string filename;
+
+	file_location = this->_server_data.get_root() + this->_uri;
+	_check_slash(file_location);
+	filename = this->_request.get_request_field("filename");
+	file_location.append(filename);
+	return (file_location);
 }
 
 void ft::RequestProcessor::_execute_delete(std::string path)
@@ -426,7 +449,8 @@ bool	ft::RequestProcessor::_is_redirection(void)
 	if (redirection == "")
 		return (false);
 	this->_response.set_header_field("Location", redirection);
-	this->_response.set_status_code("301");
+	this->_response.set_status_code(MOVED_PERMANENTLY_CODE);
+	this->_response.set_reason_phrase(MOVED_PERMANENTLY_REASON);
 	return (true);
 }
 
