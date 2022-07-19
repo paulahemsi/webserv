@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 23:14:37 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:20:21 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ namespace ft
 			void	set_body_size(int size_limit);
 			void	add_error_page(std::string code, std::string page_path);
 			void	add_cgi_conf(std::string extension, std::string program_path);
+			bool	has_error_page(std::string code) const;
 			
 			bool	operator>(ft::LocationData const &right_hand_side) const;
 			bool	operator>=(ft::LocationData const &right_hand_side) const;

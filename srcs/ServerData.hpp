@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerData.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:25:56 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 22:02:58 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:24:23 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ namespace ft
 			void		add_location(ft::LocationData new_location_block);
 			void		add_error_page(std::string code, std::string page_path);
 			void		add_cgi_conf(std::string extension, std::string program_path);
+			bool		has_error_page(std::string code) const;
 	};
 }
 

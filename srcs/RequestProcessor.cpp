@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 21:22:20 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:13:40 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,12 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 	{
 		std::string host = this->_server_data.get_listen().get_host();
 		int port = this->_server_data.get_listen().get_port();
+		std::string uri = this->_uri;
+		_check_slash(uri);
 		body +=	OPEN_ANCHOR_TAG +
 				host + DIVIDER + 
 				int_to_string(port) +
-				this->_uri + SLASH +
+				uri +
 				std::string(entry->d_name) + 
 				MIDDLE_ANCHOR_TAG + entry->d_name +CLOSE_ANCHOR_TAG;
 	}
@@ -362,12 +364,18 @@ std::string	ft::RequestProcessor::_get_error_page_path(std::string code)
 	root = this->_location_data.get_root();
 	if (root == "")
 		root = this->_server_data.get_root();
-	path = root + this->_location_data.get_error_page(code);
-	if (is_file(path))
-		return (path);
-	path = root + this->_server_data.get_error_page(code);
-	if (is_file(path))
-		return (path);
+	if (this->_location_data.has_error_page(code))
+	{
+		path = root + this->_location_data.get_error_page(code);
+		if (is_file(path))
+			return (path);
+	}
+	if (this->_server_data.has_error_page(code))
+	{
+		path = root + this->_server_data.get_error_page(code);
+		if (is_file(path))
+			return (path);
+	}
 	return (this->_server_data.get_default_error_page(code));
 }
 
