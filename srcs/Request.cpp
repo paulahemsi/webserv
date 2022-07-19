@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 23:22:06 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:42:02 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void ft::Request::_read_message_body(void)
 		if (!length)
 			break;
 		num_of_bytes = recv(this->_client_fd, buffer, BUFFER_SIZE, 0);
-		if (num_of_bytes == -1)
+		if (num_of_bytes == ERROR)
 			throw (std::exception());
 		if (num_of_bytes == 0)
 			break;

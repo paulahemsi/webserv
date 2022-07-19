@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:35:00 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/18 23:23:19 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:41:41 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	receive_line(int fd, std::string &line, std::string delimiter)
 	while (true)
 	{
 		num_of_bytes = recv(fd, buffer, 1, 0);
-		if (num_of_bytes == -1)
+		if (num_of_bytes == ERROR)
 			throw (std::exception());
 		if (num_of_bytes == 0)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 20:41:42 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/18 22:14:52 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:40:14 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 #include <sys/socket.h> 
 #include <netinet/in.h>
+#include <unistd.h>
 #include <exception>
+#include "utils.hpp"
 
 namespace ft
 {

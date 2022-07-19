@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 22:06:24 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/16 21:44:02 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:42:19 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool fd_is_valid(int fd)
 {
-	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+	return (fcntl(fd, F_GETFD) != ERROR || errno != EBADF);
 }
 
 bool is_file(std::string path)
