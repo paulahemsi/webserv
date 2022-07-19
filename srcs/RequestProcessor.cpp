@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 21:24:37 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:13:40 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,12 @@ void	ft::RequestProcessor::_add_autoindex_link(std::string &body, struct dirent 
 	{
 		std::string host = this->_server_data.get_listen().get_host();
 		int port = this->_server_data.get_listen().get_port();
+		std::string uri = this->_uri;
+		_check_slash(uri);
 		body +=	OPEN_ANCHOR_TAG +
 				host + DIVIDER + 
 				int_to_string(port) +
-				this->_uri + SLASH +
+				uri +
 				std::string(entry->d_name) + 
 				MIDDLE_ANCHOR_TAG + entry->d_name +CLOSE_ANCHOR_TAG;
 	}
