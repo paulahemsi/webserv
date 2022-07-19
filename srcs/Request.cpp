@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:57:45 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 20:33:27 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:42:02 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,21 @@ bool ft::Request::_has_no_body(void)
 void ft::Request::_read_message_body(void)
 {
 	int			length;
-	int			num_of_bytes;
+	ssize_t		num_of_bytes;
 	char		buffer[BUFFER_SIZE] = {0};
 	std::string temp_line;
 
 	length = get_content_length();
 	
-	while (length && (num_of_bytes = recv(this->_client_fd, buffer, BUFFER_SIZE, 0)) > 0)
+	while (true)
 	{
+		if (!length)
+			break;
+		num_of_bytes = recv(this->_client_fd, buffer, BUFFER_SIZE, 0);
+		if (num_of_bytes == ERROR)
+			throw (std::exception());
+		if (num_of_bytes == 0)
+			break;
 		length -= num_of_bytes;
 		temp_line.append(buffer, num_of_bytes);
 		memset(buffer, 0, BUFFER_SIZE);

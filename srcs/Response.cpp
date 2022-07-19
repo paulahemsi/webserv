@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/18 22:05:01 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:53:36 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ void	ft::Response::send(int client)
 
 	_set_current_date();
 	response = this->_to_string();
-	write(client, response.c_str(), response.length());
+	if (write(client, response.c_str(), response.length()) == ERROR)
+		throw (std::exception());
 }
 
 void	ft::Response::show(void)
