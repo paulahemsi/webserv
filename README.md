@@ -563,3 +563,7 @@ Flags describing the requested i/o mode for the file:
 * [How the web works: HTTP and CGI explained](https://www.garshol.priv.no/download/text/http-tut.html)
 * [RFC 2616](https://datatracker.ietf.org/doc/html/rfc2616)
 * [How nginx processes a request](http://nginx.org/en/docs/http/request_processing.html)
+* [Curl POST examples](https://gist.github.com/subfuzion/08c5d85437d5d4f00e58)
+* [Multipart formposts](https://everything.curl.dev/http/multipart#:~:text=A%20multipart%20formpost%20is%20what,%22%2C%20separated%20with%20MIME%20boundaries.)
+* ['x-www-form-urlencoded' or 'form-data'?](https://dev.to/getd/x-www-form-urlencoded-or-form-data-explained-in-2-mins-5hk6)
+* [stackoverflow thread what-is-the-right-way-to-post-multipart-form-data-using-curl](https://stackoverflow.com/questions/19116016/what-is-the-right-way-to-post-multipart-form-data-using-curl)
