@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
 /*   Updated: 2022/07/18 23:13:40 by phemsi-a         ###   ########.fr       */
@@ -364,12 +364,18 @@ std::string	ft::RequestProcessor::_get_error_page_path(std::string code)
 	root = this->_location_data.get_root();
 	if (root == "")
 		root = this->_server_data.get_root();
-	path = root + this->_location_data.get_error_page(code);
-	if (is_file(path))
-		return (path);
-	path = root + this->_server_data.get_error_page(code);
-	if (is_file(path))
-		return (path);
+	if (this->_location_data.has_error_page(code))
+	{
+		path = root + this->_location_data.get_error_page(code);
+		if (is_file(path))
+			return (path);
+	}
+	if (this->_server_data.has_error_page(code))
+	{
+		path = root + this->_server_data.get_error_page(code);
+		if (is_file(path))
+			return (path);
+	}
 	return (this->_server_data.get_default_error_page(code));
 }
 

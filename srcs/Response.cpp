@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   Response.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/04 21:16:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 22:05:01 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Response.hpp"
 
-#define HELLO_WORLD	"<html>\n<body>\n<h1>Hello, World!</h1>\n</body>\n</html>\n"
-
 ft::Response::Response(void):	_http_version("HTTP/1.1"),
 								_status_code("200"),
 								_reason_phrase("OK"),
 								_header(),
-								_body(HELLO_WORLD)
+								_body("")
 {
 	this->_header["Server"] = "webserv";
-	this->_header["Content-Length"] = "53";
+	this->_header["Content-Length"] = "0";
 	this->_header["Content-Type"] = "text/html";
 	this->_header["Connection"] = "close";
 	this->_header["Accept-Ranges"] = "bytes";
