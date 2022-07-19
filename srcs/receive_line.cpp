@@ -6,24 +6,35 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:35:00 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/09 21:31:28 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:23:19 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "receive_line.hpp"
-#include <sys/socket.h>
+
+static bool has_delimiter(std::string line, std::string delimiter)
+{
+	return (line.rfind(delimiter) != std::string::npos);
+}
+
 void	receive_line(int fd, std::string &line, std::string delimiter)
 {
-	char buffer[2] = {0};
+	char		buffer[2] = {0};
+	ssize_t		num_of_bytes;	
 	std::string temp_line;
 
-	while (recv(fd, buffer, 1, 0) > 0)
+	while (true)
 	{
+		num_of_bytes = recv(fd, buffer, 1, 0);
+		if (num_of_bytes == -1)
+			throw (std::exception());
+		if (num_of_bytes == 0)
+			break ;
 		temp_line += buffer;
-        if (temp_line.rfind(delimiter) != std::string::npos)
+        if (has_delimiter(temp_line, delimiter))
             break ;
 	}
 	line = temp_line;
-    if (temp_line.rfind(delimiter) != std::string::npos)
+    if (has_delimiter(temp_line, delimiter))
 		line.resize(line.rfind(delimiter));
 }
