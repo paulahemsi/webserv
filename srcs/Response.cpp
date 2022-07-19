@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:41:10 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/04 21:16:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:30:17 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ void	ft::Response::send(int client)
 
 	_set_current_date();
 	response = this->_to_string();
-	write(client, response.c_str(), response.length());
+	if (write(client, response.c_str(), response.length()) == -1)
+		throw (std::exception());
 }
 
 void	ft::Response::show(void)
