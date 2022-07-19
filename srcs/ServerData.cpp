@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerData.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 22:38:12 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:23:56 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ ft::ErrorPages	ft::ServerData::get_error_pages_default(void) const
 std::string	ft::ServerData::get_error_page(std::string code) const
 {
 	return (this->_error_pages.get_page(code));
+}
+
+bool	ft::ServerData::has_error_page(std::string code) const
+{
+	return (this->_error_pages.has_page(code));
 }
 
 ft::Cgi	ft::ServerData::get_cgi(void) const
