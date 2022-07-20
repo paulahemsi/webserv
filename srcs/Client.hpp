@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 20:41:42 by lfrasson          #+#    #+#             */
-/*   Updated: 2022/07/17 18:52:15 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/18 23:40:14 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 #include <sys/socket.h> 
 #include <netinet/in.h>
+#include <unistd.h>
+#include <exception>
+#include "utils.hpp"
 
 namespace ft
 {
@@ -32,6 +35,15 @@ namespace ft
 
 			void	connect(int server_fd);
 			int		get_fd(void);
+	
+		class AcceptConnectionError : public std::exception
+		{
+			public:
+				virtual const char* what() const throw()
+				{
+					return ("Error to accept new connection");
+				}
+		};
 	};
 }
 
