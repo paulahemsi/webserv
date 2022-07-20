@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 21:24:37 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/19 21:34:24 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ void	ft::RequestProcessor::_execute_get(std::string path)
 		else if (this->_location_data.get_autoindex())
 			return (_build_autoindex(path));
 		else
-			throw (ft::NotFound());
+			throw (ft::Forbidden());
 	}
 	else if (is_file(path))
 		return (_get_file(path));
