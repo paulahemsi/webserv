@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Listen.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:15:49 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:15:32 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:54:33 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ namespace ft
 
 			ft::Listen	&operator=(ft::Listen const &right_hand_side);
 
-			void set_host(std::string host);
-			void set_port(int port);
-
-			std::string get_host(void) const ;
-			int			get_port(void) const ;
+			bool		is_set(void) const;
+			void		set_host(std::string host);
+			void		set_port(int port);
+			std::string get_host(void) const;
+			int			get_port(void) const;
 		};
 }
 

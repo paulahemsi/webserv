@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerParser.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 22:53:07 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:00:48 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void ft::ServerParser::_check_listen_conf()
 {
 	ft::Listen listen;
 
+	if (this->_server.has_listen_set())
+		throw (ServerConfigurationError());
 	ft::reduce_to_value(this->_line, LISTEN);
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
