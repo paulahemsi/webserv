@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:26:55 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/21 19:25:18 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/21 20:03:54 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ bool	ft::ServerData::has_listen_set(void) const
 bool	ft::ServerData::has_server_name_set(void) const
 {
 	return (!this->_server_name.empty());
+}
+
+bool	ft::ServerData::has_root_set(void) const
+{
+	return (!this->_root.empty());
 }
 
 ft::Listen	ft::ServerData::get_listen(void) const

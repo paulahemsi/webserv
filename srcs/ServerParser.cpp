@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/21 19:53:39 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/21 20:04:00 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,11 @@ void ft::ServerParser::_set_server_name_conf()
 void ft::ServerParser::_set_root_conf()
 {
 	ft::reduce_to_value(this->_line, ROOT);
+	
+	if (this->_server.has_root_set())
+		throw (ServerConfigurationError());
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
 	this->_server.set_root(this->_line);

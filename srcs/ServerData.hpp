@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:25:56 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/21 19:25:27 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/21 20:03:07 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ namespace ft
 			std::vector<ft::LocationData>	get_location(void) const;
 			bool							has_listen_set(void) const;
 			bool							has_server_name_set(void) const;
+			bool							has_root_set(void) const;
 
 			std::string	server_name_to_string(void) const; 
 
