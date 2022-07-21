@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/21 19:37:38 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:53:39 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,10 @@ void ft::ServerParser::_set_server_name_conf()
 {
 	ft::reduce_to_value(this->_line, SERVER_NAME);
 
+	if (this->_server.has_server_name_set())
+		throw (ServerConfigurationError());
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	std::stringstream server_name_line(this->_line);
 	std::string server_name_value;
 	while (server_name_line.good())
