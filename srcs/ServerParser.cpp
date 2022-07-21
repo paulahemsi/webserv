@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/21 19:00:48 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:37:38 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,12 @@ void ft::ServerParser::_check_listen_conf()
 {
 	ft::Listen listen;
 
+	ft::reduce_to_value(this->_line, LISTEN);
+	
 	if (this->_server.has_listen_set())
 		throw (ServerConfigurationError());
-	ft::reduce_to_value(this->_line, LISTEN);
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
 	if (this->_line.find(":") == std::string::npos)
