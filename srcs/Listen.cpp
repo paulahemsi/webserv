@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Listen.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:36 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/06/19 13:23:59 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:56:46 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ ft::Listen &ft::Listen::operator=(ft::Listen const &right_hand_side)
 ft::Listen::~Listen(void)
 {
 	return ;
+}
+
+bool ft::Listen::is_set(void) const
+{
+	if (_port == int())
+		return (false);
+	return (true);
 }
 
 void ft::Listen::set_host(std::string host)

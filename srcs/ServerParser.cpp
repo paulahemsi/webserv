@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerParser.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/13 22:53:07 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/21 21:38:49 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ void ft::ServerParser::_check_listen_conf()
 	ft::Listen listen;
 
 	ft::reduce_to_value(this->_line, LISTEN);
+	
+	if (this->_server.has_listen_set())
+		throw (ServerConfigurationError());
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
 	if (this->_line.find(":") == std::string::npos)
@@ -121,6 +126,10 @@ void ft::ServerParser::_set_server_name_conf()
 {
 	ft::reduce_to_value(this->_line, SERVER_NAME);
 
+	if (this->_server.has_server_name_set())
+		throw (ServerConfigurationError());
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	std::stringstream server_name_line(this->_line);
 	std::string server_name_value;
 	while (server_name_line.good())
@@ -133,6 +142,11 @@ void ft::ServerParser::_set_server_name_conf()
 void ft::ServerParser::_set_root_conf()
 {
 	ft::reduce_to_value(this->_line, ROOT);
+	
+	if (this->_server.has_root_set())
+		throw (ServerConfigurationError());
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
 	this->_server.set_root(this->_line);
@@ -188,6 +202,9 @@ void ft::ServerParser::_set_cgi_conf()
 void ft::ServerParser::_set_body_size_conf()
 {
 	ft::reduce_to_value(this->_line, BODY_SIZE);
+	
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
 	if (ft::is_number(this->_line))
