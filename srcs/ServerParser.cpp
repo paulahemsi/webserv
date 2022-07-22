@@ -6,7 +6,7 @@
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:50:18 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/21 20:04:00 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/21 21:38:49 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,9 @@ void ft::ServerParser::_set_cgi_conf()
 void ft::ServerParser::_set_body_size_conf()
 {
 	ft::reduce_to_value(this->_line, BODY_SIZE);
+	
+	if (this->_line.empty())
+		throw (ServerConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (ServerConfigurationError());
 	if (ft::is_number(this->_line))
