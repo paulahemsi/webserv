@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&family=Grandstander:wght@500&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+}
+
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+}
+
+header {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    border: 0px dotted red;
+}
+
+@keyframes cores {
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+h1 {
+    font-family: 'Grandstander', cursive;
+    font-size: 3.5rem;
+    text-align: center;
+    color: #FDD20EFF;
+    padding: 0;
+    margin: 4rem auto 2rem auto;
+    animation: cores 5s linear infinite;
+    border: 0px solid green;
+}
+
+select {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.2rem;
+    display: block;
+    flex-basis: 50%;
+    margin: 2rem auto;
+    padding: .2rem;
+    border-radius: 1rem;
+    -moz-appearance: none;
+    -webkit-appearance: slider-horizontal;
+    appearance: slider-horizontal;
+    border: 3px solid #FDD20EFF;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select:hover {
+    border-color: #FDD20EFF;
+}
+
+select:focus {
+    border-color: #FDD20EFF;
+    color: #222;
+    outline: none;
+}
+
+select option {
+    font-weight: normal;
+}
+
+@keyframes giro {
+    to {
+        transform: rotateZ(360deg);
+    }
+}
+
+
+.giro {
+    animation: giro 2s linear infinite;
+    margin: 3rem;
+    font-size: 10em;
+    color: #f5f5f5;
+    text-align: center;
+    display: none;
+}
+
+.img-catioros {
+    display: none;
+}
+
+.mostrar {
+    display: block;
+}
+
+
+.div-img {
+    text-align: center;
+    margin: 3.5rem auto;
+    border: 0px dotted white;
+}
+
+.imagem {
+    text-align: center;
+    border: 0px dashed pink;
+}

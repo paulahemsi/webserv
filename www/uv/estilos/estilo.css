@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Open+Sans+Condensed:wght@300&family=PT+Sans&display=swap');
+body, html {
+  font-family: 'Montserrat', sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #F8F9FA;
+  color: #212529;
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  border: 0px dashed red;
+}
+
+a {
+  font-size: 5rem;
+  color: #343A40;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5rem;
+  border: 0px solid blue;
+}
+
+a:hover {
+  text-decoration: none;
+  font-weight: bold;
+  color: #510077;
+}
+
+.parallax {
+  min-height: 100%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
+#logo {
+  background-image: url("../imagens/logogradiente.jpg");
+}
+
+#oma {
+  background-image: url("../imagens/oma.gif");
+}
+
+#hadias {
+  background-image: url("../imagens/hadias.jpg");
+}
+
+#uvs {
+  background-image: url("../imagens/uvs.jpg");
+}
+
+#glitch1 {
+  background-image: url("../imagens/uvs-glitch.jpeg");
+}
+
+#glitch2 {
+  background-image: url("../imagens/uvs-glitch2.jpeg");
+}
+
+#kombi {
+  background-image: url("../imagens/kombi.jpg");
+}
+
+#adeus1 {
+  background-image: url("../imagens/adeus-victor1.jpg");
+}
+
+#adeus2 {
+  background-image: url("../imagens/adeus-victor2.jpg");
+}
+
+#adeus3 {
+  background-image: url("../imagens/adeus-victor3.jpg");
+}
+
+#adeus4 {
+  background-image: url("../imagens/adeus-victor4.jpg");
+}
+
+#adeus5 {
+  background-image: url("../imagens/adeus-victor5.jpg");
+}
+
+#adeus6 {
+  background-image: url("../imagens/adeus-victor6.jpg");
+}
+
+#contato {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  margin: 5rem 0 0 0;
+  border: 0px solid blue;
+}
+
+aside {
+  border: 0px dotted yellow;
+  text-align: center;
+  padding: 4rem 0;
+}
+
+fieldset {
+  font-family: 'Montserrat', sans-serif;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  width: 700px;
+  border: none;
+}
+
+form {
+  border: none;
+  border-left: 2px solid #212529;
+  margin: 0;
+  padding: 0;
+}
+
+input, textarea {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  margin: 4rem 2rem;
+  padding: .5rem;
+  width: 700px;
+  border-bottom: 2px solid black;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  background-color: #F8F9FA;
+  font-weight: bold;
+  color: black;
+}
+
+textarea {
+  height: 100px;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid #343A40;
+  margin: 1rem 0 2rem 2rem;
+  padding: 1rem;
+  background-color: #F8F9FA;
+}
+
+button:hover {
+  border: 1px solid #212529;
+  background-color: #212529;
+  color: #F8F9FA;
+  cursor: pointer;
+}
+
+/* form {
+  margin: -0.5rem 3rem 0 0;
+  padding: 0;
+  border: 0px solid red;
+} */
+
+footer {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  border-top: 0px solid #A61F11;
+}
+
+footer ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  border: 0px dashed red;
+}
+
+footer li {
+  font-size: 1rem;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  border: 0px dashed blue;
+  text-align: center;
+  flex-basis: 2%;
+  stroke-width: 1;
+}
+
+.swiper-container {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -150px;
+  margin-top: -150px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+
+@media (max-width: 768px) {
+  #logo {
+    background-image: url("../imagens/logogradiente-768.jpg");
+  }
+}
+
+@media (max-width: 414px) {
+  #logo {
+    background-image: url("../imagens/logogradiente-414.svg");
+  }
+}
