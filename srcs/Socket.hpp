@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 21:58:35 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 23:40:33 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/23 15:46:11 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include <unistd.h> //read() write()
-#include <string.h> //memset()
-#include <iostream> //cpp
-#include <sys/socket.h> //socket()
-#include <arpa/inet.h> //htons()
-#include <netinet/in.h> //sockaddr_in
+#include <unistd.h>
+#include <string.h>
+#include <iostream>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include "ServerData.hpp"
 #include "utils.hpp"
 
