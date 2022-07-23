@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:30:32 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 21:20:21 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/23 10:09:00 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ namespace ft
 			void	add_error_page(std::string code, std::string page_path);
 			void	add_cgi_conf(std::string extension, std::string program_path);
 			bool	has_error_page(std::string code) const;
-			
+			bool	has_redirection_set(void) const;
+			bool	has_root_set(void) const;
 			bool	operator>(ft::LocationData const &right_hand_side) const;
 			bool	operator>=(ft::LocationData const &right_hand_side) const;
 			bool	operator<(ft::LocationData const &right_hand_side) const;
