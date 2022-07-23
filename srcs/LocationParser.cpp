@@ -6,7 +6,7 @@
 /*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:45:40 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 19:15:46 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/23 10:10:47 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ void ft::LocationParser::_set_body_size_conf(void)
 void ft::LocationParser::_set_root_conf(void)
 {
 	ft::reduce_to_value(this->_line, ROOT);
+	if (this->_location.has_root_set())
+		throw (LocationConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (LocationConfigurationError());
 	this->_location.set_root(this->_line);
@@ -173,6 +175,8 @@ void ft::LocationParser::_set_index_conf(void)
 void ft::LocationParser::_set_redirection_conf(void)
 {
 	ft::reduce_to_value(this->_line, REDIRECTION);
+	if (this->_location.has_redirection_set())
+		throw (LocationConfigurationError());
 	if (ft::more_than_one_argument(this->_line))
 		throw (LocationConfigurationError());
 	this->_location.set_redirection(this->_line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationData.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:20 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/18 21:19:49 by lfrasson         ###   ########.fr       */
+/*   Updated: 2022/07/23 10:08:48 by phemsi-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,16 @@ std::string	ft::LocationData::get_error_page(std::string code) const
 bool ft::LocationData::has_error_page(std::string code) const
 {
 	return (this->_error_pages.has_page(code));
+}
+
+bool ft::LocationData::has_redirection_set(void) const
+{
+	return (!this->_redirection.empty());
+}
+
+bool ft::LocationData::has_root_set(void) const
+{
+	return (!this->_root.empty());
 }
 
 ft::Cgi	ft::LocationData::get_cgi(void) const
