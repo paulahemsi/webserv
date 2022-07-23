@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RequestProcessor.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phemsi-a <phemsi-a@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:34:30 by phemsi-a          #+#    #+#             */
-/*   Updated: 2022/07/19 21:34:24 by phemsi-a         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:42:06 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ void	ft::RequestProcessor::_execute_get(std::string path)
 		else if (this->_location_data.get_autoindex())
 			return (_build_autoindex(path));
 		else
-			throw (ft::Forbidden());
+			throw (ft::NotFound());
 	}
 	else if (is_file(path))
 		return (_get_file(path));
@@ -248,7 +248,6 @@ void	ft::RequestProcessor::_execute_post(void)
 	_check_payload();
 	if (this->_request.is_multipart_form_data())
 		return (_upload_file());
-	//lidar com não-arquivos
 }
 
 void ft::RequestProcessor::_upload_file(void)
@@ -261,8 +260,8 @@ void ft::RequestProcessor::_upload_file(void)
 	filepath = _build_filepath();
 	file_location = _build_file_location();
 	body = (this->_request.get_request_field("Body"));
-	new_file.open(filepath.c_str(), std::ios::binary);//lidar com erros
-	new_file.write(body.c_str(), body.length());//lidar com erros
+	new_file.open(filepath.c_str(), std::ios::binary);
+	new_file.write(body.c_str(), body.length());
 	new_file.close();
 
 	this->_response.set_status_code(CREATED_CODE);
