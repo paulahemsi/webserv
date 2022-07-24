@@ -79,7 +79,9 @@ void	ft::Response::_set_body(std::string body)
 void	ft::Response::_set_body_type(std::string path)
 {
 	if (path.find(".jpg") != std::string::npos)
-		this->_set_content_type("jpg");
+		this->_set_content_type("image/jpeg");
+	else if (path.find(".jpeg") != std::string::npos)
+		this->_set_content_type("image/jpeg");
 	else if (path.find(".js") != std::string::npos)
 		this->_set_content_type("application/javascript");
 	else if (path.find(".css") != std::string::npos)
