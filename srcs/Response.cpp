@@ -86,6 +86,8 @@ void	ft::Response::_set_body_type(std::string path)
 		this->_set_content_type("application/javascript");
 	else if (path.find(".css") != std::string::npos)
 		this->_set_content_type("text/css");
+	else if (path.find(".png") != std::string::npos)
+		this->_set_content_type("image/png");
 }
 
 void	ft::Response::_set_content_length(unsigned int length)
