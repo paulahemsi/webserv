@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <cerrno>
+#include "ErrorsHttp.hpp"
 
 #define ERROR		-1
 
