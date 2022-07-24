@@ -16,6 +16,7 @@
 #include <string>
 #include <sys/socket.h>
 #include "utils.hpp"
+#include "Request.hpp"
 
 void	receive_line(int fd, std::string &line, std::string delimiter);
 

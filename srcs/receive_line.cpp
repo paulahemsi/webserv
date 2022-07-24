@@ -19,7 +19,7 @@ static bool has_delimiter(std::string line, std::string delimiter)
 
 void	receive_line(int fd, std::string &line, std::string delimiter)
 {
-	char		buffer[2] = {0};
+	char		buffer[BUFFER_SIZE] = {0};
 	ssize_t		num_of_bytes;	
 	std::string temp_line;
 
