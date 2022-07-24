@@ -112,7 +112,7 @@ char ** ft::CgiMediator::_build_env(void)
 
 void ft::CgiMediator::_save_env_variable(std::string key, std::string value, char** env_var)
 {
-	ft::trim(key, ":"); //!fazer um fix no request
+	ft::trim(key, ":");
 	std::string var_string = to_upper(key) + "=" + value ;
 	*(env_var) = strdup((var_string.c_str()));
 }

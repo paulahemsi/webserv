@@ -65,9 +65,7 @@ std::string last_modification_time(std::string path)
 	struct stat s;
 	
 	if (stat(path.c_str(), &s) != 0)
-	{
-		//lança ServerError?
-	}
+		throw (ft::InternalServerError());
 	#ifdef DARWIN
 		return (http_date(&s.st_mtimespec .tv_sec));
 	#else
