@@ -301,7 +301,7 @@ std::string	ft::RequestProcessor::_build_file_location(void)
 	std::string file_location;
 	std::string filename;
 
-	file_location = this->_server_data.get_root() + this->_uri;
+	file_location = this->_uri;
 	_check_slash(file_location);
 	filename = this->_request.get_request_field("filename");
 	file_location.append(filename);
