@@ -24,6 +24,13 @@
 #include "utils.hpp"
 #include "ErrorsHttp.hpp"
 
+#define SP				" "
+#define CRLF			"\r\n"
+#define CRLF_DOUBLE		"\r\n\r\n"
+#define FILENAME_ID		"filename=\""
+#define DOUBLE_QUOTE	"\""
+#define BUFFER_SIZE		20
+
 namespace ft
 {
 	typedef std::pair<std::string, std::string> request_pair;

@@ -12,13 +12,6 @@
 
 #include "Request.hpp"
 
-#define SP				" "
-#define CRLF			"\r\n"
-#define CRLF_DOUBLE		"\r\n\r\n"
-#define FILENAME_ID		"filename=\""
-#define DOUBLE_QUOTE	"\""
-#define BUFFER_SIZE		20
-
 ft::Request::Request(const ft::Request& other)
 {
 	*this = other;
