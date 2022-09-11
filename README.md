@@ -2,6 +2,15 @@
 
 * [introduction](#introduction)
 * [socket](#socket)
+* [Configuration_file](#Configuration_file)
+    * [server_blocks](#server_blocks)
+      * [listen](#listen)
+      * [server_name](#server_name)
+      * [location](#location)
+      * [client_body_size](#client_body_size)
+      * [error_page](#error_page)
+    * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
+* [parser](#parser)
 * [HTTP](#HTTP)
   * [client](#client)
   * [user_agent](#user_agent)
@@ -17,16 +26,7 @@
     * [Status-Line](#Status-Line)
     * [Request-Line](#Request-Line)
     * [Request_Header_Fields](#Request_Header_Fields)
-* [Configuration_file](#Configuration_file)
-    * [server_blocks](#server_blocks)
-      * [listen](#listen)
-      * [server_name](#server_name)
-      * [location](#location)
-      * [client_body_size](#client_body_size)
-      * [error_page](#error_page)
-    * [how_nginx_processes_a_request](#how_nginx_processes_a_request)
-* [parser](#parser)
-    * [ifstream](#ifstream)
+* [ifstream](#ifstream)
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
 
@@ -79,170 +79,6 @@ There are a few steps involved in using sockets:
 * Close the socket
 
 From [HTTP Server: Everything you need to know to Build a simple HTTP server from scratch](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
-
-## HTTP
-
-The HTTP protocol is a **request/response protocol**.
-
-A **client** sends a **request to the server** in the form of a request method, URI, and protocol version, followed by a MIME-like message containing request modifiers, client information, and possible body content over a connection with a server.
-
-The **server responds** with a status line, including the message's protocol version and a success or error code, followed by a MIME-like message containing server information, entity metainformation, and possible entity-body content.
-
-Most HTTP communication is **initiated by a user agent** and consists of a **request to be applied to a resource on some origin server**. In the simplest case, this may be accomplished via a single connection between the user agent and the origin server.
-
-A more complicated situation occurs when one or more intermediaries are present in the request/response chain.
-
-In **HTTP/1.1**, a connection may be used for **one or more request/response exchanges**, although connections may be closed for a variety of reasons.
-
-The "http" scheme is used to locate network resources via the HTTP protocol. This scheme-specific syntax and semantics for http URLs is:
-
-   `http_URL = "http:" "//" host [ ":" port ] [ abs_path [ "?" query ]]`
-
-**If the port is empty or not given, port 80 is assumed.**
-
-
-The HTTP protocol **does not place any a priori limit on the length of a URI**. Servers MUST be able to handle the URI of any resource they serve, and SHOULD be able to handle URIs of unbounded length if they provide GET-based forms that could generate such URIs. **A server SHOULD return 414 (Request-URI Too Long) status if a URI is longer than the server can handle**.
-
-
-### client
-
-A **program** that **establishes connections** for the purpose of **sending requests**.
-
-### user_agent
-
-The **client which initiates a request**. These are often browsers, editors, spiders (web-traversing robots), or other end user tools.
-
-### server
-
-An **application program** that **accepts connections** in order to **service requests by sending back responses**.
-
-**Any given program** may be capable of being **both** a client and a server; our use of these terms refers only to the **role being performed** by the program **for a particular connection**, rather than to the program's capabilities in general. Likewise, any server may act as an origin server, proxy, gateway, or tunnel, switching behavior based on the nature of each request.
-
-### proxy
-
-An **intermediary program** which **acts as both a server and a client** for the purpose of **making requests** on **behalf** of **other clients**. Requests are serviced internally or by passing them on, with possible translation, to other servers.
-
-A proxy MUST implement both the client and server requirements of this specification. 
-
-A **"transparent proxy"** is a proxy that **does not modify the request or response** beyond what is required for proxy authentication and identification. 
-
-A **"non-transparent proxy"** is a proxy that **modifies the request or response** in order **to provide some added service to the user agent**, such as group annotation services, media type transformation, protocol reduction, or anonymity filtering.
-
-Except where either transparent or non-transparent behavior is explicitly stated, the HTTP proxy requirements apply to both types of proxies.
-
-### gateway
-
-A **server** which acts as an **intermediary** for some **other server**. Unlike a proxy, a gateway **receives requests as if it were the origin server for the requested resource**; the requesting client may not be aware that it is communicating with a gateway.
-
-### cache
-
-A **program's local store** of response messages and the subsystem
-that controls its message storage, retrieval, and deletion.
-
-A cache stores cacheable responses in order to **reduce the response time and network bandwidth consumption on future** equivalent requests.
-
-Any client or server may include a cache, though a cache cannot be used by a server that is acting as a tunnel.
-
-### Request
-
-A request message from a client to a server includes, within the first line of that message, the method to be applied to the resource, the identifier of the resource, and the protocol version in use.
-
-#### Request-Line
-
-The Request-Line begins with a method token, followed by the Request-URI and the protocol version, and ending with CRLF. The elements are separated by SP characters. No CR or LF is allowed except in the final CRLF sequence.
-
-`Request-Line = Method SP Request-URI SP HTTP-Version CRLF`
-
-The `Method`  token indicates the method to be performed on the resource identified by the Request-URI. The method is case-sensitive
-
-|Method|
-|----------|
-|"OPTIONS" |
-| "GET"     |
-| "HEAD"    |
-| "POST"    |
-| "PUT"     |
-| "DELETE"  |
-| "TRACE"   |
-| "CONNECT" |
-
-The list of methods allowed by a resource can be specified in an **Allow header field**.
-
-The return code of the **response always notifies** the client whether a **method is currently allowed on a resource**, since the set of allowed methods can change dynamically. 
-
-An origin server SHOULD return the status code **405** (Method Not Allowed) if the method is **known by the origin server but not allowed for the requested resource**, and **501** (Not Implemented) if the method is **unrecognized or not implemented by the origin server**. The methods **GET** and **HEAD** **MUST be supported** by all general-purpose servers. **All other** methods are **OPTIONAL**.
-
-The `Request-URI` is a Uniform Resource Identifier (section 3.2) and identifies the resource upon which to apply the request.
-
-#### Request_Header_Fields
-
-The request-header fields allow the client to pass additional information about the request, and about the client itself, to the server.
-
-|Request Header|
-|--------------|
-| Accept             |
-| Accept-Charset     |
-| Accept-Encoding    |
-| Accept-Language    |
-| Authorization      |
-| Expect             |
-| From               |
-| Host               |
-| If-Match           |
-| If-Modified-Since  |
-| If-None-Match      |
-| If-Range           |
-| If-Unmodified-Since|
-| Max-Forwards       |
-| Proxy-Authorization|
-| Range              |
-| Referer            |
-| TE                 |
-| User-Agent         |
-
-### Response
-After receiving and interpreting a request message, a server responds with an HTTP response message.
-
-#### Status-Line
-
-The first line of a Response message is the Status-Line, consisting of the protocol version followed by a numeric status code and its associated textual phrase, with each element separated by SP characters. No CR or LF is allowed except in the final CRLF sequence.
-
-`Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF`
-
-The `Status-Code` element is a 3-digit integer result code of the attempt to understand and satisfy the request.
-The `Reason-Phrase` is intended to give a short textual description of the `Status-Code`. The `Status-Code` is intended for use by automata and the `Reason-Phrase` is intended for the human user. The client is not required to examine or display the `Reason-Phrase`.
-
-The first digit of the `Status-Code` defines the class of response. The last two digits do not have any categorization role. There are 5 values for the first digit:
-
-- `1xx`: Informational - Request received, continuing process
-- `2xx`: Success - The action was successfully received, understood, and accepted
-- `3xx`: Redirection - Further action must be taken in order to complete the request
-- `4xx`: Client Error - The request contains bad syntax or cannot be fulfilled
-- `5xx`: Server Error - The server failed to fulfill an apparently valid request
-
-### Response_Header_Fields
-
-The response-header fields allow the server to pass additional information about the response. These header fields give information about the server and about further access to the resource identified by the Request-URI.
-
-|Response Header|
-|---------------|
-| Accept-Ranges      |
-| Age                |
-| ETag               |
-| Location           |
-| Proxy-Authenticate |
-| Retry-After        |
-| Server             |
-| Vary               |
-| WWW-Authenticate   |
-
-### Connection_Field
-
-The Connection general-header field allows the sender to specify options that are desired for that particular connection and MUST NOT be communicated by proxies over further connections.
-
-HTTP/1.1 defines the "close" connection option for the sender to signal that the connection will be closed after completion of the response. In either the request or the response header fields indicates that the connection SHOULD NOT be considered [persistent](https://www.rfc-editor.org/rfc/rfc2616#section-8.1) after the current request/response is complete.
-
-HTTP/1.1 applications that do not support persistent connections MUST include the "close" connection option in every message.
 
 ## Configuration_file
 
@@ -520,6 +356,170 @@ Other important infos:
 
 * Make the route able to accept uploaded files and configure where they should be saved
 * The first server for a host:port will be the default for this host:port
+
+## HTTP
+
+The HTTP protocol is a **request/response protocol**.
+
+A **client** sends a **request to the server** in the form of a request method, URI, and protocol version, followed by a MIME-like message containing request modifiers, client information, and possible body content over a connection with a server.
+
+The **server responds** with a status line, including the message's protocol version and a success or error code, followed by a MIME-like message containing server information, entity metainformation, and possible entity-body content.
+
+Most HTTP communication is **initiated by a user agent** and consists of a **request to be applied to a resource on some origin server**. In the simplest case, this may be accomplished via a single connection between the user agent and the origin server.
+
+A more complicated situation occurs when one or more intermediaries are present in the request/response chain.
+
+In **HTTP/1.1**, a connection may be used for **one or more request/response exchanges**, although connections may be closed for a variety of reasons.
+
+The "http" scheme is used to locate network resources via the HTTP protocol. This scheme-specific syntax and semantics for http URLs is:
+
+   `http_URL = "http:" "//" host [ ":" port ] [ abs_path [ "?" query ]]`
+
+**If the port is empty or not given, port 80 is assumed.**
+
+
+The HTTP protocol **does not place any a priori limit on the length of a URI**. Servers MUST be able to handle the URI of any resource they serve, and SHOULD be able to handle URIs of unbounded length if they provide GET-based forms that could generate such URIs. **A server SHOULD return 414 (Request-URI Too Long) status if a URI is longer than the server can handle**.
+
+
+### client
+
+A **program** that **establishes connections** for the purpose of **sending requests**.
+
+### user_agent
+
+The **client which initiates a request**. These are often browsers, editors, spiders (web-traversing robots), or other end user tools.
+
+### server
+
+An **application program** that **accepts connections** in order to **service requests by sending back responses**.
+
+**Any given program** may be capable of being **both** a client and a server; our use of these terms refers only to the **role being performed** by the program **for a particular connection**, rather than to the program's capabilities in general. Likewise, any server may act as an origin server, proxy, gateway, or tunnel, switching behavior based on the nature of each request.
+
+### proxy
+
+An **intermediary program** which **acts as both a server and a client** for the purpose of **making requests** on **behalf** of **other clients**. Requests are serviced internally or by passing them on, with possible translation, to other servers.
+
+A proxy MUST implement both the client and server requirements of this specification. 
+
+A **"transparent proxy"** is a proxy that **does not modify the request or response** beyond what is required for proxy authentication and identification. 
+
+A **"non-transparent proxy"** is a proxy that **modifies the request or response** in order **to provide some added service to the user agent**, such as group annotation services, media type transformation, protocol reduction, or anonymity filtering.
+
+Except where either transparent or non-transparent behavior is explicitly stated, the HTTP proxy requirements apply to both types of proxies.
+
+### gateway
+
+A **server** which acts as an **intermediary** for some **other server**. Unlike a proxy, a gateway **receives requests as if it were the origin server for the requested resource**; the requesting client may not be aware that it is communicating with a gateway.
+
+### cache
+
+A **program's local store** of response messages and the subsystem
+that controls its message storage, retrieval, and deletion.
+
+A cache stores cacheable responses in order to **reduce the response time and network bandwidth consumption on future** equivalent requests.
+
+Any client or server may include a cache, though a cache cannot be used by a server that is acting as a tunnel.
+
+### Request
+
+A request message from a client to a server includes, within the first line of that message, the method to be applied to the resource, the identifier of the resource, and the protocol version in use.
+
+#### Request-Line
+
+The Request-Line begins with a method token, followed by the Request-URI and the protocol version, and ending with CRLF. The elements are separated by SP characters. No CR or LF is allowed except in the final CRLF sequence.
+
+`Request-Line = Method SP Request-URI SP HTTP-Version CRLF`
+
+The `Method`  token indicates the method to be performed on the resource identified by the Request-URI. The method is case-sensitive
+
+|Method|
+|----------|
+|"OPTIONS" |
+| "GET"     |
+| "HEAD"    |
+| "POST"    |
+| "PUT"     |
+| "DELETE"  |
+| "TRACE"   |
+| "CONNECT" |
+
+The list of methods allowed by a resource can be specified in an **Allow header field**.
+
+The return code of the **response always notifies** the client whether a **method is currently allowed on a resource**, since the set of allowed methods can change dynamically. 
+
+An origin server SHOULD return the status code **405** (Method Not Allowed) if the method is **known by the origin server but not allowed for the requested resource**, and **501** (Not Implemented) if the method is **unrecognized or not implemented by the origin server**. The methods **GET** and **HEAD** **MUST be supported** by all general-purpose servers. **All other** methods are **OPTIONAL**.
+
+The `Request-URI` is a Uniform Resource Identifier (section 3.2) and identifies the resource upon which to apply the request.
+
+#### Request_Header_Fields
+
+The request-header fields allow the client to pass additional information about the request, and about the client itself, to the server.
+
+|Request Header|
+|--------------|
+| Accept             |
+| Accept-Charset     |
+| Accept-Encoding    |
+| Accept-Language    |
+| Authorization      |
+| Expect             |
+| From               |
+| Host               |
+| If-Match           |
+| If-Modified-Since  |
+| If-None-Match      |
+| If-Range           |
+| If-Unmodified-Since|
+| Max-Forwards       |
+| Proxy-Authorization|
+| Range              |
+| Referer            |
+| TE                 |
+| User-Agent         |
+
+### Response
+After receiving and interpreting a request message, a server responds with an HTTP response message.
+
+#### Status-Line
+
+The first line of a Response message is the Status-Line, consisting of the protocol version followed by a numeric status code and its associated textual phrase, with each element separated by SP characters. No CR or LF is allowed except in the final CRLF sequence.
+
+`Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF`
+
+The `Status-Code` element is a 3-digit integer result code of the attempt to understand and satisfy the request.
+The `Reason-Phrase` is intended to give a short textual description of the `Status-Code`. The `Status-Code` is intended for use by automata and the `Reason-Phrase` is intended for the human user. The client is not required to examine or display the `Reason-Phrase`.
+
+The first digit of the `Status-Code` defines the class of response. The last two digits do not have any categorization role. There are 5 values for the first digit:
+
+- `1xx`: Informational - Request received, continuing process
+- `2xx`: Success - The action was successfully received, understood, and accepted
+- `3xx`: Redirection - Further action must be taken in order to complete the request
+- `4xx`: Client Error - The request contains bad syntax or cannot be fulfilled
+- `5xx`: Server Error - The server failed to fulfill an apparently valid request
+
+### Response_Header_Fields
+
+The response-header fields allow the server to pass additional information about the response. These header fields give information about the server and about further access to the resource identified by the Request-URI.
+
+|Response Header|
+|---------------|
+| Accept-Ranges      |
+| Age                |
+| ETag               |
+| Location           |
+| Proxy-Authenticate |
+| Retry-After        |
+| Server             |
+| Vary               |
+| WWW-Authenticate   |
+
+### Connection_Field
+
+The Connection general-header field allows the sender to specify options that are desired for that particular connection and MUST NOT be communicated by proxies over further connections.
+
+HTTP/1.1 defines the "close" connection option for the sender to signal that the connection will be closed after completion of the response. In either the request or the response header fields indicates that the connection SHOULD NOT be considered [persistent](https://www.rfc-editor.org/rfc/rfc2616#section-8.1) after the current request/response is complete.
+
+HTTP/1.1 applications that do not support persistent connections MUST include the "close" connection option in every message.
 
 ### ifstream
 
