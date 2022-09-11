@@ -37,6 +37,7 @@
 ![webserv-ex (1)](https://user-images.githubusercontent.com/63563271/189550914-a28ee028-5503-4585-a544-38a2542bfba2.gif)
 
 ![webserv-error (1)](https://user-images.githubusercontent.com/63563271/189550912-989d56d2-9d8f-477a-a070-c6366fd352f1.gif)
+![webserv-ex2](https://user-images.githubusercontent.com/63563271/189551453-cb12c906-646d-4fb0-a169-271edb911e36.gif)
 
 
 ## introduction
@@ -487,7 +488,7 @@ server {
 
 ## parser
 
-![image](https://user-images.githubusercontent.com/63563271/173972162-e835b91f-f4bd-48d6-a46f-6a6cb8c98b3c.png)
+![image](https://user-images.githubusercontent.com/63563271/189551799-df567ed8-63ae-495d-a49e-1ce86ca3dc3c.png)
 
 
 **SERVER**
@@ -496,7 +497,8 @@ server {
 |listen|1 (or + ?)|pair/struct/class|:heavy_check_mark: 80 by default?|
 |server_name|1|string/string list|:heavy_check_mark:|
 |root|string|1|:heavy_check_mark:|
-|error pages|1|string|:x:|
+|error pages|1 + default|string|:x:|
+|CGI|1 or +|Cgi object|:x:|
 |client body size|1|string/int|:x:|
 |location|1 or +|string|:x:|
 
@@ -509,6 +511,9 @@ server {
 |autoindex|1|bool|:x: false by default|
 |index|1|string/string list|:x:|
 |client body size|1|string/int|:x:|
+|CGI|1 or +|Cgi object|:x:|
+|error pages|1 + default|string|:x:|
+|prefix|1|string|:heavy_check_mark:|
 
 Other important infos:
 
