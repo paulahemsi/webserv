@@ -32,12 +32,7 @@
 
 
 
-![image](https://user-images.githubusercontent.com/63563271/189547313-cfebd0de-53a4-4e96-bdb6-608e82cc8aa7.png)
-
 ![webserv-ex (1)](https://user-images.githubusercontent.com/63563271/189550914-a28ee028-5503-4585-a544-38a2542bfba2.gif)
-
-![webserv-error (1)](https://user-images.githubusercontent.com/63563271/189550912-989d56d2-9d8f-477a-a070-c6366fd352f1.gif)
-![webserv-ex2](https://user-images.githubusercontent.com/63563271/189551453-cb12c906-646d-4fb0-a169-271edb911e36.gif)
 
 
 ## introduction
@@ -62,6 +57,12 @@ While the primary function is to serve content, full implementation of HTTP also
 forms, including the uploading of files.
 
 > note that any software program that does the same as a web browser (ie: retrieve documents from servers) is called a **client** in network terminology and a **user agent** in web terminology. Also note that the **server is** properly the **server program**, and **not the computer** on which the server is an application program. (Sometimes called the server machine.)
+
+
+![webserv-error (1)](https://user-images.githubusercontent.com/63563271/189550912-989d56d2-9d8f-477a-a070-c6366fd352f1.gif)
+![webserv-ex2](https://user-images.githubusercontent.com/63563271/189551453-cb12c906-646d-4fb0-a169-271edb911e36.gif)
+
+![image](https://user-images.githubusercontent.com/63563271/189552075-7b119358-e3a2-4582-8189-850b7d94fb7a.png)
 
 ## socket
 
