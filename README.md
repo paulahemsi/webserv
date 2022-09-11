@@ -30,6 +30,15 @@
 * [specific_functions_overview](#specific_functions_overview)
 * [study resources](#study_resources)
 
+
+
+![image](https://user-images.githubusercontent.com/63563271/189547313-cfebd0de-53a4-4e96-bdb6-608e82cc8aa7.png)
+
+![webserv-ex (1)](https://user-images.githubusercontent.com/63563271/189550914-a28ee028-5503-4585-a544-38a2542bfba2.gif)
+
+![webserv-error (1)](https://user-images.githubusercontent.com/63563271/189550912-989d56d2-9d8f-477a-a070-c6366fd352f1.gif)
+
+
 ## introduction
 
 The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed, collaborative, hypermedia information systems.
